@@ -1,0 +1,63 @@
+/*-- scss:defaults --*/
+
+$col1: #F8F2F0;
+$col2: #F27B82;
+$col3: #008766ff;
+$col4: #e71d4fff;
+$text-color: #30323D;
+
+/*-- scss:rules --*/
+
+//Nav bar
+.navbar {
+  background-color: $col2 !important;
+}
+
+// Body 
+body {
+  background-color: $col1 !important;
+  color: $text-color !important;
+  font-family: 'Indie Flower', cursive, sans-serif !important;
+  font-size: 1.1em !important;
+}
+
+// Headers & Text 
+h1, h2, h3, h4, h5, h6, p, a, span, div {
+  color: $text-color !important;
+}
+
+// All Icons on the Nav Bar
+.navbar i, .navbar svg {
+  color: $text-color !important;
+  fill: $text-color !important;
+  stroke: $text-color !important;
+}
+
+//Landing Page Image
+.about-image {
+  border-radius: 50% !important;  // Force it to be oval
+  object-fit: cover;         // Ensure the image fits nicely within the oval
+}
+
+// Hyperlink
+a {
+  color: $col3 !important
+}
+a:hover {
+  color: $col4 !important;
+}
+
+// Link text inside buttons
+a.about-link {
+  color: $col3 !important;
+}
+
+span.about-link-text {
+  color: $col3 !important;  
+}
+
+a.about-link:hover, span.about-link-text:hover {
+  color: $col4 !important;  
+}
+
+/*-- scss:uses --*/

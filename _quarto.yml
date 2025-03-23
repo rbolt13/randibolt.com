@@ -6,14 +6,19 @@ website:
   navbar:
     right:
       - about.qmd
+      - blogs.qmd
+      - dashboards.qmd
+      - talks.qmd
       - icon: github
         href: https://github.com/
-      - icon: twitter
-        href: https://twitter.com
+      - icon: linkedin
+        href: https://www.linkedin.com/in/randi-bolt/
+
 format:
   html:
-    theme: cosmo
-    css: styles.css
+    theme: styles.scss
 
-editor: visual
 
+header-includes:
+  - |
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">

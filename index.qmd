@@ -1,12 +1,17 @@
 ---
-title: "Blog"
-listing:
-  contents: posts
-  sort: "date desc"
-  type: default
-  categories: true
-  sort-ui: false
-  filter-ui: false
-page-layout: full
-title-block-banner: true
+title: "Randi Bolt"
+image: profile.png
+about:
+  template: trestles
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/rbolt13/
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/randi-bolt/
 ---
+
+<div style="margin-top: 20vh;">
+I’m the Data Equity and Innovation Supervisor for [Paid Leave Oregon](https://paidleave.oregon.gov/), where I lead a team of data analysts in transforming complex data into insights with Tableau and R. Our work ensures the program drives equitable outcomes for the Oregonians we serve. Explore my dashboards, blogs, and talks to see more.
+</div>

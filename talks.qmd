@@ -1,15 +1,17 @@
----
-title: "Talks"
-image: profile.jpg
-about:
-  template: jolla
-  links:
-    - icon: linkedin
-      text: LinkedIn
-      href: https://linkedin.com
-    - icon: github
-      text: Github
-      href: https://github.com
----
+# 📣 [Code to Content](https://github.com/rbolt13/2024-PDX_RUG-Code_to_Content)
 
-About this blog
+Used 4 years of hands-on experience creating technical blogs to compile a short 6 minute presentation to guide and encourage R users to create and share their expertise and journeys online. 
+
+::: {style="text-align: center;"}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/soFDbl02svY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+:::
+
+* Presented at [PDX R User Group](https://www.meetup.com/login/?returnUri=https%3A%2F%2Fwww.meetup.com%2Fportland-r-user-group%2Fevents%2F298359537%2F) (February 2024), and [Cascadia R Conference](https://cascadiarconf.com/) (June 2024). 
+
+* Created accessible slides with Quarto, and hosted on Github. 
+
+# 📣 [Oregon Grown](https://github.com/rbolt13/Oregon-Grown) (2021)
+
+Applied mapping and data analytics techniques to investigate dispensary diversity in Oregon November 2020 where I discovered that more than half of dispensaries in Oregon are owned by chains, and about 10% of dispensaries in Portland’s Urban Growth Boundary are owned by one chain, Groundworks. 
+
+* Created an abstract that was accepted for [GIS in Action 2021](https://gisinaction2021.sched.com/directory/speakers), and presented virtually April 2021. 

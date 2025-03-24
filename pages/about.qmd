@@ -3,15 +3,15 @@ toc: true
 comments: false
 ---
 
-## About Me ~ 
+## 💚 About Me \~
 
-I’m a data analytics supervisor with a passion for making data meaningful, accessible, and equitable. I believe in continuously improving how we work with data—whether that’s through better governance, building tools, or supporting Paid Leave Oregon in making informed decisions. My portfolio is a collection of personal projects, experiments, and learnings, mostly built in R.
+I’m a data analytics supervisor born, raised, and residing in the City of Roses—Portland, Oregon. I have a passion for making data meaningful, accessible, and equitable. I believe in continuously improving how we work with data—whether that’s through better governance, building tools, or supporting Paid Leave Oregon in making informed data driven decisions. My portfolio is a collection of data visuals, blogs, and dashboards mostly built in R.
 
-## What I Do ~
+## 💚 What I Do \~
 
 I currently work in state government, where I lead data efforts to improve reporting, governance, and innovation at Paid Leave Oregon. I also collaborate with data analysts and engineers across agencies to build better data systems and insights. Outside of work, I’m active in the PDX R User Group, where I’ve given a lightning talk and stay connected with the local R community.
 
-## Where I Came From ~
+## 💚 Where I Came From \~
 
 I have a BS in Mathematics from Portland State University, where I studied statistics and first learned R. Before working in government, I worked in fintech and digital advertising. Earlier in my career, I held a variety of roles—accounting at a sheet metal company, admin / safety monitoring for a roofing business, and even managing shifts at Baskin-Robbins and a dispensary.
 
@@ -19,7 +19,6 @@ My background isn’t just in data—I was also a trained dancer, studying pre-p
 
 When I was 21, I was in a head-on collision with a drunk driver, led to multiple jaw surgeries and a long recovery. That experience shaped my views on workplace support and the necessity of programs like paid leave. No one should have to struggle through major life events without the ability to take time off.
 
-## How to Connect ~
+## 💚 How to Connect \~
 
 The best way to reach me professionally is through LinkedIn—just send me a message. Email also works, but since my inbox is over a decade old, messages sometimes get lost in the noise.
-

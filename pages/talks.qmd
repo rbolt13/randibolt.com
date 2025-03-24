@@ -15,7 +15,7 @@ Used 4 years of hands-on experience creating technical blogs to compile a short 
 
 * Created accessible slides with Quarto, and hosted on Github. 
 
-# 📣 [Oregon Grown](https://github.com/rbolt13/Oregon-Grown) (2021)
+# 📣 [Oregon Grown](https://github.com/rbolt13/Oregon-Grown) (April 2021)
 
 Applied mapping and data analytics techniques to investigate dispensary diversity in Oregon November 2020 where I discovered that more than half of dispensaries in Oregon are owned by chains, and about 10% of dispensaries in Portland’s Urban Growth Boundary are owned by one chain, Groundworks. 
 

@@ -95,14 +95,14 @@
     "href": "pages/talks.html",
     "title": "📣 Code to Content (June 2024)",
     "section": "",
-    "text": "📣 Code to Content (June 2024)\nUsed 4 years of hands-on experience creating technical blogs to compile a short 6 minute presentation to guide and encourage R users to create and share their expertise and journeys online.\n\n\n\n\n\nPresented at PDX R User Group (February 2024), and Cascadia R Conference (June 2024).\nCreated accessible slides with Quarto, and hosted on Github.\n\n\n\n📣 Oregon Grown (2021)\nApplied mapping and data analytics techniques to investigate dispensary diversity in Oregon November 2020 where I discovered that more than half of dispensaries in Oregon are owned by chains, and about 10% of dispensaries in Portland’s Urban Growth Boundary are owned by one chain, Groundworks.\n\nCreated an abstract that was accepted for GIS in Action 2021, and presented virtually April 2021."
+    "text": "📣 Code to Content (June 2024)\nUsed 4 years of hands-on experience creating technical blogs to compile a short 6 minute presentation to guide and encourage R users to create and share their expertise and journeys online.\n\n\n\n\n\nPresented at PDX R User Group (February 2024), and Cascadia R Conference (June 2024).\nCreated accessible slides with Quarto, and hosted on Github.\n\n\n\n📣 Oregon Grown (April 2021)\nApplied mapping and data analytics techniques to investigate dispensary diversity in Oregon November 2020 where I discovered that more than half of dispensaries in Oregon are owned by chains, and about 10% of dispensaries in Portland’s Urban Growth Boundary are owned by one chain, Groundworks.\n\nCreated an abstract that was accepted for GIS in Action 2021, and presented virtually April 2021."
   },
   {
     "objectID": "pages/about.html",
     "href": "pages/about.html",
     "title": "Randi Bolt",
     "section": "",
-    "text": "Coming soon …"
+    "text": "I’m a data analytics supervisor with a passion for making data meaningful, accessible, and equitable. I believe in continuously improving how we work with data—whether that’s through better governance, building tools, or supporting Paid Leave Oregon in making informed decisions. My portfolio is a collection of personal projects, experiments, and learnings, mostly built in R."
   },
   {
     "objectID": "pages/blogs.html#rbolt.me-2024",
@@ -165,14 +165,14 @@
     "href": "pages/about.html#about-me",
     "title": "Randi Bolt",
     "section": "",
-    "text": "Coming soon …"
+    "text": "I’m a data analytics supervisor with a passion for making data meaningful, accessible, and equitable. I believe in continuously improving how we work with data—whether that’s through better governance, building tools, or supporting Paid Leave Oregon in making informed decisions. My portfolio is a collection of personal projects, experiments, and learnings, mostly built in R."
   },
   {
     "objectID": "pages/about.html#what-i-do",
     "href": "pages/about.html#what-i-do",
     "title": "Randi Bolt",
-    "section": "What I Do :",
-    "text": "What I Do :\nComing soon …"
+    "section": "What I Do ~",
+    "text": "What I Do ~\nI currently work in state government, where I lead data efforts to improve reporting, governance, and innovation at Paid Leave Oregon. I also collaborate with data analysts and engineers across agencies to build better data systems and insights. Outside of work, I’m active in the PDX R User Group, where I’ve given a lightning talk and stay connected with the local R community."
   },
   {
     "objectID": "pages/about.html#where-i-come-from",
@@ -185,14 +185,14 @@
     "objectID": "pages/about.html#how-to-connect",
     "href": "pages/about.html#how-to-connect",
     "title": "Randi Bolt",
-    "section": "How to Connect :",
-    "text": "How to Connect :\nComing soon …"
+    "section": "How to Connect ~",
+    "text": "How to Connect ~\nThe best way to reach me professionally is through LinkedIn—just send me a message. Email also works, but since my inbox is over a decade old, messages sometimes get lost in the noise."
   },
   {
     "objectID": "pages/about.html#where-i-came-from",
     "href": "pages/about.html#where-i-came-from",
     "title": "Randi Bolt",
-    "section": "Where I Came From :",
-    "text": "Where I Came From :\nComing soon …"
+    "section": "Where I Came From ~",
+    "text": "Where I Came From ~\nI have a BS in Mathematics from Portland State University, where I studied statistics and first learned R. Before working in government, I worked in fintech and digital advertising. Earlier in my career, I held a variety of roles—accounting at a sheet metal company, admin / safety monitoring for a roofing business, and even managing shifts at Baskin-Robbins and a dispensary.\nMy background isn’t just in data—I was also a trained dancer, studying pre-professionally at the San Francisco Conservatory of Ballet. Some of my biggest role models were my dance teachers, who taught me the value of instinct, adaptability, and looking at movement (or data) from multiple perspectives.\nWhen I was 21, I was in a head-on collision with a drunk driver, led to multiple jaw surgeries and a long recovery. That experience shaped my views on workplace support and the necessity of programs like paid leave. No one should have to struggle through major life events without the ability to take time off."
   }
 ]

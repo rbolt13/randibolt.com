@@ -1,5 +1,4 @@
 /*-- scss:defaults --*/
-
 $col1: #F8F2F0;
 $col2: #F27B82;
 $col3: #008766ff;
@@ -58,6 +57,11 @@ span.about-link-text {
 
 a.about-link:hover, span.about-link-text:hover {
   color: $col4 !important;  
+}
+
+.sidebar nav[role=doc-toc] ul>li>a.active, .sidebar nav[role=doc-toc] ul>li>ul>li>a.active {
+    border-left: 1px solid $col4;
+    color: $col4 !important;
 }
 
 /*-- scss:uses --*/

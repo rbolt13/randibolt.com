@@ -14,7 +14,7 @@ website:
       - text: "Talks"
         href: pages/talks.qmd
       - icon: github
-        href: https://github.com/
+        href: https://github.com/rbolt13
       - icon: linkedin
         href: https://www.linkedin.com/in/randi-bolt/
 

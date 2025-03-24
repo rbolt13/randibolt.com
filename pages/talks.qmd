@@ -1,3 +1,8 @@
+---
+toc: true
+comments: false
+---
+
 # 📣 [Code to Content](https://github.com/rbolt13/2024-PDX_RUG-Code_to_Content) (June 2024)
 
 Used 4 years of hands-on experience creating technical blogs to compile a short 6 minute presentation to guide and encourage R users to create and share their expertise and journeys online. 

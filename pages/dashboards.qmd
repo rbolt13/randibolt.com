@@ -1,3 +1,8 @@
+---
+toc: true
+comments: false
+---
+
 # 📊 [2024 Oscar Prediction Challenge](https://rbolt.shinyapps.io/2024-oscars/)
 
 This interactive Shiny app presents the results of a survey where participants predicted the winners of various Oscar categories. Built as part of my efforts to create and share data-driven projects, the dashboard lets users explore trends, accuracy, and insights from the challenge.

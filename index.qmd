@@ -1,6 +1,6 @@
 ---
 title: "Randi Bolt"
-image: profile.png
+image: img/profile.png
 about:
   template: trestles
   links:
@@ -16,5 +16,7 @@ about:
 ---
 
 <div style="margin-top: 20vh;">
-I’m the Data Equity and Innovation Supervisor for [Paid Leave Oregon](https://paidleave.oregon.gov/), where I lead a team of data analysts in transforming complex data into insights with Tableau and R. Our work ensures the program drives equitable outcomes for the Oregonians we serve. Explore my dashboards, blogs, and talks to see more.
+I’m the Data Equity and Innovation Supervisor for [Paid Leave Oregon](https://paidleave.oregon.gov/), where I lead a team of data analysts in transforming complex data into insights with Tableau and R. 
+
+Outside of work, I explore data through various personal projects that incorporate analytics, visualization, and storytelling. Check out my blogs, dashboards, and talks to see more.
 </div>

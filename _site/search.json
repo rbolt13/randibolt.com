@@ -86,9 +86,9 @@
   {
     "objectID": "pages/blogs.html",
     "href": "pages/blogs.html",
-    "title": "R Ready",
+    "title": "Quarto Q&A",
     "section": "",
-    "text": "R Ready\nComing soon …\n\n\n\nTidy Tips\nComing soon …\n\n\n\nQuarto Q&A\nComing soon …"
+    "text": "Quarto Q&A\nComing soon …\n\n\n\nR Ready\nComing soon …\n\n\n\n\n\n\nShiny Start\nComing soon …\n\n\n\nTidy Tips\nComing soon …"
   },
   {
     "objectID": "pages/talks.html",
@@ -159,5 +159,40 @@
     "title": "Current Blogs",
     "section": "",
     "text": "Coming Soon…"
+  },
+  {
+    "objectID": "pages/about.html#about-me",
+    "href": "pages/about.html#about-me",
+    "title": "Randi Bolt",
+    "section": "",
+    "text": "Coming soon …"
+  },
+  {
+    "objectID": "pages/about.html#what-i-do",
+    "href": "pages/about.html#what-i-do",
+    "title": "Randi Bolt",
+    "section": "What I Do :",
+    "text": "What I Do :\nComing soon …"
+  },
+  {
+    "objectID": "pages/about.html#where-i-come-from",
+    "href": "pages/about.html#where-i-come-from",
+    "title": "Randi Bolt",
+    "section": "Where I Come From:",
+    "text": "Where I Come From:\nComing soon …"
+  },
+  {
+    "objectID": "pages/about.html#how-to-connect",
+    "href": "pages/about.html#how-to-connect",
+    "title": "Randi Bolt",
+    "section": "How to Connect :",
+    "text": "How to Connect :\nComing soon …"
+  },
+  {
+    "objectID": "pages/about.html#where-i-came-from",
+    "href": "pages/about.html#where-i-came-from",
+    "title": "Randi Bolt",
+    "section": "Where I Came From :",
+    "text": "Where I Came From :\nComing soon …"
   }
 ]

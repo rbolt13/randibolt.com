@@ -6,23 +6,31 @@ comments: false
 <center>
 
 ::: columns
-::: {.column width="30%"}
-# R Ready
+::: {.column width="50%"}
+# Quarto Q&A
 
 Coming soon ...
 
 :::
 
-::: {.column width="30%"}
-# Tidy Tips
+::: {.column width="50%"}
+# R Ready
+
+Coming soon ...
+:::
+:::
+
+::: columns
+::: {.column width="50%"}
+# Shiny Start
 
 Coming soon ... 
 :::
 
-::: {.column width="30%"}
-# Quarto Q&A
+::: {.column width="50%"}
+# Tidy Tips
 
-Coming soon ...
+Coming soon ... 
 :::
 :::
 

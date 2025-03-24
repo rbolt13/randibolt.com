@@ -3,35 +3,20 @@ toc: true
 comments: false
 ---
 
-<center>
+About blog page coming soon ...
 
-::: columns
-::: {.column width="50%"}
-# Quarto Q&A
+# 🗣️ Quarto Questions Answered
 
 Coming soon ...
 
-:::
-
-::: {.column width="50%"}
-# R Ready
+# 🗣 R Ready
 
 Coming soon ...
-:::
-:::
 
-::: columns
-::: {.column width="50%"}
-# Shiny Start
+# 🗣 Getting Started with Shiny
 
-Coming soon ... 
-:::
+Coming soon ...
 
-::: {.column width="50%"}
-# Tidy Tips
+# 🗣 Tidy Tuesday Tips
 
-Coming soon ... 
-:::
-:::
-
-</center>
+Coming soon ...

@@ -3,7 +3,27 @@ toc: true
 comments: false
 ---
 
-# rbolt.me (2024)
+<center>
 
+::: columns
+::: {.column width="30%"}
+# R Ready
 
-<iframe src="https://2024-rbolt.netlify.app/" width="100%" height="600px">
+Coming soon ...
+
+:::
+
+::: {.column width="30%"}
+# Tidy Tips
+
+Coming soon ... 
+:::
+
+::: {.column width="30%"}
+# Quarto Q&A
+
+Coming soon ...
+:::
+:::
+
+</center>

@@ -6,13 +6,13 @@ website:
   navbar:
     right:
       - text: "About"
-        href: blog/about.qmd
+        href: pages/about.qmd
       - text: "Blogs"
-        href: blog/blogs.qmd
+        href: pages/blogs.qmd
       - text: "Dashboards"
-        href: blog/dashboards.qmd
+        href: pages/dashboards.qmd
       - text: "Talks"
-        href: blog/talks.qmd
+        href: pages/talks.qmd
       - icon: github
         href: https://github.com/
       - icon: linkedin

@@ -75,5 +75,33 @@
     "title": "Randi Bolt",
     "section": "",
     "text": "Coming soon …"
+  },
+  {
+    "objectID": "pages/dashboards.html",
+    "href": "pages/dashboards.html",
+    "title": "📊 2024 Oscar Prediction Challenge",
+    "section": "",
+    "text": "📊 2024 Oscar Prediction Challenge\nThis interactive Shiny app presents the results of a survey where participants predicted the winners of various Oscar categories. Built as part of my efforts to create and share data-driven projects, the dashboard lets users explore trends, accuracy, and insights from the challenge.\n\n\n\n\n📊 COvid-19 Dashboard\nThe Covid-19 Dashboard is an interactive tool analyzing cases and fatalities in both the United States and my home state of Oregon. Originally created as a class project at the start of the pandemic, it has gone through multiple iterations to become a fully functional and informative resource for exploring trends over time."
+  },
+  {
+    "objectID": "pages/blogs.html",
+    "href": "pages/blogs.html",
+    "title": "Randi Bolt",
+    "section": "",
+    "text": "Coming soon …"
+  },
+  {
+    "objectID": "pages/talks.html",
+    "href": "pages/talks.html",
+    "title": "📣 Code to Content (June 2024)",
+    "section": "",
+    "text": "📣 Code to Content (June 2024)\nUsed 4 years of hands-on experience creating technical blogs to compile a short 6 minute presentation to guide and encourage R users to create and share their expertise and journeys online.\n\n\n\n\n\nPresented at PDX R User Group (February 2024), and Cascadia R Conference (June 2024).\nCreated accessible slides with Quarto, and hosted on Github.\n\n\n\n📣 Oregon Grown (2021)\nApplied mapping and data analytics techniques to investigate dispensary diversity in Oregon November 2020 where I discovered that more than half of dispensaries in Oregon are owned by chains, and about 10% of dispensaries in Portland’s Urban Growth Boundary are owned by one chain, Groundworks.\n\nCreated an abstract that was accepted for GIS in Action 2021, and presented virtually April 2021."
+  },
+  {
+    "objectID": "pages/about.html",
+    "href": "pages/about.html",
+    "title": "Randi Bolt",
+    "section": "",
+    "text": "Coming soon …"
   }
 ]

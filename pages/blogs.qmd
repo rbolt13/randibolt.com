@@ -3,20 +3,4 @@ toc: true
 comments: false
 ---
 
-About blog page coming soon ...
-
-# 🗣️ Quarto Questions Answered
-
-Coming soon ...
-
-# 🗣 R Ready
-
-Coming soon ...
-
-# 🗣 Getting Started with Shiny
-
-Coming soon ...
-
-# 🗣 Tidy Tuesday Tips
-
-Coming soon ...
+coming soon... 

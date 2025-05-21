@@ -95,7 +95,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../pages/blogs.html"> 
-<span class="menu-text">Blogs</span></a>
+<span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../pages/dashboards.html"> 
@@ -127,7 +127,17 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts">Key Concepts</a>
+  <ul class="collapse">
+  <li><a href="#primary-and-foreign-keys" id="toc-primary-and-foreign-keys" class="nav-link" data-scroll-target="#primary-and-foreign-keys">Primary and Foreign Keys</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -160,9 +170,26 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Test…</p>
+<p>This blog post is to help data analysts understand data combination methods. It covers keys, joins (inner, left, right, and full outer), and unions.</p>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<ul>
+<li>General understanding of datasets.</li>
+<li>Optional: Some background with joins.</li>
+</ul>
+</section>
+<section id="key-concepts" class="level1">
+<h1>Key Concepts</h1>
+<section id="primary-and-foreign-keys" class="level2">
+<h2 class="anchored" data-anchor-id="primary-and-foreign-keys">Primary and Foreign Keys</h2>
+<p>Before joining data sets, it’s important to understand how tables can be connected through keys. Every join uses a pai of keys: a primary key and a foreign key.</p>
+<ul>
+<li>A <strong>primary key</strong> is a variable (or set of variables) that uniquely identifies each observation. In the example below the primary key in the upper set is <em>Customers</em>, and in the lower set the priamy key is <em>Order ID</em>.</li>
+</ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

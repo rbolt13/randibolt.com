@@ -7,7 +7,7 @@ website:
     right:
       - text: "About"
         href: pages/about.qmd
-      - text: "Blogs"
+      - text: "Blog"
         href: pages/blogs.qmd
       - text: "Dashboards"
         href: pages/dashboards.qmd

@@ -1,0 +1,41 @@
+---
+title: "Onboarding Data Analysts Without a Process in Place"
+image: ../../img/welcome.avif
+draft: true
+---
+
+How I built an onboarding plan from scratch. Covering everything from pre-start logistics to week-by-week structure, documentation tips, and lessons learned along the way.
+
+# Introduction 
+
+When I started as the supervisor of my team, I didn’t really get onboarded. I was thrown into meetings with little context, had no clear roadmap, and often found myself in conversations like, “Oh, you don’t have access to that yet,” or “You haven't done ___ yet?” without knowing what any of it meant or how to get started.
+
+To be honest, I’ve been in this role for about six months, and I still often feel like I’m in a tiny dinghy in the middle of the ocean—just trying to keep up and figure out how to best support my team. Thankfully, I’ve had the support of smart and capable colleagues, including my manager and our existing analyst.
+
+So when we hired two new data analysts, I knew I needed to build an onboarding plan—essentially from scratch. I had some input from my manager and teammates, and our admin provided general onboarding checklists, which were helpful for getting started. But when it came to actually training analysts and integrating them into our data work, there was nothing.
+
+This post walks through how I developed a flexible, collaborative onboarding plan that connected new analysts with subject matter experts, established structure for my existing team, and helped keep me accountable to supporting their growth.
+
+# Assessing the Starting Point: What You Have (or Don’t)
+
+blah 
+
+# Building the Plan: Structure and Schedule
+
+blah 
+
+# Onboarding by Phase 
+
+blah 
+
+# Documentation, Communication, and Collaboration
+
+blah
+
+# Lessons Learned
+
+blah
+
+# Conclusion 
+
+blah 

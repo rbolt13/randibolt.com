@@ -3,6 +3,7 @@ project:
 
 website:
   title: "Randi Bolt"
+  favicon: img/2025-bolt.png
   navbar:
     right:
       - text: "About"

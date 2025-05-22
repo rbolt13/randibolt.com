@@ -5,6 +5,8 @@ $col3: #008766ff;
 $col4: #e71d4fff;
 $text-color: #30323D;
 
+@import url('https://fonts.googleapis.com/css2?family=Tinos&display=swap');
+
 /*-- scss:rules --*/
 
 //Nav bar
@@ -16,7 +18,7 @@ $text-color: #30323D;
 body {
   background-color: $col1 !important;
   color: $text-color !important;
-  font-family: 'Indie Flower', cursive, sans-serif !important;
+  font-family: 'Tinos', serif !important;
   font-size: 1.1em !important;
 }
 

@@ -1,0 +1,82 @@
+---
+title: "Joins and Unions"
+date: "2025-05-21"
+categories: ["Data Analytics"]
+toc: true
+draft: true
+---
+
+This blog post is to help data analysts understand data combination methods. It covers keys, joins (inner, left, right, and full outer), and unions. 
+
+## Prerequisites 
+
+* General understanding of data structure. 
+* Familiarity working with and manipulating data. 
+* Optional: Some background with joins. 
+
+# Key Concepts
+
+## Primary and Foreign Keys
+
+Before joining data sets, it's important to understand how tables can be connected through keys. Every join uses a pair of keys: a primary key and a foreign key. 
+
+* A **primary key** is a variable (or set of variables) that uniquely identifies each observation. In the example below the primary key in the upper set is _Customers_, and in the lower set the primary key is _Order ID_. 
+
+(insert image)
+
+* A **compound (or composite) key** is when two or more columns together are needed to uniquely identify each row. That means that neither column alone is unique, but together they are. 
+
+(insert img)
+
+* A **foreign key** is a variable (or set of variables) that corresponds to a primary key in another table. In the example below of New York City flights (from the R package nycflights) the primary kes are colored grey and are connected to their corresponding foreigh keys with arrows. 
+
+(img)
+
+These keys are how databases (and tools like Tableua Prep and R Studio) know what rows are related across different tables. A nice feature in teh design of these keys is that the primary and foreign keys almost always have the same names. 
+
+### Knowledge Check
+
+Using your knowledge of the [Superstore Data](https://www.kaggle.com/datasets/vivek468/superstore-dataset-final), please answer the following questions: 
+
+1. Which of the following columns in the _Orders_ table is a good candidate for a primary key?
+
+    a. Customer ID
+    
+    b. Order Date
+    
+    c. Order ID
+    
+    d. Product ID
+
+2. If the _Orders_ table has a _Customers ID_, and there's a separate _Customers_ table with the same column, what is _Customer ID_ in the _Orders_ table? 
+
+    a. Primary Key
+    
+    b. Foreign Key
+    
+    c. Compound Key 
+    
+    d. House Key 
+
+3. True or False: The same column can be a primary key in one table and a foreign key in another. 
+
+4. You're tyring to join a _Returns_ table to the _Orders_ table. Which shared key would you use?
+  
+    a. Order Date
+    
+    b. Order ID
+    
+    c. Customer Name
+    
+    d. Ship Mode 
+
+## Joins 
+
+A join is used to combine rows from two or more tables, based on a related column between them. Think of this like matching puzzle pieces together based on shared shapes (values). Consider the following two data sets: X and Y. 
+
+(img)
+
+
+
+
+

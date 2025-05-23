@@ -23,6 +23,7 @@ website:
 format:
   html:
     theme: styles.scss
+    title-block: false
     template-partials:
       - metadata.html
 

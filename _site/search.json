@@ -1,82 +1,5 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Randi Bolt",
-    "section": "",
-    "text": "I’m the Data Equity and Innovation Supervisor for Paid Leave Oregon, where I lead a team of data analysts in transforming complex data into insights with Tableau and R.\nOutside of work, I explore data through various personal projects that incorporate analytics, visualization, and storytelling. Check out my blogs, dashboards, and talks to see more."
-  },
-  {
-    "objectID": "posts/0206 - Update/index.html",
-    "href": "posts/0206 - Update/index.html",
-    "title": "Update",
-    "section": "",
-    "text": "I’ve updated my blog, and have some updates about life.\n\n\nIntroduction\nEvery year I update my blog. Usually around the holidays, but this year I was busy moving, navigating a new job, and taking care of our dying kitty cat. My sweet little buddy, who passed away in the middle of January. I’ve also been running a job recruitment. That’s pretty wild. It felt like I spent years interviewing and now I am on the other side of the table. This is wild stuff kids."
-  },
-  {
-    "objectID": "posts/0213 - Phone Data/index.html",
-    "href": "posts/0213 - Phone Data/index.html",
-    "title": "Phone Data",
-    "section": "",
-    "text": "This is a post with executable code.\n\n# install.packages(\"tidyverse\")\n\n\nlibrary(\"tidyverse\")\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.4     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\n\nLoad Data\n\nccd &lt;- read_csv(\"Call Center Data.csv\")\n\nRows: 1251 Columns: 9\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (2): Answer Rate, Service Level (20 Seconds)\ndbl  (4): Index, Incoming Calls, Answered Calls, Abandoned Calls\ntime (3): Answer Speed (AVG), Talk Duration (AVG), Waiting Time (AVG)\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\n\n\nLook at the data\n\nhead(ccd)\n\n# A tibble: 6 × 9\n  Index `Incoming Calls` `Answered Calls` `Answer Rate` `Abandoned Calls`\n  &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;                     &lt;dbl&gt;\n1     1              217              204 94.01%                       13\n2     2              200              182 91.00%                       18\n3     3              216              198 91.67%                       18\n4     4              155              145 93.55%                       10\n5     5               37               37 100.00%                       0\n6     6              315              304 96.51%                       11\n# ℹ 4 more variables: `Answer Speed (AVG)` &lt;time&gt;,\n#   `Talk Duration (AVG)` &lt;time&gt;, `Waiting Time (AVG)` &lt;time&gt;,\n#   `Service Level (20 Seconds)` &lt;chr&gt;\n\ntail(ccd)\n\n# A tibble: 6 × 9\n  Index `Incoming Calls` `Answered Calls` `Answer Rate` `Abandoned Calls`\n  &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;                     &lt;dbl&gt;\n1  1246              202              195 96.53%                        7\n2  1247              191              184 96.34%                        7\n3  1248              212              209 98.58%                        3\n4  1249              210              203 96.67%                        7\n5  1250              167              159 95.21%                        8\n6  1251               12               11 91.67%                        1\n# ℹ 4 more variables: `Answer Speed (AVG)` &lt;time&gt;,\n#   `Talk Duration (AVG)` &lt;time&gt;, `Waiting Time (AVG)` &lt;time&gt;,\n#   `Service Level (20 Seconds)` &lt;chr&gt;"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Randi Bolt",
-    "section": "",
-    "text": "Coming soon …"
-  },
-  {
-    "objectID": "dashboards.html",
-    "href": "dashboards.html",
-    "title": "Randi Bolt",
-    "section": "",
-    "text": "Coming sonn …"
-  },
-  {
-    "objectID": "talks.html",
-    "href": "talks.html",
-    "title": "📣 Code to Content",
-    "section": "",
-    "text": "📣 Code to Content\nUsed 4 years of hands-on experience creating technical blogs to compile a short 6 minute presentation to guide and encourage R users to create and share their expertise and journeys online.\n\n\n\n\n\nPresented at PDX R User Group (February 2024), and Cascadia R Conference (June 2024).\nCreated accessible slides with Quarto, and hosted on Github.\n\n\n\n📣 Oregon Grown (2021)\nApplied mapping and data analytics techniques to investigate dispensary diversity in Oregon November 2020 where I discovered that more than half of dispensaries in Oregon are owned by chains, and about 10% of dispensaries in Portland’s Urban Growth Boundary are owned by one chain, Groundworks.\n\nCreated an abstract that was accepted for GIS in Action 2021, and presented virtually April 2021."
-  },
-  {
-    "objectID": "blogs.html",
-    "href": "blogs.html",
-    "title": "Randi Bolt",
-    "section": "",
-    "text": "Coming soon …"
-  },
-  {
-    "objectID": "blog/talks.html",
-    "href": "blog/talks.html",
-    "title": "📣 Code to Content (June 2024)",
-    "section": "",
-    "text": "📣 Code to Content (June 2024)\nUsed 4 years of hands-on experience creating technical blogs to compile a short 6 minute presentation to guide and encourage R users to create and share their expertise and journeys online.\n\n\n\n\n\nPresented at PDX R User Group (February 2024), and Cascadia R Conference (June 2024).\nCreated accessible slides with Quarto, and hosted on Github.\n\n\n\n📣 Oregon Grown (2021)\nApplied mapping and data analytics techniques to investigate dispensary diversity in Oregon November 2020 where I discovered that more than half of dispensaries in Oregon are owned by chains, and about 10% of dispensaries in Portland’s Urban Growth Boundary are owned by one chain, Groundworks.\n\nCreated an abstract that was accepted for GIS in Action 2021, and presented virtually April 2021."
-  },
-  {
-    "objectID": "blog/dashboards.html",
-    "href": "blog/dashboards.html",
-    "title": "Randi Bolt",
-    "section": "",
-    "text": "Coming sonn …"
-  },
-  {
-    "objectID": "blog/about.html",
-    "href": "blog/about.html",
-    "title": "Randi Bolt",
-    "section": "",
-    "text": "Coming soon …"
-  },
-  {
-    "objectID": "blog/blogs.html",
-    "href": "blog/blogs.html",
-    "title": "Randi Bolt",
-    "section": "",
-    "text": "Coming soon …"
-  },
-  {
     "objectID": "pages/dashboards.html",
     "href": "pages/dashboards.html",
     "title": "📊 2024 Oscar Prediction Challenge",
@@ -84,81 +7,11 @@
     "text": "📊 2024 Oscar Prediction Challenge\nThis interactive Shiny app presents the results of a survey where participants predicted the winners of various Oscar categories. Built as part of my efforts to create and share data-driven projects, the dashboard lets users explore trends, accuracy, and insights from the challenge.\n\n\n\n\n📊 COvid-19 Dashboard\nThe Covid-19 Dashboard is an interactive tool analyzing cases and fatalities in both the United States and my home state of Oregon. Originally created as a class project at the start of the pandemic, it has gone through multiple iterations to become a fully functional and informative resource for exploring trends over time."
   },
   {
-    "objectID": "pages/blogs.html",
-    "href": "pages/blogs.html",
-    "title": "Randi Bolt",
-    "section": "",
-    "text": "coming soon…\n\n\n\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "pages/talks.html",
-    "href": "pages/talks.html",
-    "title": "📣 Code to Content (June 2024)",
-    "section": "",
-    "text": "📣 Code to Content (June 2024)\nUsed 4 years of hands-on experience creating technical blogs to compile a short 6 minute presentation to guide and encourage R users to create and share their expertise and journeys online.\n\n\n\n\n\nPresented at PDX R User Group (February 2024), and Cascadia R Conference (June 2024).\nCreated accessible slides with Quarto, and hosted on Github.\n\n\n\n📣 Oregon Grown (April 2021)\nApplied mapping and data analytics techniques to investigate dispensary diversity in Oregon November 2020 where I discovered that more than half of dispensaries in Oregon are owned by chains, and about 10% of dispensaries in Portland’s Urban Growth Boundary are owned by one chain, Groundworks.\n\nCreated an abstract that was accepted for GIS in Action 2021, and presented virtually April 2021."
-  },
-  {
     "objectID": "pages/about.html",
     "href": "pages/about.html",
     "title": "Randi Bolt",
     "section": "",
     "text": "I’m a data analytics supervisor born, raised, and residing in the City of Roses—Portland, Oregon. I have a passion for making data meaningful, accessible, and equitable. I believe in continuously improving how we work with data—whether that’s through better governance, building tools, or supporting Paid Leave Oregon in making informed data driven decisions. My portfolio is a collection of data visuals, blogs, and dashboards mostly built in R."
-  },
-  {
-    "objectID": "pages/blogs.html#rbolt.me-2024",
-    "href": "pages/blogs.html#rbolt.me-2024",
-    "title": "Current Blogs",
-    "section": "rbolt.me (2024)",
-    "text": "rbolt.me (2024)\nComing Soon …"
-  },
-  {
-    "objectID": "pages/blogs.html#data-bites",
-    "href": "pages/blogs.html#data-bites",
-    "title": "Current Blogs",
-    "section": "",
-    "text": "coming soon …"
-  },
-  {
-    "objectID": "pages/blogs.html#tidy-tuesday-tips",
-    "href": "pages/blogs.html#tidy-tuesday-tips",
-    "title": "Current Blogs",
-    "section": "",
-    "text": "coming soon …"
-  },
-  {
-    "objectID": "pages/blogs.html#quarto-tips",
-    "href": "pages/blogs.html#quarto-tips",
-    "title": "Current Blogs",
-    "section": "",
-    "text": "(coming soon)"
-  },
-  {
-    "objectID": "pages/blogs.html#rbolt.me-2023",
-    "href": "pages/blogs.html#rbolt.me-2023",
-    "title": "Current Blogs",
-    "section": "rbolt.me (2023)",
-    "text": "rbolt.me (2023)\nComing Soon …"
-  },
-  {
-    "objectID": "pages/blogs.html#rbolt.me-2022",
-    "href": "pages/blogs.html#rbolt.me-2022",
-    "title": "Current Blogs",
-    "section": "rbolt.me (2022)",
-    "text": "rbolt.me (2022)\nComing Soon …"
-  },
-  {
-    "objectID": "pages/blogs.html#rbolt.me-2021",
-    "href": "pages/blogs.html#rbolt.me-2021",
-    "title": "Current Blogs",
-    "section": "rbolt.me (2021)",
-    "text": "rbolt.me (2021)\nComing Soon …"
-  },
-  {
-    "objectID": "pages/blogs.html#quatro",
-    "href": "pages/blogs.html#quatro",
-    "title": "Current Blogs",
-    "section": "",
-    "text": "Coming Soon…"
   },
   {
     "objectID": "pages/about.html#about-me",
@@ -175,11 +28,11 @@
     "text": "💚 What I Do ~\nI currently work in state government, where I lead data efforts to improve reporting, governance, and innovation at Paid Leave Oregon. I also collaborate with data analysts and engineers across agencies to build better data systems and insights. Outside of work, I’m active in the PDX R User Group, where I’ve given a lightning talk and stay connected with the local R community."
   },
   {
-    "objectID": "pages/about.html#where-i-come-from",
-    "href": "pages/about.html#where-i-come-from",
+    "objectID": "pages/about.html#where-i-came-from",
+    "href": "pages/about.html#where-i-came-from",
     "title": "Randi Bolt",
-    "section": "Where I Come From:",
-    "text": "Where I Come From:\nComing soon …"
+    "section": "💚 Where I Came From ~",
+    "text": "💚 Where I Came From ~\nI have a BS in Mathematics from Portland State University, where I studied statistics and first learned R. Before working in government, I worked in fintech and digital advertising. Earlier in my career, I held a variety of roles—accounting at a sheet metal company, admin / safety monitoring for a roofing business, and even managing shifts at Baskin-Robbins and a dispensary.\nMy background isn’t just in data—I was also a trained dancer, studying pre-professionally at the San Francisco Conservatory of Ballet. Some of my biggest role models were my dance teachers, who taught me the value of instinct, adaptability, and looking at movement (or data) from multiple perspectives.\nWhen I was 21, I was in a head-on collision with a drunk driver, led to multiple jaw surgeries and a long recovery. That experience shaped my views on workplace support and the necessity of programs like paid leave. No one should have to struggle through major life events without the ability to take time off."
   },
   {
     "objectID": "pages/about.html#how-to-connect",
@@ -189,10 +42,24 @@
     "text": "💚 How to Connect ~\nThe best way to reach me professionally is through LinkedIn—just send me a message. Email also works, but since my inbox is over a decade old, messages sometimes get lost in the noise."
   },
   {
-    "objectID": "pages/about.html#where-i-came-from",
-    "href": "pages/about.html#where-i-came-from",
+    "objectID": "index.html",
+    "href": "index.html",
     "title": "Randi Bolt",
-    "section": "💚 Where I Came From ~",
-    "text": "💚 Where I Came From ~\nI have a BS in Mathematics from Portland State University, where I studied statistics and first learned R. Before working in government, I worked in fintech and digital advertising. Earlier in my career, I held a variety of roles—accounting at a sheet metal company, admin / safety monitoring for a roofing business, and even managing shifts at Baskin-Robbins and a dispensary.\nMy background isn’t just in data—I was also a trained dancer, studying pre-professionally at the San Francisco Conservatory of Ballet. Some of my biggest role models were my dance teachers, who taught me the value of instinct, adaptability, and looking at movement (or data) from multiple perspectives.\nWhen I was 21, I was in a head-on collision with a drunk driver, led to multiple jaw surgeries and a long recovery. That experience shaped my views on workplace support and the necessity of programs like paid leave. No one should have to struggle through major life events without the ability to take time off."
+    "section": "",
+    "text": "I’m the Data Equity and Innovation Supervisor for Paid Leave Oregon, where I lead a team of data analysts in transforming complex data into insights with Tableau and R.\nOutside of work, I explore data through various personal projects that incorporate analytics, visualization, and storytelling. Check out my blogs, dashboards, and talks to see more."
+  },
+  {
+    "objectID": "pages/talks.html",
+    "href": "pages/talks.html",
+    "title": "📣 Code to Content (June 2024)",
+    "section": "",
+    "text": "📣 Code to Content (June 2024)\nUsed 4 years of hands-on experience creating technical blogs to compile a short 6 minute presentation to guide and encourage R users to create and share their expertise and journeys online.\n\n\n\n\n\nPresented at PDX R User Group (February 2024), and Cascadia R Conference (June 2024).\nCreated accessible slides with Quarto, and hosted on Github.\n\n\n\n📣 Oregon Grown (April 2021)\nApplied mapping and data analytics techniques to investigate dispensary diversity in Oregon November 2020 where I discovered that more than half of dispensaries in Oregon are owned by chains, and about 10% of dispensaries in Portland’s Urban Growth Boundary are owned by one chain, Groundworks.\n\nCreated an abstract that was accepted for GIS in Action 2021, and presented virtually April 2021."
+  },
+  {
+    "objectID": "pages/blogs.html",
+    "href": "pages/blogs.html",
+    "title": "Randi Bolt",
+    "section": "",
+    "text": "coming soon…\n\n\n\n\n\n\n\n\n\nNo matching items"
   }
 ]

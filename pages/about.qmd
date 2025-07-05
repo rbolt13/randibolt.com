@@ -1,25 +1,12 @@
 ---
-title: "About"
+title: "About Me"
 toc: true
 comments: false
+title-block-banner: false
 ---
 
-## 💚 About Me \~
+I was born, raised, and currently reside in the City of Roses—Portland, Oregon. I have a passion for making data meaningful, accessible, and equitable. I believe in continuously improving how we work with data—whether that’s through better governance, building tools, or supporting making informed data driven decisions. My portfolio is a collection of data visuals, blogs, and dashboards mostly built in R.
 
-I’m a data analytics supervisor born, raised, and residing in the City of Roses—Portland, Oregon. I have a passion for making data meaningful, accessible, and equitable. I believe in continuously improving how we work with data—whether that’s through better governance, building tools, or supporting Paid Leave Oregon in making informed data driven decisions. My portfolio is a collection of data visuals, blogs, and dashboards mostly built in R.
-
-## 💚 What I Do \~
-
-I currently work in state government, where I lead data efforts to improve reporting, governance, and innovation at Paid Leave Oregon. I also collaborate with data analysts and engineers across agencies to build better data systems and insights. Outside of work, I’m active in the PDX R User Group, where I’ve given a lightning talk and stay connected with the local R community.
-
-## 💚 Where I Came From \~
-
-I have a BS in Mathematics from Portland State University, where I studied statistics and first learned R. Before working in government, I worked in fintech and digital advertising. Earlier in my career, I held a variety of roles—accounting at a sheet metal company, admin / safety monitoring for a roofing business, and even managing shifts at Baskin-Robbins and a dispensary.
-
-My background isn’t just in data—I was also a trained dancer, studying pre-professionally at the San Francisco Conservatory of Ballet. Some of my biggest role models were my dance teachers, who taught me the value of instinct, adaptability, and looking at movement (or data) from multiple perspectives.
-
-When I was 21, I was in a head-on collision with a drunk driver, led to multiple jaw surgeries and a long recovery. That experience shaped my views on workplace support and the necessity of programs like paid leave. No one should have to struggle through major life events without the ability to take time off.
-
-## 💚 How to Connect \~
+I currently work in state government, where I lead data efforts to improve reporting, governance, and innovation at Paid Leave Oregon. I also collaborate with data analysts and engineers across agencies to build better data systems and insights. 
 
 The best way to reach me professionally is through LinkedIn—just send me a message. Email also works, but since my inbox is over a decade old, messages sometimes get lost in the noise.

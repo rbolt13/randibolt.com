@@ -1,6 +1,20 @@
 [
   {
     "listing": "/pages/blogs.html",
-    "items": []
+    "items": [
+      "/pages/posts/readcsv.html"
+    ]
+  },
+  {
+    "listing": "/blogs.html",
+    "items": [
+      "/blog/readcsv.html"
+    ]
+  },
+  {
+    "listing": "/blog.html",
+    "items": [
+      "/blog/readcsv.html"
+    ]
   }
 ]

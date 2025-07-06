@@ -1,0 +1,15 @@
+---
+title: "Importing Data"
+subtitle: "How to Read a CSV"
+categories: ["Introduction to Base R"]
+draft: false
+---
+
+read.csv()
+
+```{r}
+pokemon <- utils::read.csv("data/pokemon_df.csv")
+
+
+utils::head(pokemon)
+```

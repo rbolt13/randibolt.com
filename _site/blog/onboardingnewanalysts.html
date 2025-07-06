@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Randi Bolt</title>
+<title>Randi Bolt - Onboarding Data Analysts Without a Process in Place</title>
 
 <!-- Google tag (gtag.js) -->
 <!-- Google tag (gtag.js) -->
@@ -42,8 +42,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../img/2025-bolt.png" rel="icon" type="image/png">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -80,35 +78,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-author','listing-subtitle','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0Z8G9C0SFQ"></script>
 
 <script type="text/javascript">
@@ -120,42 +89,13 @@ gtag('config', 'G-0Z8G9C0SFQ', { 'anonymize_ip': true});
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&amp;display=swap" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -170,19 +110,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../pages/about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="../pages/blogs.html" aria-current="page"> 
+    <a class="nav-link" href="../blogs.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../pages/dashboards.html"> 
+    <a class="nav-link" href="../dashboards.html"> 
 <span class="menu-text">Dashboards</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../pages/talks.html"> 
+    <a class="nav-link" href="../talks.html"> 
 <span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item compact">
@@ -203,56 +139,68 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Introduction to Base R">Introduction to Base R <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Onboarding Data Analysts Without a Process in Place</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
+</header>
 
 
+<p>How I built an onboarding plan from scratch. Covering everything from pre-start logistics to week-by-week structure, documentation tips, and lessons learned along the way.</p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>When I started as the supervisor of my team, I didn’t really get onboarded. I was thrown into meetings with little context, had no clear roadmap, and often found myself in conversations like, “Oh, you don’t have access to that yet,” or “You haven’t done ___ yet?” without knowing what any of it meant or how to get started.</p>
+<p>To be honest, I’ve been in this role for about six months, and I still often feel like I’m in a tiny dinghy in the middle of the ocean—just trying to keep up and figure out how to best support my team. Thankfully, I’ve had the support of smart and capable colleagues, including my manager and our existing analyst.</p>
+<p>So when we hired two new data analysts, I knew I needed to build an onboarding plan—essentially from scratch. I had some input from my manager and teammates, and our admin provided general onboarding checklists, which were helpful for getting started. But when it came to actually training analysts and integrating them into our data work, there was nothing.</p>
+<p>This post walks through how I developed a flexible, collaborative onboarding plan that connected new analysts with subject matter experts, established structure for my existing team, and helped keep me accountable to supporting their growth.</p>
+</section>
+<section id="assessing-the-starting-point-what-you-have-or-dont" class="level1">
+<h1>Assessing the Starting Point: What You Have (or Don’t)</h1>
+<p>blah</p>
+</section>
+<section id="building-the-plan-structure-and-schedule" class="level1">
+<h1>Building the Plan: Structure and Schedule</h1>
+<p>blah</p>
+</section>
+<section id="onboarding-by-phase" class="level1">
+<h1>Onboarding by Phase</h1>
+<p>blah</p>
+</section>
+<section id="documentation-communication-and-collaboration" class="level1">
+<h1>Documentation, Communication, and Collaboration</h1>
+<p>blah</p>
+</section>
+<section id="lessons-learned" class="level1">
+<h1>Lessons Learned</h1>
+<p>blah</p>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>blah</p>
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Introduction to Base R" data-listing-file-modified-sort="1751833891223" data-listing-reading-time-sort="1" data-listing-word-count-sort="3">
-<div class="thumbnail">
-<p><a href="../pages/posts/readcsv.html" class="no-external"></a></p><a href="../pages/posts/readcsv.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="../pages/posts/readcsv.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../pages/posts/readcsv.html" class="no-external">Importing Data</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../pages/posts/readcsv.html" class="no-external">How to Read a CSV</a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Introduction to Base R'); return false;">
-Introduction to Base R
-</div>
-</div>
-<div class="listing-description">
-<a href="../pages/posts/readcsv.html" class="no-external">read.csv()</a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="../pages/posts/readcsv.html" class="no-external"></a></p><a href="../pages/posts/readcsv.html" class="no-external">
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

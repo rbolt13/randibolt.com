@@ -7,14 +7,12 @@ website:
   google-analytics: "G-0Z8G9C0SFQ"
   navbar:
     right:
-      - text: "About"
-        href: pages/about.qmd
       - text: "Blog"
-        href: pages/blogs.qmd
+        href: blog.qmd
       - text: "Dashboards"
-        href: pages/dashboards.qmd
+        href: dashboards.qmd
       - text: "Talks"
-        href: pages/talks.qmd
+        href: talks.qmd
       - icon: github
         href: https://github.com/rbolt13
       - icon: linkedin

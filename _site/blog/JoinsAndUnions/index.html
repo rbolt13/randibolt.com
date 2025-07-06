@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2025-05-21">
 
-<title>Randi Bolt</title>
+<title>Randi Bolt - Joins and Unions</title>
 
 <!-- Google tag (gtag.js) -->
 <!-- Google tag (gtag.js) -->
@@ -34,25 +35,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../img/2025-bolt.png" rel="icon" type="image/png">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../img/2025-bolt.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -80,35 +79,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-author','listing-subtitle','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0Z8G9C0SFQ"></script>
 
 <script type="text/javascript">
@@ -120,46 +90,17 @@ gtag('config', 'G-0Z8G9C0SFQ', { 'anonymize_ip': true});
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&amp;display=swap" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Randi Bolt</span>
     </a>
   </div>
@@ -170,19 +111,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../pages/about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="../pages/blogs.html" aria-current="page"> 
+    <a class="nav-link" href="../../blogs.html"> 
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../pages/dashboards.html"> 
+    <a class="nav-link" href="../../dashboards.html"> 
 <span class="menu-text">Dashboards</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../pages/talks.html"> 
+    <a class="nav-link" href="../../talks.html"> 
 <span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item compact">
@@ -203,56 +140,123 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Introduction to Base R">Introduction to Base R <span class="quarto-category-count">(1)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts">Key Concepts</a>
+  <ul class="collapse">
+  <li><a href="#primary-and-foreign-keys" id="toc-primary-and-foreign-keys" class="nav-link" data-scroll-target="#primary-and-foreign-keys">Primary and Foreign Keys</a>
+  <ul class="collapse">
+  <li><a href="#knowledge-check" id="toc-knowledge-check" class="nav-link" data-scroll-target="#knowledge-check">Knowledge Check</a></li>
+  </ul></li>
+  <li><a href="#joins" id="toc-joins" class="nav-link" data-scroll-target="#joins">Joins</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Joins and Unions</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Data Analytics</div>
+  </div>
+  </div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 21, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
 
 
+</header>
 
 
+<p>This blog post is to help data analysts understand data combination methods. It covers keys, joins (inner, left, right, and full outer), and unions.</p>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<ul>
+<li>General understanding of data structure.</li>
+<li>Familiarity working with and manipulating data.</li>
+<li>Optional: Some background with joins.</li>
+</ul>
+</section>
+<section id="key-concepts" class="level1">
+<h1>Key Concepts</h1>
+<section id="primary-and-foreign-keys" class="level2">
+<h2 class="anchored" data-anchor-id="primary-and-foreign-keys">Primary and Foreign Keys</h2>
+<p>Before joining data sets, it’s important to understand how tables can be connected through keys. Every join uses a pair of keys: a primary key and a foreign key.</p>
+<ul>
+<li>A <strong>primary key</strong> is a variable (or set of variables) that uniquely identifies each observation. In the example below the primary key in the upper set is <em>Customers</em>, and in the lower set the primary key is <em>Order ID</em>.</li>
+</ul>
+<p>(insert image)</p>
+<ul>
+<li>A <strong>compound (or composite) key</strong> is when two or more columns together are needed to uniquely identify each row. That means that neither column alone is unique, but together they are.</li>
+</ul>
+<p>(insert img)</p>
+<ul>
+<li>A <strong>foreign key</strong> is a variable (or set of variables) that corresponds to a primary key in another table. In the example below of New York City flights (from the R package nycflights) the primary kes are colored grey and are connected to their corresponding foreigh keys with arrows.</li>
+</ul>
+<p>(img)</p>
+<p>These keys are how databases (and tools like Tableua Prep and R Studio) know what rows are related across different tables. A nice feature in teh design of these keys is that the primary and foreign keys almost always have the same names.</p>
+<section id="knowledge-check" class="level3">
+<h3 class="anchored" data-anchor-id="knowledge-check">Knowledge Check</h3>
+<p>Using your knowledge of the <a href="https://www.kaggle.com/datasets/vivek468/superstore-dataset-final">Superstore Data</a>, please answer the following questions:</p>
+<ol type="1">
+<li><p>Which of the following columns in the <em>Orders</em> table is a good candidate for a primary key?</p>
+<ol type="a">
+<li><p>Customer ID</p></li>
+<li><p>Order Date</p></li>
+<li><p>Order ID</p></li>
+<li><p>Product ID</p></li>
+</ol></li>
+<li><p>If the <em>Orders</em> table has a <em>Customers ID</em>, and there’s a separate <em>Customers</em> table with the same column, what is <em>Customer ID</em> in the <em>Orders</em> table?</p>
+<ol type="a">
+<li><p>Primary Key</p></li>
+<li><p>Foreign Key</p></li>
+<li><p>Compound Key</p></li>
+<li><p>House Key</p></li>
+</ol></li>
+<li><p>True or False: The same column can be a primary key in one table and a foreign key in another.</p></li>
+<li><p>You’re tyring to join a <em>Returns</em> table to the <em>Orders</em> table. Which shared key would you use?</p>
+<ol type="a">
+<li><p>Order Date</p></li>
+<li><p>Order ID</p></li>
+<li><p>Customer Name</p></li>
+<li><p>Ship Mode</p></li>
+</ol></li>
+</ol>
+</section>
+</section>
+<section id="joins" class="level2">
+<h2 class="anchored" data-anchor-id="joins">Joins</h2>
+<p>A join is used to combine rows from two or more tables, based on a related column between them. Think of this like matching puzzle pieces together based on shared shapes (values). Consider the following two data sets: X and Y.</p>
+<p>(img)</p>
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Introduction to Base R" data-listing-file-modified-sort="1751833891223" data-listing-reading-time-sort="1" data-listing-word-count-sort="3">
-<div class="thumbnail">
-<p><a href="../pages/posts/readcsv.html" class="no-external"></a></p><a href="../pages/posts/readcsv.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="../pages/posts/readcsv.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../pages/posts/readcsv.html" class="no-external">Importing Data</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../pages/posts/readcsv.html" class="no-external">How to Read a CSV</a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Introduction to Base R'); return false;">
-Introduction to Base R
-</div>
-</div>
-<div class="listing-description">
-<a href="../pages/posts/readcsv.html" class="no-external">read.csv()</a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="../pages/posts/readcsv.html" class="no-external"></a></p><a href="../pages/posts/readcsv.html" class="no-external">
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+
+</section>
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

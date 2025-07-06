@@ -1,0 +1,15 @@
+{
+  "hash": "8ba63c3a63c806e371f2add682a2d13a",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Importing Data\"\nsubtitle: \"How to Read a CSV\"\ncategories: [\"Introduction to Base R\"]\ndraft: false\n---\n\n\nread.csv()\n\n\n::: {.cell}\n\n```{.r .cell-code}\npokemon <- utils::read.csv(\"data/pokemon_df.csv\")\n\n\nutils::head(pokemon)\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n  id    pokemon species_id height weight base_experience type_1 type_2 hp\n1  1  bulbasaur          1    0.7    6.9              64  grass poison 45\n2  2    ivysaur          2    1.0   13.0             142  grass poison 60\n3  3   venusaur          3    2.0  100.0             236  grass poison 80\n4  4 charmander          4    0.6    8.5              62   fire   <NA> 39\n5  5 charmeleon          5    1.1   19.0             142   fire   <NA> 58\n6  6  charizard          6    1.7   90.5             240   fire flying 78\n  attack defense special_attack special_defense speed color_1 color_2 color_f\n1     49      49             65              65    45 #78C850 #A040A0 #81A763\n2     62      63             80              80    60 #78C850 #A040A0 #81A763\n3     82      83            100             100    80 #78C850 #A040A0 #81A763\n4     52      43             60              50    65 #F08030    <NA>    <NA>\n5     64      58             80              65    80 #F08030    <NA>    <NA>\n6     84      78            109              85   100 #F08030 #A890F0 #DE835E\n  egg_group_1 egg_group_2\n1     monster       plant\n2     monster       plant\n3     monster       plant\n4     monster      dragon\n5     monster      dragon\n6     monster      dragon\n                                                 url_icon generation_id\n1 //archives.bulbagarden.net/media/upload/7/7b/001MS6.png             1\n2 //archives.bulbagarden.net/media/upload/a/a0/002MS6.png             1\n3 //archives.bulbagarden.net/media/upload/0/07/003MS6.png             1\n4 //archives.bulbagarden.net/media/upload/7/7d/004MS6.png             1\n5 //archives.bulbagarden.net/media/upload/b/be/005MS6.png             1\n6 //archives.bulbagarden.net/media/upload/4/41/006MS6.png             1\n                                                                            url_image\n1 https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/001.png\n2 https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/002.png\n3 https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/003.png\n4 https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/004.png\n5 https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/005.png\n6 https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/006.png\n```\n\n\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

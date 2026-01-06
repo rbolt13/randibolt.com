@@ -48,6 +48,11 @@ a:hover {
   color: $col4 !important;
 }
 
+//blog window text
+a.no-external {
+  color: $text-color !important;
+}
+
 // Link text inside buttons
 a.about-link {
   color: $col3 !important;

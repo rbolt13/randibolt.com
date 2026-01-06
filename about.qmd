@@ -5,8 +5,4 @@ comments: false
 title-block-banner: false
 ---
 
-I was born, raised, and currently reside in the City of Roses—Portland, Oregon. I have a passion for making data meaningful, accessible, and equitable. I believe in continuously improving how we work with data—whether that’s through better governance, building tools, or supporting making informed data driven decisions. My portfolio is a collection of data visuals, blogs, and dashboards mostly built in R.
-
-I currently work in state government, where I lead data efforts to improve reporting, governance, and innovation at Paid Leave Oregon. I also collaborate with data analysts and engineers across agencies to build better data systems and insights. 
-
-The best way to reach me professionally is through LinkedIn—just send me a message. Email also works, but since my inbox is over a decade old, messages sometimes get lost in the noise.
+I was born, raised, and currently reside in the City of Roses—Portland, Oregon. I have a passion for making data meaningful, accessible, and equitable. I believe in continuously improving how we work with data. Whether that’s through better governance, building tools, or supporting making informed data driven decisions. My portfolio is a collection of data visuals, blogs, and dashboards mostly built in R.

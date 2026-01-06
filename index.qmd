@@ -16,7 +16,7 @@ about:
 ---
 
 <div style="margin-top: 20vh;">
-I’m the Data Equity and Innovation Supervisor for [Paid Leave Oregon](https://paidleave.oregon.gov/), where I lead a team of data analysts in transforming complex data into insights with Tableau and R. 
+I’m a data analyst for the Oregon Employment Department, where I support the Contributions and Recovery team transform complex data into actionable insights with Tableau and R. 
 
 Outside of work, I explore data through various personal projects that incorporate analytics, visualization, and storytelling. Check out my blogs, dashboards, and talks to see more.
 </div>

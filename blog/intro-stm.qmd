@@ -1,0 +1,147 @@
+---
+title: "Introduction to Structured Topic Modeling"
+format:
+  html:
+    toc: true
+draft: true
+---
+
+> Hello Strategy Team,
+>
+> Thank you again for providing the data and the extra time to explore how we might apply topic modeling to our free-text survey questions. Attached is a PDF that walks through each part of the process, explains the approach, and highlights key definitions along with notes for future refinement.
+>
+> I’ll schedule time for us to discuss this in more depth in a couple of weeks. In the meantime, please review the attached PDF, which includes definitions and considerations for future iterations.
+
+# 0. Getting Started with R
+
+I won’t try to write a full introduction to R here. There are plenty of excellent tutorials online that go into more depth. But here’s just enough to help you follow along.
+
+R is a statistical programming language that’s incredibly powerful for working with data. Unlike Python, which is built around “objects,” R is based on “functions.” For our purposes, that means we’ll be calling functions (like f(x) = y) to transform our data rather than attaching properties to objects.
+
+Most of the work we’ll do here also relies on packages. Think of packages as toolkits you can add to R. To use one, you first need to install it with a base R function:
+
+`install.packages("package_name")`
+
+After that, you load it into your current session with:
+
+`library(package_name)`
+
+When in doubt about what a function does, you can type `?function_name` in the console to open the description page in the viewer. 
+
+Don’t worry if this feels new! In each section I’ll introduce the packages and functions we’re using, and explain what role they play in the analysis.
+
+# 1. Set Up & Clean Up
+
+Before running the model, it helps to pause and explore the data a little. We also want to set the data up in a way that makes it easier to manipulate later. To do that, let’s start by grounding ourselves in a few key terms and concepts.
+
+## 1.1. Key Definitions
+
+These definitions might feel elementary at first, but that’s the point. The more clearly you understand these simple ideas, the easier it will be to make sense of the more complex modeling steps later.
+
+* **Corpus**: the full collection of texts (all songs).
+
+* **Document**: one unit of text (a single song / a single survey response).
+
+* **Text**: the actual written content inside a document.
+
+* **Word**: single word, and smallest unit of analysis.
+
+* **Vocabulary**: the unique set of words across all documents.
+
+* **N-grams**: sequence of n words (1 = unigram, 2 = bigram, 3 = trigram).
+
+* **Covariates**: document-level attributes (album, release year, song characteristics).
+
+* **Topic**: a cluster of words that tend to appear together, representing a theme.
+
+
+## 1.2. Load Packages & Data 
+
+We’ll load a few packages that help us download the data, wrangle text, create n-grams, and do visualize quick checks. 
+
+**Packages**
+
+* Taylor: provides the `taylor_all_songs` dataset, which contains all the information we need for our topic model. 
+
+* Dplyr: makes it easier to filter, select, group, and summarize data.
+
+* Tidyr: helps reshape data, especially when working with nested list-columns like lyrics
+
+* Ggplot2: creates flexible, high-quality plots for exploring word frequencies and patterns.
+
+* Tidytext: 
+
+```{r}
+# install.packages("taylor")
+base::library("taylor")
+
+# install.packages("dplyr")
+base::library("dplyr")
+
+# install.packages("tidyr")
+base::library("tidyr")
+
+# install.packages("ggplot2)
+base::library("ggplot2")
+
+
+# install.packages("tidytext")
+library("tidytext")
+```
+
+To preview the data, we’ll use the base R function head() to look at the first few rows of taylor_all_songs. This gives us a sense of the columns we’ll work with. 
+
+
+```{r}
+utils::head(taylor_all_songs)
+```
+
+You’ll notice that the lyrics column isn’t stored as plain text but as a list. That’s because each song’s lyrics are made up of many lines, and the dataset preserves that line-by-line structure.
+
+Let’s take a closer look at one example. Using base R, we can pull out the lyrics for the first song in the dataset:
+
+```{r}
+taylor_all_songs$lyrics[[1]]
+```
+
+
+## 1.3. Define Data 
+
+
+
+### 1.3.1. Unigram
+
+This creates a dataset where each lyric line is split into single words (unigrams). Each row now represents one word tied back to its song.
+
+```{r}
+unigram <-
+    taylor::taylor_album_songs |>
+    tidyr::unnest(lyrics) |> 
+    tidytext::unnest_tokens(word, lyric)
+
+head(unigram)
+```
+
+### 1.3.2. Bigram 
+
+Here we split each lyric line into two-word combinations (bigrams). This is helpful for capturing phrases like “broken heart” that carry more meaning together than separately.
+
+```{r}
+bigram <-
+    taylor::taylor_album_songs |>
+    tidyr::unnest(lyrics) |> 
+    tidytext::unnest_tokens(word, lyric, token = "ngrams", n = 2)
+
+head(bigram)
+```
+
+### 1.3.3. Trigram 
+
+```{r}
+trigram <-
+    taylor::taylor_album_songs |>
+    tidyr::unnest(lyrics) |> 
+    tidytext::unnest_tokens(word, lyric, token = "ngrams", n = 3)
+
+head(trigram)
+```

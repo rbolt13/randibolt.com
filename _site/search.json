@@ -46,7 +46,7 @@
     "href": "index.html",
     "title": "Randi Bolt",
     "section": "",
-    "text": "I’m the Data Equity and Innovation Supervisor for Paid Leave Oregon, where I lead a team of data analysts in transforming complex data into insights with Tableau and R.\nOutside of work, I explore data through various personal projects that incorporate analytics, visualization, and storytelling. Check out my blogs, dashboards, and talks to see more."
+    "text": "I’m a data analyst for the Oregon Employment Department, where I support the Contributions and Recovery team transform complex data into actionable insights with Tableau and R.\nOutside of work, I explore data through various personal projects that incorporate analytics, visualization, and storytelling. Check out my blogs, dashboards, and talks to see more."
   },
   {
     "objectID": "pages/talks.html",
@@ -102,7 +102,7 @@
     "href": "about.html",
     "title": "About Me",
     "section": "",
-    "text": "I was born, raised, and currently reside in the City of Roses—Portland, Oregon. I have a passion for making data meaningful, accessible, and equitable. I believe in continuously improving how we work with data—whether that’s through better governance, building tools, or supporting making informed data driven decisions. My portfolio is a collection of data visuals, blogs, and dashboards mostly built in R.\nI currently work in state government, where I lead data efforts to improve reporting, governance, and innovation at Paid Leave Oregon. I also collaborate with data analysts and engineers across agencies to build better data systems and insights.\nThe best way to reach me professionally is through LinkedIn—just send me a message. Email also works, but since my inbox is over a decade old, messages sometimes get lost in the noise."
+    "text": "I was born, raised, and currently reside in the City of Roses—Portland, Oregon. I have a passion for making data meaningful, accessible, and equitable. I believe in continuously improving how we work with data. Whether that’s through better governance, building tools, or supporting making informed data driven decisions. My portfolio is a collection of data visuals, blogs, and dashboards mostly built in R."
   },
   {
     "objectID": "talks.html",
@@ -123,6 +123,20 @@
     "href": "blog.html",
     "title": "Randi Bolt",
     "section": "",
-    "text": "Importing Data\n\n\nHow to Read a CSV\n\n\n\nIntroduction to Base R\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Weekly Updates\n\n\n\n\n\n\nUpdates\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "blog/PawneeSurveyAnalysis.html",
+    "href": "blog/PawneeSurveyAnalysis.html",
+    "title": "PawneeSurveyAnalysis",
+    "section": "",
+    "text": "Here is a test ladyy."
+  },
+  {
+    "objectID": "blog/weekly-updates.html",
+    "href": "blog/weekly-updates.html",
+    "title": "Weekly Updates",
+    "section": "",
+    "text": "Each week I plan to post professional updates on what worked in the previous week, what I learned, what felt difficult, and what I’m focused on in the coming week.\n\nJanuary 5th, 2026\nLast week I spent time exploring a new, very large dataset and getting a feel for what is and isn’t possible. Along the way, it became clear that high level aggregations will require more granular exploration due to the different nuances and triggers across workflows. I also built an employee hierarchy dataset and dashboard to support this exploration that ultimately will not work for a larger build. While it was not a finished solution, it was a useful starting point. It surfaced assumptions I was making and served as a reminder that early exploratory analysis often raises more questions than answers, and that is just part of the process.\nIt has been strange adjusting from being a manager to an individual contributor. At times, I feel an internal pressure to join conversations or meetings about work I used to own or make decisions about. I am being intentional about setting boundaries and letting my manager or other analysts own their work, even when that feels uncomfortable or frustrating.\nThis week I have several important meetings that should help clarify my focus over the next few months. I want to stay focused, define a clear path forward for these large scale projects, and make intentional choices rather than reacting to outside pressure."
   }
 ]

@@ -1,0 +1,82 @@
+---
+title: "Tableau Cheat Sheet"
+date: "5-1-2026"
+format: html
+toc: true
+draft: true
+---
+
+I use Tableau at OED to explore data, build dashboards, and share analysis. This post is my personal living Tableau cheat sheet.
+
+# Dates
+
+## Default Date Calculations 
+
+These are usually the first calculations I create in a new dashboard. 
+
+### Default Start Date
+
+Generally speaking I like to show what looks like the last six months as the default start date in the view. To do this I truncate today's month to the first, and then add -5 months to that. This will show five full months in the view, and then the partial current month as well. 
+
+```{r}
+#| eval: false
+
+# Default Start Date
+DATETRUNC('month', DATEADD('month', -5, TODAY()))
+```
+
+### Default End Date
+
+Since the leaders I build dashboards for are usually pulling weekly values, I don’t want the default end date to be yesterday, even when that is the most current date available. Using yesterday can include a partial week, which makes weekly totals harder to compare.
+
+Instead, I default the end date to the start of the current week. This creates more uniform reporting, gives leaders the same values on Monday that they would see on Friday, and saves me from explaining why someone’s numbers look different just because their date filter changed.
+
+To do this I use `DATEPART()` to find out what day of the week today is, and then subtract that from today's date. 
+
+```{r}
+#| eval: false
+# Default End Date
+DATEADD('day', 1 - DATEPART('weekday', TODAY()), TODAY())
+```
+
+## Change from Previous Week
+
+I use this a lot on my overview pages to shows how much a value has gone up or down from the previous week. 
+
+Coming soon...
+
+
+```{r}
+#| eval: false
+```
+
+
+# Dynamic Zone Visibility (DZV)
+
+To control what is visible in a dashboard container, first create a parameter for the views you want users to toggle between. Then create one Boolean calculation for each option. On the dashboard, select the container or sheet you want to show/hide and use that calculation for Dynamic Zone Visibility.
+
+
+```{r}
+#| eval: false
+# View Bar 
+[View] = "Bar"
+# View Table
+[View] = "Table"
+```
+
+# KPI Flare
+
+# Defining Color Palettes (2025 and older)
+
+Preferences.tps file
+
+(find article, and maybe copy OED and PL colors?)
+
+# Nested Parameters 
+
+Coming soon...
+
+
+# Common LODs 
+
+(should probably not be doing this as much as I do but we will get there)

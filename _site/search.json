@@ -123,7 +123,7 @@
     "href": "blog.html",
     "title": "Randi Bolt",
     "section": "",
-    "text": "Weekly Updates\n\n\n\n\n\n\nUpdates\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Text Mining, Sentiment Analysis, & Topic Modeling\n\n\n\n\n\n\nR\n\n\nText Mining\n\n\nTopic Modeling\n\n\nSentiment Analysis\n\n\n\n\n\n\n\n\n\nJun 3, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nWeekly Updates\n\n\n\n\n\n\nUpdates\n\n\n\n\n\n\n\n\n\nMay 31, 2026\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/PawneeSurveyAnalysis.html",
@@ -137,6 +137,55 @@
     "href": "blog/weekly-updates.html",
     "title": "Weekly Updates",
     "section": "",
-    "text": "Each week I plan to post professional updates on what worked in the previous week, what I learned, what felt difficult, and what I’m focused on in the coming week.\n\nJanuary 5th, 2026\nLast week I spent time exploring a new, very large dataset and getting a feel for what is and isn’t possible. Along the way, it became clear that high level aggregations will require more granular exploration due to the different nuances and triggers across workflows. I also built an employee hierarchy dataset and dashboard to support this exploration that ultimately will not work for a larger build. While it was not a finished solution, it was a useful starting point. It surfaced assumptions I was making and served as a reminder that early exploratory analysis often raises more questions than answers, and that is just part of the process.\nIt has been strange adjusting from being a manager to an individual contributor. At times, I feel an internal pressure to join conversations or meetings about work I used to own or make decisions about. I am being intentional about setting boundaries and letting my manager or other analysts own their work, even when that feels uncomfortable or frustrating.\nThis week I have several important meetings that should help clarify my focus over the next few months. I want to stay focused, define a clear path forward for these large scale projects, and make intentional choices rather than reacting to outside pressure."
+    "text": "Each week I plan to post professional updates on what worked in the previous week, what I learned, what felt difficult, and what I’m focused on in the coming week.\n\nMay 31st, 2026\nFull moon tonight, and I have my blog open to publish some notes for other posts. I didn’t really stick to this weekly updates thing did I? Sorry about it. Guess I’m too busy collecting my roses being a data rock star. 🌹😘 ✨\nLast week I did some data validation that I feel very confident in, a fun little ad-hoc analysis around scheduling, and I have two dashboards in test ready to publish this week. OMG data queen. Save some analysis for the rest of us, will ya!\nThere is so much trust and confidence in me from leaders and collaborators that I’ve started researching forecasting models for time series data. The first one is Prophet which I used many years ago for a blog post related to stocks. The second is ETS (Error, Trend, Seasonality), which is also commonly used for forecasting, but I am hoping to use R for this (instead of excel). My initial goal is to compare different forecasting methods to explore trends in phone volume, but I think this knowledge could be applied to so much that we do here. Why not add another jewel to my crown?\n\n\nJanuary 5th, 2026\nLast week I spent time exploring a new, very large dataset and getting a feel for what is and isn’t possible. Along the way, it became clear that high level aggregations will require more granular exploration due to the different nuances and triggers across workflows. I also built an employee hierarchy dataset and dashboard to support this exploration that ultimately will not work for a larger build. While it was not a finished solution, it was a useful starting point. It surfaced assumptions I was making and served as a reminder that early exploratory analysis often raises more questions than answers, and that is just part of the process.\nIt has been strange adjusting from being a manager to an individual contributor. At times, I feel an internal pressure to join conversations or meetings about work I used to own or make decisions about. I am being intentional about setting boundaries and letting my manager or other analysts own their work, even when that feels uncomfortable or frustrating.\nThis week I have several important meetings that should help clarify my focus over the next few months. I want to stay focused, define a clear path forward for these large scale projects, and make intentional choices rather than reacting to outside pressure."
+  },
+  {
+    "objectID": "blog/text-mining-notes.html",
+    "href": "blog/text-mining-notes.html",
+    "title": "Text Mining, Sentiment Analysis, & Topic Modeling",
+    "section": "",
+    "text": "These are my notes related to text mining, sentiment analysis, and topic modeling."
+  },
+  {
+    "objectID": "blog/text-mining-notes.html#word-textw",
+    "href": "blog/text-mining-notes.html#word-textw",
+    "title": "Text Mining, Topic Modeling, & Sentiment Analysis",
+    "section": "Word (\\(\\text{w}\\))",
+    "text": "Word (\\(\\text{w}\\))"
+  },
+  {
+    "objectID": "blog/text-mining-notes.html#word-w",
+    "href": "blog/text-mining-notes.html#word-w",
+    "title": "Text Mining, Topic Modeling, & Sentiment Analysis",
+    "section": "Word (\\(w\\))",
+    "text": "Word (\\(w\\))"
+  },
+  {
+    "objectID": "blog/text-mining-notes.html#definitions",
+    "href": "blog/text-mining-notes.html#definitions",
+    "title": "Text Mining, Sentiment Analysis, & Topic Modeling",
+    "section": "Definitions",
+    "text": "Definitions\n(\\(w\\)) Word: a single word. This is the smallest unit of analysis.\nText: written content (aka the words) within a single document.\n(\\(d\\)) Document: a unit a of text.\nCorpus: the full collection of texts (documents).\nStop Words: common words that don’t add much meaning for text analysis.\n(\\(y\\)) Covariates: documents attributes.\n(\\(v\\)) Vocabulary: a unique set of words from a corpus.\nN-Grams: sequence of words we can use to look for corpus themes such as uni-gram (one word), bi-gram (two words), and tri-gram (three words).\nSentiment: emotional tone or attitude expressed in the text."
+  },
+  {
+    "objectID": "blog/text-mining-notes.html#definitions-1",
+    "href": "blog/text-mining-notes.html#definitions-1",
+    "title": "Text Mining, Sentiment Analysis, & Topic Modeling",
+    "section": "Definitions",
+    "text": "Definitions\nTopics: groups of words that tend to appear together and represent possible themes.\n(\\(k\\)) Number of Topics: the number of themes your model should look for, where each topic is a probability distribution over the words. Higher K can capture more nuance but risks redundancy and noise.\nExclusivity: is how unique a topic’s top words are to that topic. Higher exclusivity means the words are more distinct, but topics can also get more fragmented. This often trades off with coherence.\nSemantic Coherence: is how frequent a topic’s top words co-occur within a document, and tell us how closely related topics are. This tends to decrease as \\(k\\) grows and topics get thinner.\nHeld-Out: predicts the fit on held out words or unseen data. Higher is better, and you want to look for when K levels out (the elbow).\nResiduals: this shows the unexplained variance, and is the difference between predicted and actual values. High residuals suggests missing topics or vocabulary issues. This usually drops fast with K, and then should flatten out."
+  },
+  {
+    "objectID": "blog/text-mining-notes.html#considerations",
+    "href": "blog/text-mining-notes.html#considerations",
+    "title": "Text Mining, Sentiment Analysis, & Topic Modeling",
+    "section": "Considerations",
+    "text": "Considerations\nWhen choosing \\(k\\), the main things to consider are:\n\nWhere does held-out mostly plateau?\nWhere do residuals start to flatten out?\nWhere are exclusivity and coherence both reasonable?"
+  },
+  {
+    "objectID": "blog/text-mining-notes.html#definitions-2",
+    "href": "blog/text-mining-notes.html#definitions-2",
+    "title": "Text Mining, Sentiment Analysis, & Topic Modeling",
+    "section": "Definitions",
+    "text": "Definitions\n\n(\\(\\beta\\)) Distribution of Words in a Topic\nThe vocabulary (mix of words) that defines a topic.\n(How likely a word occurs in a topic.)\n\\[\\beta_{d,k}=P(w_v|k,y_d)\\]\nThe word distribution for topic \\(k\\) is the probability of vocabulary word \\(w_v\\), given topic \\(k\\) and the document-level covariates \\(y_d\\).\n\n\n(\\(z_{d,n}\\)) Topic Assignment (per word\nThe topic assigned to a specific word in a specific document.\n(Which topic generated a specific word.)\n\\[z_{d,n} \\in \\{1, \\ldots, K\\}\\]\nFor the \\(n\\)th word in document \\(d\\), which topic \\(k\\) generated that word.\n\n\n(\\(\\theta\\)) Distribution of Topic sin a Document\nThe mix of topics a document covers.\n(Document d is 70% topic 1 and 30% topic 2. )\n\\[\\theta_{d,k} = P(z = k \\mid d)\\]\nFor document \\(d\\), \\(\\theta_{d,k}\\) is the probability that a word in that document belongs to topic \\(k\\).\n\n\n(\\(y_d\\)) Covariate Effect\nDocument-level information that can change how a topic is expressed in words, and helps explain why the same topic might use different words in different documents.\n\n\nLatent Variables\nHidden variables that are a part of the model that we do not directly observe, but want to infer."
   }
 ]

@@ -1,6 +1,7 @@
 ---
 title: "Weekly Updates"
 categories: ["Updates"]
+date: "5-31-2026"
 draft: false
 format:
   html:
@@ -8,6 +9,14 @@ format:
 ---
 
 Each week I plan to post professional updates on what worked in the previous week, what I learned, what felt difficult, and what I’m focused on in the coming week.
+
+# May 31st, 2026
+
+Full moon tonight, and I have my blog open to publish some notes for other posts. I didn't really stick to this weekly updates thing did I? Sorry about it. Guess I'm too busy collecting my roses being a data rock star. 🌹😘 ✨
+
+Last week I did some data validation that I feel very confident in, a fun little ad-hoc analysis around scheduling, and I have two dashboards in test ready to publish this week. OMG data queen. Save some analysis for the rest of us, will ya!
+
+There is so much trust and confidence in me from leaders and collaborators that I've started researching forecasting models for time series data. The first one is `Prophet` which I used many years ago for a blog post related to stocks. The second is `ETS` (Error, Trend, Seasonality), which is also commonly used for forecasting, but I am hoping to use R for this (instead of excel). My initial goal is to compare different forecasting methods to explore trends in phone volume, but I think this knowledge could be applied to so much that we do here. Why not add another jewel to my crown?
 
 # January 5th, 2026
 

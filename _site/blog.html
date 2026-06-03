@@ -90,9 +90,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -204,7 +204,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Updates">Updates <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="R">R <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Sentiment Analysis">Sentiment Analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Text Mining">Text Mining <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Topic Modeling">Topic Modeling <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Updates">Updates <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -217,7 +217,46 @@ window.Quarto = {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Updates" data-listing-file-modified-sort="1767665702266" data-listing-reading-time-sort="2" data-listing-word-count-sort="238">
+<div class="quarto-post image-right" data-index="0" data-categories="R,Text Mining,Topic Modeling,Sentiment Analysis" data-listing-date-sort="1780470000000" data-listing-file-modified-sort="1780527641007" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="495">
+<div class="thumbnail">
+<p><a href="./blog/text-mining-notes.html" class="no-external"></a></p><a href="./blog/text-mining-notes.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./blog/text-mining-notes.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./blog/text-mining-notes.html" class="no-external">Text Mining, Sentiment Analysis, &amp; Topic Modeling</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./blog/text-mining-notes.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
+R
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Text Mining'); return false;">
+Text Mining
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Topic Modeling'); return false;">
+Topic Modeling
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Sentiment Analysis'); return false;">
+Sentiment Analysis
+</div>
+</div>
+<div class="listing-description">
+<a href="./blog/text-mining-notes.html" class="no-external">These are my notes related to text mining, sentiment analysis, and topic modeling.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./blog/text-mining-notes.html" class="no-external">
+<div class="listing-date">
+Jun 3, 2026
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="Updates" data-listing-date-sort="1780210800000" data-listing-file-modified-sort="1780527677182" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="432">
 <div class="thumbnail">
 <p><a href="./blog/weekly-updates.html" class="no-external"></a></p><a href="./blog/weekly-updates.html" class="no-external">
 <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
@@ -240,7 +279,10 @@ Updates
 </div>
 </div>
 <div class="metadata">
-<p><a href="./blog/weekly-updates.html" class="no-external"></a></p><a href="./blog/weekly-updates.html" class="no-external">
+<a href="./blog/weekly-updates.html" class="no-external">
+<div class="listing-date">
+May 31, 2026
+</div>
 </a>
 </div>
 </div>

@@ -114,10 +114,9 @@ a.about-link:hover, span.about-link-text:hover {
 .talk-card {
   margin-top: clamp(2.5rem, 6vw, 4.5rem);
   padding: clamp(1.5rem, 4vw, 2.5rem);
-  border: 1px solid rgba($col3, .18);
-  border-top: 4px solid $accent-color;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, .45);
+  border: 0;
+  border-radius: 0;
+  background: mix($accent-color, $col1, 18%);
 }
 .landing-eyebrow {
   font-size: .8rem;
@@ -128,6 +127,7 @@ a.about-link:hover, span.about-link-text:hover {
 }
 .landing-feature h2,
 .talk-card h2 {
+  border-bottom: 0;
   font-size: clamp(1.65rem, 3vw, 2.15rem);
   line-height: 1.2;
   margin: 0 0 .75rem;
@@ -278,7 +278,7 @@ a.about-link:hover, span.about-link-text:hover {
   gap: .5rem 1rem;
   padding-bottom: .75rem;
   margin-bottom: 1.25rem;
-  border-bottom: 1px solid rgba($col3, .18);
+  border-bottom: 0;
 }
 .talk-card-header > section {
   display: contents;

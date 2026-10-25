@@ -1,22 +1,64 @@
 ---
+title: "Talks"
 toc: true
 comments: false
 ---
 
-# 📣 [Code to Content](https://github.com/rbolt13/2024-PDX_RUG-Code_to_Content) (June 2024)
+::: {.talk-card}
 
-Used 4 years of hands-on experience creating technical blogs to compile a short 6 minute presentation to guide and encourage R users to create and share their expertise and journeys online. 
+## Making Sense of Messy Data
 
-::: {style="text-align: center;"}
-<iframe width="560" height="315" src="https://www.youtube.com/embed/soFDbl02svY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+::: {.talk-event}
+Presented at Cascadia R Conf · June 2026
 :::
 
-* Presented at [PDX R User Group](https://www.meetup.com/login/?returnUri=https%3A%2F%2Fwww.meetup.com%2Fportland-r-user-group%2Fevents%2F298359537%2F) (February 2024), and [Cascadia R Conference](https://cascadiarconf.com/) (June 2024). 
+::: {.talk-description}
+Learn a practical workflow for text mining in R, from cleaning open-ended responses to sentiment analysis and topic modeling. Motivated by the challenges of analyzing survey responses in government work, this talk uses movie reviews to demonstrate the methods and explain the tradeoffs in choosing a model.
+:::
 
-* Created accessible slides with Quarto, and hosted on Github. 
+::: {.talk-resources}
+[View slides](https://making-sense-talk.netlify.app/) · [Read related notes](blog/text-mining-notes.html)
+:::
 
-# 📣 [Oregon Grown](https://github.com/rbolt13/Oregon-Grown) (April 2021)
+:::
 
-Applied mapping and data analytics techniques to investigate dispensary diversity in Oregon November 2020 where I discovered that more than half of dispensaries in Oregon are owned by chains, and about 10% of dispensaries in Portland’s Urban Growth Boundary are owned by one chain, Groundworks. 
+::: {.talk-card}
 
-* Created an abstract that was accepted for [GIS in Action 2021](https://gisinaction2021.sched.com/directory/speakers), and presented virtually April 2021. 
+## Code to Content
+
+::: {.talk-event}
+Presented at [PDX R User Group](https://www.meetup.com/portland-r-user-group/events/298359537/) · February 2024  
+Presented at [Cascadia R Conference](https://cascadiarconf.com/) · June 2024
+:::
+
+::: {.talk-description}
+Learn how a technical blog can help you share your R projects, explain what you’re learning, and build a record of your work. This six-minute talk draws on four years of blogging experience, with slides created using Quarto.
+:::
+
+::: {.talk-resources}
+[View source and slides](https://github.com/rbolt13/2024-PDX_RUG-Code_to_Content) · [Watch recording](https://www.youtube.com/watch?v=soFDbl02svY)
+:::
+
+::: {.talk-video}
+<iframe src="https://www.youtube.com/embed/soFDbl02svY" title="Code to Content presentation recording" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+:::
+
+:::
+
+::: {.talk-card}
+
+## Oregon Grown
+
+::: {.talk-event}
+Presented virtually at [GIS in Action](https://gisinaction2021.sched.com/directory/speakers) · April 2021
+:::
+
+::: {.talk-description}
+See how mapping and spatial analysis can reveal patterns in business ownership. Using Oregon dispensary data from November 2020, this talk examines chain ownership statewide and within Portland’s Urban Growth Boundary.
+:::
+
+::: {.talk-resources}
+[View project and source](https://github.com/rbolt13/Oregon-Grown)
+:::
+
+:::

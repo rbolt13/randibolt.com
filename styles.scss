@@ -110,7 +110,8 @@ a.about-link:hover, span.about-link-text:hover {
   outline: 3px solid $col3;
   outline-offset: 5px;
 }
-.landing-feature {
+.landing-feature,
+.talk-card {
   margin-top: clamp(2.5rem, 6vw, 4.5rem);
   padding: clamp(1.5rem, 4vw, 2.5rem);
   border: 1px solid rgba($col3, .18);
@@ -125,16 +126,19 @@ a.about-link:hover, span.about-link-text:hover {
   text-transform: uppercase;
   margin: 0 0 .75rem;
 }
-.landing-feature h2 {
+.landing-feature h2,
+.talk-card h2 {
   font-size: clamp(1.65rem, 3vw, 2.15rem);
   line-height: 1.2;
   margin: 0 0 .75rem;
 }
-.landing-event {
+.landing-event,
+.talk-event {
   font-size: .95rem;
   margin-bottom: 1.25rem;
 }
-.landing-description {
+.landing-description,
+.talk-description {
   max-width: 760px;
   line-height: 1.7;
   margin-bottom: 1.5rem;
@@ -166,6 +170,33 @@ a.about-link:hover, span.about-link-text:hover {
 }
 .navbar .navbar-toggler-icon {
   filter: brightness(0) invert(1);
+}
+
+// Talks page
+.talk-card {
+  margin-top: 2rem;
+}
+.talk-card h2 a {
+  text-decoration: none;
+}
+.talk-resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem 1.5rem;
+  margin: 1.25rem 0 0;
+}
+.talk-video {
+  width: 100%;
+  max-width: 760px;
+  aspect-ratio: 16 / 9;
+  margin-top: 1.5rem;
+}
+.talk-video iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 8px;
 }
 
 /*-- scss:uses --*/

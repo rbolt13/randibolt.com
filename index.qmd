@@ -16,7 +16,5 @@ about:
 ---
 
 <div style="margin-top: 20vh;">
-I’m a data analyst for the Oregon Employment Department, where I support the Contributions and Recovery team transform complex data into actionable insights with Tableau and R. 
-
-Outside of work, I explore data through various personal projects that incorporate analytics, visualization, and storytelling. Check out my blogs, dashboards, and talks to see more.
+I’m Randi Bolt, a Data Analytics Lead for the Oregon Employment Department. I use technical analysis to bring clarity to complex, high-stakes decisions. My projects and talks show how R, statistics, and visualization can make data and its limitations easier to understand.
 </div>

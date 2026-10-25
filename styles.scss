@@ -266,4 +266,19 @@ a.about-link:hover, span.about-link-text:hover {
   }
 }
 
+// Center the page title across the full-width title banner
+.talks-page .quarto-title-banner {
+  background: $col1;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
+.talks-page .quarto-title-banner .quarto-title,
+.talks-page .quarto-title-banner .title {
+  text-align: center;
+  width: 100%;
+}
+.talk-card > h2 {
+  margin-bottom: 1.5rem;
+}
+
 /*-- scss:uses --*/

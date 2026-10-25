@@ -236,7 +236,7 @@ a.about-link:hover, span.about-link-text:hover {
 }
 .talk-card-grid {
   display: grid;
-  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
   gap: 1.75rem;
   align-items: start;
 }
@@ -249,7 +249,7 @@ a.about-link:hover, span.about-link-text:hover {
   margin-top: 0;
 }
 .talk-media .talk-thumbnail img {
-  max-height: 230px;
+  height: auto;
   object-fit: contain;
 }
 .talk-media iframe {
@@ -262,7 +262,7 @@ a.about-link:hover, span.about-link-text:hover {
   }
   .talk-media {
     width: 100%;
-    max-width: 280px;
+    max-width: none;
   }
 }
 
@@ -279,6 +279,11 @@ a.about-link:hover, span.about-link-text:hover {
 }
 .talk-card > h2 {
   margin-bottom: 1.5rem;
+}
+
+.talks-heading {
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 /*-- scss:uses --*/

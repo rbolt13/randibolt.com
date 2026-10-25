@@ -6,93 +6,15 @@ page-layout: full
 ---
 
 ```{=html}
-<style>
-.landing {
-  max-width: 1040px;
-  margin: 0 auto;
-  padding: clamp(2rem, 5vw, 4.5rem) 1rem 4rem;
-}
-.landing-hero {
-  display: grid;
-  grid-template-columns: 200px minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 4rem);
-  align-items: center;
-}
-.landing-portrait {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-.landing h1 {
-  font-size: clamp(2.5rem, 5vw, 3.75rem);
-  line-height: 1.1;
-  margin: 0 0 1.25rem;
-}
-.landing-intro {
-  max-width: 650px;
-  font-size: 1.15rem;
-  line-height: 1.7;
-  margin-bottom: 1.5rem;
-}
-.landing-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .75rem 1.5rem;
-}
-.landing a {
-  text-decoration: underline;
-  text-underline-offset: .22em;
-}
-.landing a:focus-visible {
-  outline: 3px solid #2D93AD;
-  outline-offset: 5px;
-}
-.landing-feature {
-  margin-top: clamp(2.5rem, 6vw, 4.5rem);
-  padding: clamp(1.5rem, 4vw, 2.5rem);
-  border: 1px solid rgba(48, 50, 61, .18);
-  border-top: 4px solid #2D93AD;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, .45);
-}
-.landing-eyebrow {
-  font-size: .8rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  margin: 0 0 .75rem;
-}
-.landing-feature h2 {
-  font-size: clamp(1.65rem, 3vw, 2.15rem);
-  line-height: 1.2;
-  margin: 0 0 .75rem;
-}
-.landing-event {
-  font-size: .95rem;
-  margin-bottom: 1.25rem;
-}
-.landing-description {
-  max-width: 760px;
-  line-height: 1.7;
-  margin-bottom: 1.5rem;
-}
-@media (max-width: 640px) {
-  .landing-hero { grid-template-columns: 1fr; gap: 1.5rem; }
-  .landing-portrait { width: 140px; height: 140px; }
-}
-</style>
-
 <div class="landing">
-  <section class="landing-hero" aria-labelledby="landing-name">
+  <section class="landing-hero" aria-label="Introduction">
     <img class="landing-portrait" src="img/profile.png" alt="Portrait of Randi Bolt" width="200" height="200">
     <div>
-      <h1 id="landing-name">Randi Bolt</h1>
-      <p class="landing-intro">I’m Randi Bolt, a Data Analytics Lead for the Oregon Employment Department. I use technical analysis to bring clarity to complex, high-stakes decisions. My projects and talks show how R, statistics, and visualization can make data and its limitations easier to understand.</p>
+      <p class="landing-intro">I’m a Data Analytics Lead for the Oregon Employment Department. I use technical analysis to bring clarity to complex, high-stakes decisions. My projects and talks show how R, statistics, and visualization can make data and its limitations easier to understand.</p>
       <nav class="landing-links" aria-label="Contact and profiles">
-        <a href="mailto:randibolt93@gmail.com">Email</a>
-        <a href="https://github.com/rbolt13/">GitHub</a>
-        <a href="https://www.linkedin.com/in/randi-bolt/">LinkedIn</a>
+        <a href="mailto:randibolt93@gmail.com"><i class="bi bi-envelope" aria-hidden="true"></i>Email</a>
+        <a href="https://github.com/rbolt13/"><i class="bi bi-github" aria-hidden="true"></i>GitHub</a>
+        <a href="https://www.linkedin.com/in/randi-bolt/"><i class="bi bi-linkedin" aria-hidden="true"></i>LinkedIn</a>
       </nav>
     </div>
   </section>

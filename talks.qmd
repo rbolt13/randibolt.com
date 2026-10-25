@@ -5,7 +5,11 @@ toc: true
 comments: false
 ---
 
-# Talks {.talks-heading .unnumbered .unlisted}
+<center>
+
+# Talks {.unnumbered .unlisted}
+
+</center>
 
 
 ::::::: {.talk-card}
@@ -18,6 +22,12 @@ comments: false
 
 :::::: {.talk-card-grid}
 
+::::: {.talk-media}
+::: {.talk-video}
+<iframe src="https://making-sense-talk.netlify.app/#/title-slide" title="Making Sense of Messy Data slides" loading="lazy" allowfullscreen></iframe>
+:::
+:::::
+
 ::::: {.talk-content}
 ::: {.talk-description}
 Learn a practical workflow for text mining in R, from cleaning open-ended responses to sentiment analysis and topic modeling. Motivated by the challenges of analyzing survey responses in government work, this talk uses movie reviews to demonstrate the methods and explain the tradeoffs in choosing a model.
@@ -25,12 +35,6 @@ Learn a practical workflow for text mining in R, from cleaning open-ended respon
 
 ::: {.talk-resources}
 [View slides](https://making-sense-talk.netlify.app/) · [Read related notes](blog/text-mining-notes.html)
-:::
-:::::
-
-::::: {.talk-media}
-::: {.talk-video}
-<iframe src="https://making-sense-talk.netlify.app/#/title-slide" title="Making Sense of Messy Data slides" loading="lazy" allowfullscreen></iframe>
 :::
 :::::
 
@@ -52,6 +56,12 @@ Presented at Cascadia R Conf · June 2026
 
 :::::: {.talk-card-grid}
 
+::::: {.talk-media}
+::: {.talk-video}
+<iframe src="https://www.youtube.com/embed/soFDbl02svY" title="Code to Content presentation recording" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+:::
+:::::
+
 ::::: {.talk-content}
 ::: {.talk-description}
 Learn how a technical blog can help you share your R projects, explain what you’re learning, and build a record of your work. This six-minute talk draws on four years of blogging experience, with slides created using Quarto.
@@ -59,12 +69,6 @@ Learn how a technical blog can help you share your R projects, explain what you�
 
 ::: {.talk-resources}
 [View source and slides](https://github.com/rbolt13/2024-PDX_RUG-Code_to_Content) · [Watch recording](https://www.youtube.com/watch?v=soFDbl02svY)
-:::
-:::::
-
-::::: {.talk-media}
-::: {.talk-video}
-<iframe src="https://www.youtube.com/embed/soFDbl02svY" title="Code to Content presentation recording" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 :::
 :::::
 
@@ -87,6 +91,12 @@ Presented at [Cascadia R Conference](https://cascadiarconf.com/) · June 2024
 
 :::::: {.talk-card-grid}
 
+::::: {.talk-media}
+::: {.talk-thumbnail}
+[![Map from the Oregon Grown project](https://raw.githubusercontent.com/rbolt13/Oregon-Grown/gh-pages/assets/UGB.png)](https://rbolt13.github.io/Oregon-Grown/)
+:::
+:::::
+
 ::::: {.talk-content}
 ::: {.talk-description}
 See how mapping and spatial analysis can reveal patterns in business ownership. Using Oregon dispensary data from November 2020, this talk examines chain ownership statewide and within Portland’s Urban Growth Boundary.
@@ -94,12 +104,6 @@ See how mapping and spatial analysis can reveal patterns in business ownership. 
 
 ::: {.talk-resources}
 [View project and source](https://github.com/rbolt13/Oregon-Grown)
-:::
-:::::
-
-::::: {.talk-media}
-::: {.talk-thumbnail}
-[![Map from the Oregon Grown project](https://raw.githubusercontent.com/rbolt13/Oregon-Grown/gh-pages/assets/UGB.png)](https://rbolt13.github.io/Oregon-Grown/)
 :::
 :::::
 

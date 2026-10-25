@@ -2,14 +2,12 @@
 pagetitle: "Presentations | Randi Bolt"
 body-classes: talks-page
 toc: true
+toc-depth: 2
+toc-location: right
 comments: false
 ---
 
-<center>
-
-# Talks {.unnumbered .unlisted}
-
-</center>
+<center><h1>Talks</h1></center>
 
 
 ::::::: {.talk-card}

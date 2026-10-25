@@ -230,4 +230,40 @@ a.about-link:hover, span.about-link-text:hover {
   margin-bottom: 0;
 }
 
+// Compact talk previews alongside the descriptions
+.talks-page #title-block-header .title {
+  text-align: center;
+}
+.talk-card-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+  gap: 1.75rem;
+  align-items: start;
+}
+.talk-media,
+.talk-content {
+  min-width: 0;
+}
+.talk-media .talk-video,
+.talk-media .talk-thumbnail {
+  margin-top: 0;
+}
+.talk-media .talk-thumbnail img {
+  max-height: 230px;
+  object-fit: contain;
+}
+.talk-media iframe {
+  min-height: 0;
+}
+@media (max-width: 720px) {
+  .talk-card-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .talk-media {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
 /*-- scss:uses --*/

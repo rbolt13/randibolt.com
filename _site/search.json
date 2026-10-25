@@ -107,9 +107,9 @@
   {
     "objectID": "talks.html",
     "href": "talks.html",
-    "title": "📣 Code to Content (June 2024)",
+    "title": "Talks",
     "section": "",
-    "text": "📣 Code to Content (June 2024)\nUsed 4 years of hands-on experience creating technical blogs to compile a short 6 minute presentation to guide and encourage R users to create and share their expertise and journeys online.\n\n\n\n\n\nPresented at PDX R User Group (February 2024), and Cascadia R Conference (June 2024).\nCreated accessible slides with Quarto, and hosted on Github.\n\n\n\n📣 Oregon Grown (April 2021)\nApplied mapping and data analytics techniques to investigate dispensary diversity in Oregon November 2020 where I discovered that more than half of dispensaries in Oregon are owned by chains, and about 10% of dispensaries in Portland’s Urban Growth Boundary are owned by one chain, Groundworks.\n\nCreated an abstract that was accepted for GIS in Action 2021, and presented virtually April 2021."
+    "text": "R Text mining Topic modeling\n\n\n\n\nLearn a practical workflow for text mining in R, from cleaning open-ended responses to sentiment analysis and topic modeling. Motivated by the challenges of analyzing survey responses in government work, this talk uses movie reviews to demonstrate the methods and explain the tradeoffs in choosing a model.\n\n\nView slides · Read related notes\n\n\n\n\n\n\n\n\n\n\nPresented at Cascadia R Conf · June 2026\n\n\n\n\n\nR Quarto Technical communication\n\n\n\n\nLearn how a technical blog can help you share your R projects, explain what you’re learning, and build a record of your work. This six-minute talk draws on four years of blogging experience, with slides created using Quarto.\n\n\nView source and slides · Watch recording\n\n\n\n\n\n\n\n\n\n\nPresented at PDX R User Group · February 2024\nPresented at Cascadia R Conference · June 2024\n\n\n\n\n\nGIS Spatial analysis\n\n\n\n\nSee how mapping and spatial analysis can reveal patterns in business ownership. Using Oregon dispensary data from November 2020, this talk examines chain ownership statewide and within Portland’s Urban Growth Boundary.\n\n\nView project and source\n\n\n\n\n\n\n\nMap from the Oregon Grown project\n\n\n\n\n\n\nPresented virtually at GIS in Action · April 2021"
   },
   {
     "objectID": "blogs.html",
@@ -236,5 +236,26 @@
     "title": "Randi Bolt",
     "section": "",
     "text": "Presented at Cascadia R Conf · June 2026\nA practical introduction to text mining in R, motivated by the challenge of analyzing thousands of open-ended survey responses in government work, covering sentiment analysis, topic modeling, and the tradeoffs in choosing a model.\nView slides · Read related notes"
+  },
+  {
+    "objectID": "talks.html#making-sense-of-messy-data",
+    "href": "talks.html#making-sense-of-messy-data",
+    "title": "Talks",
+    "section": "Making Sense of Messy Data",
+    "text": "Making Sense of Messy Data\n\nR Text mining Topic modeling"
+  },
+  {
+    "objectID": "talks.html#code-to-content",
+    "href": "talks.html#code-to-content",
+    "title": "Talks",
+    "section": "Code to Content",
+    "text": "Code to Content\n\nR Quarto Technical communication"
+  },
+  {
+    "objectID": "talks.html#oregon-grown",
+    "href": "talks.html#oregon-grown",
+    "title": "Talks",
+    "section": "Oregon Grown",
+    "text": "Oregon Grown\n\nGIS Spatial analysis"
   }
 ]

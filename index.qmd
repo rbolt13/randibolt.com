@@ -1,7 +1,5 @@
 ---
-title: "Randi Bolt"
 pagetitle: "Randi Bolt"
-title-block-style: none
 page-layout: full
 ---
 
@@ -10,7 +8,7 @@ page-layout: full
   <section class="landing-hero" aria-label="Introduction">
     <img class="landing-portrait" src="img/profile.png" alt="Portrait of Randi Bolt" width="200" height="200">
     <div>
-      <p class="landing-intro">I’m a Data Analytics Lead for the Oregon Employment Department. I use technical analysis to bring clarity to complex, high-stakes decisions. My projects and talks show how R, statistics, and visualization can make data and its limitations easier to understand.</p>
+      <p class="landing-intro">I’m Randi Bolt, a Data Analytics Lead for the Oregon Employment Department. I use technical analysis to bring clarity to complex, high-stakes decisions. My projects and talks show how R, statistics, and visualization can make data and its limitations easier to understand.</p>
       <nav class="landing-links" aria-label="Contact and profiles">
         <a href="mailto:randibolt93@gmail.com"><i class="bi bi-envelope" aria-hidden="true"></i>Email</a>
         <a href="https://github.com/rbolt13/"><i class="bi bi-github" aria-hidden="true"></i>GitHub</a>

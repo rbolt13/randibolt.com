@@ -3,7 +3,7 @@ project:
 
 website:
   title: "Randi Bolt"
-  favicon: img/2025-bolt.png
+  favicon: img/petrol-logo.png
   google-analytics: "G-0Z8G9C0SFQ"
   navbar:
     right:

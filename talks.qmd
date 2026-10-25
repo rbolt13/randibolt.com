@@ -14,11 +14,15 @@ comments: false
 
 ::::::: {.talk-card}
 
+:::::: {.talk-card-header}
+
 ## Making Sense of Messy Data
 
 ::: {.talk-tags aria-label="Topics"}
 [R]{.talk-tag} [Text mining]{.talk-tag} [Topic modeling]{.talk-tag}
 :::
+
+::::::
 
 :::::: {.talk-card-grid}
 
@@ -48,11 +52,15 @@ Presented at Cascadia R Conf · June 2026
 
 ::::::: {.talk-card}
 
+:::::: {.talk-card-header}
+
 ## Code to Content
 
 ::: {.talk-tags aria-label="Topics"}
 [R]{.talk-tag} [Quarto]{.talk-tag} [Technical communication]{.talk-tag}
 :::
+
+::::::
 
 :::::: {.talk-card-grid}
 
@@ -83,11 +91,15 @@ Presented at [Cascadia R Conference](https://cascadiarconf.com/) · June 2024
 
 ::::::: {.talk-card}
 
+:::::: {.talk-card-header}
+
 ## Oregon Grown
 
 ::: {.talk-tags aria-label="Topics"}
 [GIS]{.talk-tag} [Spatial analysis]{.talk-tag}
 :::
+
+::::::
 
 :::::: {.talk-card-grid}
 

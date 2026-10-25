@@ -79,15 +79,16 @@ a.about-link:hover, span.about-link-text:hover {
 }
 .landing-hero {
   display: grid;
-  grid-template-columns: 200px minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
   align-items: center;
 }
 .landing-portrait {
-  width: 200px;
-  height: 200px;
+  width: 230px;
+  height: 290px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid rgba($col3, .22);
 }
 .landing-intro {
   max-width: 650px;
@@ -139,7 +140,7 @@ a.about-link:hover, span.about-link-text:hover {
 }
 @media (max-width: 640px) {
   .landing-hero { grid-template-columns: 1fr; gap: 1.5rem; }
-  .landing-portrait { width: 140px; height: 140px; }
+  .landing-portrait { width: 170px; height: 215px; }
 }
 
 .landing-links .bi { margin-right: .4rem; }

@@ -1,8 +1,10 @@
 ---
-pagetitle: "Presentations | Randi Bolt"
-toc: false
+title: "Talks"
+toc: true
 comments: false
 ---
+
+I share practical ways to work with data, from text mining in R to spatial analysis and technical blogging. These presentations bring together examples, methods, and lessons from my work and personal projects.
 
 ::: {.talk-card}
 
@@ -14,6 +16,10 @@ Presented at Cascadia R Conf · June 2026
 
 ::: {.talk-description}
 Learn a practical workflow for text mining in R, from cleaning open-ended responses to sentiment analysis and topic modeling. Motivated by the challenges of analyzing survey responses in government work, this talk uses movie reviews to demonstrate the methods and explain the tradeoffs in choosing a model.
+:::
+
+::: {.talk-video}
+<iframe src="https://making-sense-talk.netlify.app/#/title-slide" title="Making Sense of Messy Data slides" loading="lazy" allowfullscreen></iframe>
 :::
 
 ::: {.talk-resources}
@@ -63,6 +69,10 @@ Presented virtually at [GIS in Action](https://gisinaction2021.sched.com/directo
 
 ::: {.talk-description}
 See how mapping and spatial analysis can reveal patterns in business ownership. Using Oregon dispensary data from November 2020, this talk examines chain ownership statewide and within Portland’s Urban Growth Boundary.
+:::
+
+::: {.talk-thumbnail}
+[![Map from the Oregon Grown project](https://raw.githubusercontent.com/rbolt13/Oregon-Grown/gh-pages/assets/UGB.png)](https://rbolt13.github.io/Oregon-Grown/)
 :::
 
 ::: {.talk-resources}

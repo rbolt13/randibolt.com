@@ -199,4 +199,20 @@ a.about-link:hover, span.about-link-text:hover {
   border-radius: 8px;
 }
 
+.talk-tags p {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin: .75rem 0 1rem;
+}
+.talk-tag {
+  display: inline-block;
+  padding: .2rem .65rem;
+  border-radius: 999px;
+  background: rgba($accent-color, .2);
+  color: $col3 !important;
+  font-size: .85rem;
+  line-height: 1.5;
+}
+
 /*-- scss:uses --*/

@@ -17,4 +17,12 @@ about:
 
 <div style="margin-top: 20vh;">
 I’m Randi Bolt, a Data Analytics Lead for the Oregon Employment Department. I use technical analysis to bring clarity to complex, high-stakes decisions. My projects and talks show how R, statistics, and visualization can make data and its limitations easier to understand.
+
+## Making Sense of Messy Data
+
+*Presented at Cascadia R Conf · June 2026*
+
+A practical introduction to text mining in R, motivated by the challenge of analyzing thousands of open-ended survey responses in government work, covering sentiment analysis, topic modeling, and the tradeoffs in choosing a model.
+
+[View slides](https://making-sense-talk.netlify.app/) · [Read related notes](blog/text-mining-notes.html)
 </div>

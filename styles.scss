@@ -175,6 +175,7 @@ a.about-link:hover, span.about-link-text:hover {
 // Talks page
 .talk-card {
   margin-top: 2rem;
+  text-align: left;
 }
 .talk-card h2 a {
   text-decoration: none;
@@ -231,9 +232,6 @@ a.about-link:hover, span.about-link-text:hover {
 }
 
 // Compact talk previews alongside the descriptions
-.talks-page #title-block-header .title {
-  text-align: center;
-}
 .talk-card-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
@@ -266,24 +264,9 @@ a.about-link:hover, span.about-link-text:hover {
   }
 }
 
-// Center the page title across the full-width title banner
-.talks-page .quarto-title-banner {
-  background: $col1;
-  padding-top: 2rem;
-  padding-bottom: 1rem;
-}
-.talks-page .quarto-title-banner .quarto-title,
-.talks-page .quarto-title-banner .title {
-  text-align: center;
-  width: 100%;
-}
 .talk-card > h2 {
   margin-bottom: 1.5rem;
 }
 
-.talks-heading {
-  text-align: center;
-  margin-bottom: 2rem;
-}
 
 /*-- scss:uses --*/

@@ -269,4 +269,36 @@ a.about-link:hover, span.about-link-text:hover {
 }
 
 
+// Talk title and tags share one row above the divider
+.talk-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem 1rem;
+  padding-bottom: .75rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid rgba($col3, .18);
+}
+.talk-card-header > section {
+  display: contents;
+}
+.talk-card-header h2 {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 0;
+  border-bottom: 0;
+}
+.talk-card-header .talk-tags p {
+  margin: 0;
+  justify-content: flex-end;
+}
+.talk-card .talk-description {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.talk-card .talk-resources {
+  font-size: .9rem;
+}
+
 /*-- scss:uses --*/

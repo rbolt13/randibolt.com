@@ -1,10 +1,10 @@
 /*-- scss:defaults --*/
-$col1: #F6F2EB;
-$col2: #E5D9C9;
-$accent-color: #BD858D;
-$col3: #245B60;
-$col4: #183F43;
-$text-color: #245B60;
+$col1: #F5F8FA;
+$col2: #00567D;
+$accent-color: #D9E8EE;
+$col3: #00567D;
+$col4: #003D59;
+$text-color: #263D4A;
 
 @import url('https://fonts.googleapis.com/css2?family=Tinos&display=swap');
 
@@ -145,5 +145,27 @@ a.about-link:hover, span.about-link-text:hover {
 }
 
 .landing-links .bi { margin-right: .4rem; }
+
+// Contrast for deep blue navigation
+.navbar .navbar-brand,
+.navbar .navbar-brand span,
+.navbar .nav-link,
+.navbar .nav-link span,
+.navbar .quarto-navigation-tool,
+.navbar i,
+.navbar svg {
+  color: #FFFFFF !important;
+}
+.navbar svg {
+  fill: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+}
+.navbar .navbar-toggler {
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, .6);
+}
+.navbar .navbar-toggler-icon {
+  filter: brightness(0) invert(1);
+}
 
 /*-- scss:uses --*/

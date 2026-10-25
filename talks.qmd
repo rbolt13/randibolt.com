@@ -1,15 +1,19 @@
 ---
 title: "Talks"
 body-classes: talks-page
+title-block-banner: true
 toc: true
 comments: false
 ---
 
-I share practical ways to work with data, from text mining in R to spatial analysis and technical blogging. These presentations bring together examples, methods, and lessons from my work and personal projects.
+What can text mining reveal in thousands of responses, maps show about business ownership, or a blog help us share? These talks explore practical methods and lessons from working with data.
 
 
 
 ::::::: {.talk-card}
+
+## Making Sense of Messy Data
+
 :::::: {.talk-card-grid}
 
 ::::: {.talk-media}
@@ -19,7 +23,6 @@ I share practical ways to work with data, from text mining in R to spatial analy
 :::::
 
 :::: {.talk-content}
-## Making Sense of Messy Data
 
 ::: {.talk-event}
 Presented at Cascadia R Conf Â· June 2026
@@ -44,6 +47,9 @@ Learn a practical workflow for text mining in R, from cleaning open-ended respon
 
 
 ::::::: {.talk-card}
+
+## Code to Content
+
 :::::: {.talk-card-grid}
 
 ::::: {.talk-media}
@@ -53,7 +59,6 @@ Learn a practical workflow for text mining in R, from cleaning open-ended respon
 :::::
 
 :::: {.talk-content}
-## Code to Content
 
 ::: {.talk-event}
 Presented at [PDX R User Group](https://www.meetup.com/portland-r-user-group/events/298359537/) Â· February 2024  
@@ -79,6 +84,9 @@ Learn how a technical blog can help you share your R projects, explain what youâ
 
 
 ::::::: {.talk-card}
+
+## Oregon Grown
+
 :::::: {.talk-card-grid}
 
 ::::: {.talk-media}
@@ -88,7 +96,6 @@ Learn how a technical blog can help you share your R projects, explain what youâ
 :::::
 
 :::: {.talk-content}
-## Oregon Grown
 
 ::: {.talk-event}
 Presented virtually at [GIS in Action](https://gisinaction2021.sched.com/directory/speakers) Â· April 2021

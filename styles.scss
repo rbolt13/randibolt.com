@@ -1,10 +1,10 @@
 /*-- scss:defaults --*/
-$col1: #FAF5EF;
-$col2: #DED0BE;
-$accent-color: #AD737A;
-$col3: #443A35;
-$col4: #805057;
-$text-color: #443A35;
+$col1: #F5F4F0;
+$col2: #23434A;
+$accent-color: #8FB9B0;
+$col3: #2D383C;
+$col4: #38675F;
+$text-color: #2D383C;
 
 @import url('https://fonts.googleapis.com/css2?family=Tinos&display=swap');
 
@@ -13,6 +13,22 @@ $text-color: #443A35;
 //Nav bar
 .navbar {
   background-color: $col2 !important;
+}
+
+// Keep navigation text and controls readable on petrol.
+.navbar .navbar-brand, .navbar .nav-link, .navbar .nav-link span,
+.navbar i, .navbar svg, .navbar .quarto-search-button,
+.navbar .dropdown-toggle {
+  color: $col1 !important;
+  fill: $col1 !important;
+  stroke: $col1 !important;
+}
+.navbar .nav-link:hover, .navbar .navbar-brand:hover {
+  color: $accent-color !important;
+}
+.navbar .navbar-toggler { color: $col1 !important; border-color: $accent-color; }
+.navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23F5F4F0' stroke-linecap='round' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 // Body 
@@ -30,9 +46,9 @@ h1, h2, h3, h4, h5, h6, p, a, span, div {
 
 // All Icons on the Nav Bar
 .navbar i, .navbar svg {
-  color: $text-color !important;
-  fill: $text-color !important;
-  stroke: $text-color !important;
+  color: $col1 !important;
+  fill: $col1 !important;
+  stroke: $col1 !important;
 }
 
 //Landing Page Image
@@ -89,7 +105,8 @@ a.about-link:hover, span.about-link-text:hover {
   height: 290px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid rgba($col3, .22);
+  border: 2px solid $col3;
+  background-color: $col1;
 }
 .landing-intro {
   max-width: 650px;
@@ -116,7 +133,7 @@ a.about-link:hover, span.about-link-text:hover {
   border: 1px solid rgba($col3, .18);
   border-top: 4px solid $accent-color;
   border-radius: 12px;
-  background: rgba(255, 255, 255, .45);
+  background: rgba($accent-color, .12);
 }
 .landing-eyebrow {
   font-size: .8rem;

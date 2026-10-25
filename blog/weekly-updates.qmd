@@ -2,13 +2,50 @@
 title: "Weekly Updates"
 categories: ["Updates"]
 date: "5-31-2026"
-draft: false
+draft: true
 format:
   html:
     toc: true
 ---
 
 Each week I plan to post professional updates on what worked in the previous week, what I learned, what felt difficult, and what I’m focused on in the coming week.
+
+# October , 2026
+
+This week, I focused most of my time on employer account data quality, building an analysis in R for another agency focused on FY2025 employer size reporting, and developing an internal Tableau dashboard for staff and leadership to monitor Paid Leave employer account quality issues. The data is large and complex, so structuring, validating, and explaining it has been challenging. That being said, the work has the potential to make a meaningful impact, which is exciting!
+
+Unrelated to employer reporting, I spent some time this week fixing issues in a dataset I rebuilt last week. It's been tricky, but it's starting to work in a way that allows users to explore data across different groupings and reporting periods. Next week, I'm hoping to finish the dataset by integrating historical backlog data. This will allow users to compare pending work across reporting periods, rather than only seeing the current backlog.
+
+This project is a lower priority for leadership, so most of next week will be spent finishing my FY2025 analysis in R and getting the first version of the employer account quality dashboard published to our test environment.
+
+# June 28th, 2026
+
+Saturday I presented at Cascadia R Conf in Portland. I had a pretty good time, learned a lot, and left feeling very inspired. The conference took a thoughtful approach to AI and gave me a lot to think about, especially around AI as an emerging data literacy competency. It also inspired me to keep moving forward with some of my text analysis work. I plan to write a more focused post about the conference, but I need a little more time to reflect on my own talk first.
+
+At work this past week, I continued building out a dashboard that I started and published as a minimal version a few months ago. I think the updates look really nice, and expanding the analysis will help me better monitor the data and build future analyses related to these workflows. There is still more work to do before it fully answers the team’s core question, but this is a step in the right direction.
+
+This week, I plan to do some documentation around data validation. The data has some quirks I want to better understand, especially because validation work is often where small details matter the most. A peer of mine also cleverly updated my _Data Validation Standard Operating Procedure (SOP)_ so it could be incorporated into the summary page template I built a couple of months ago. I wrote this SOP over a year ago, and at the time I felt like I got more criticism than support, so it truly felt like a compliment to have another analyst interact with my work that way.
+
+
+# June 21st, 2026
+
+Last week was another short week, because of Juneteenth. I work for the state of Oregon that sent out this video: [The flooding of Vanport | full documentary | Oregon Experience](https://youtu.be/gl8dMk0Z0lc?si=6IhSuJ_oVtJJo3c0), published on Youtube by OPB. It was interesting to learn about this Portland city with no government, that brought people of color into the city and non-segregated learning to Oregon. If you are an Oregonian, I recommend the watch. 
+
+# June 14th, 2026
+
+I was having a harder time motivating myself to work last week and ended up taking some time off on Wednesday and Thursday. I might just be riding the crimson wave, but I have been feeling wildly disenchanted with the analytics department recently.
+
+Regardless, I validated new data for an analysis I have been working on. That should be the final piece, and if all goes well in my meetings on Tuesday, then I will publish it before the end of this week. I also updated another dashboard I built back in March to include an overview page, which not only looks really nice, but I think will make these reports much more accessible to the leaders who use them. Not to mention, if I email myself the overview page of every dashboard I build, it makes it a lot easier for me to monitor everything I’ve built. I also spend enough of my day loading dashboards and data, so if I can avoid that with my published builds, I will haha.
+
+Last week, I also did the initial build of a new dashboard. It took me like 30 minutes, but I can tell from the research I’ve done and the questions I am starting to get asked by other leaders that this will likely be a much larger build than I initially thought. I love it, lets go!
+
+# June 7th, 2026
+
+Last week I published another new dashboard. Whenever I publish a new build, I send an email to notify all interested parties about what is included on each page of the dashboard and what questions each page can help answer. To me, this helps bring the build process full circle and gives leadership one location (their email) to search for pre-built dashboards that answer their FAQs.
+
+Both the email template and the dashboard received a lot of praise and visibility from leadership and my peers. It’s pretty cool to see the level of influence I have just because I put out good work.
+
+This week, I am hoping to wrap up some loose ends on a few ad hoc projects, validate some new data, publish a dashboard, and start another new build. To be honest, the initial build should be as easy as copy, paste, and update the filters. It is everything after that that can be tricky, but fun.
 
 # May 31st, 2026
 

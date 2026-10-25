@@ -1,0 +1,217 @@
+---
+title: "Forecasting Phone Volume with R"
+categories: ["R"]
+date: "7-7-2026"
+draft: true
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+
+Can we use R to forecast phone volume for the city of Mesa Arizona? 
+
+# Set-up
+
+```{r set up}
+# Load Packages
+library(tidyverse)
+library(readr)
+library(prophet)
+library(plotly)
+# Load Data
+data <- read_csv("data/Business_Services_-_Utility_Customer_Calls_20260706.csv")
+# View Data 
+head(data)
+```
+
+# Breif EDA & Cleaning
+
+## Calls Offered by Service
+
+I'm starting by looking at the number of calls offered for each service. 
+
+```{r offered by q}
+offer_by_q <- data |>
+  group_by(`Service Name`) |>
+  summarise(`Calls Offered` = sum(`Calls Offered`, na.rm = TRUE)) |>
+  arrange(desc(`Calls Offered`))
+offer_by_q
+```
+
+## Calls Offered for Each Payment Related Services
+
+I am not sure what all the queues are, but see 'payment' in here. Lets focus our analysis on payment lines. 
+
+```{r}
+payment_data <- data |>
+  filter(str_detect(`Service Name`, regex("payment", ignore_case = TRUE))) |>
+  group_by(`Service Name`) |>
+  summarise(`Calls Offered` = sum(`Calls Offered`, na.rm = TRUE)) |>
+  arrange(desc(`Calls Offered`))
+payment_data
+```
+
+For payments, it looks like customers can call in to reach:
+
+* Make Payment: Caller is trying to make a payment.
+
+* Make Payment Error: Caller had an issue while making a payment.
+
+* Payments Off: Payment option may have been unavailable, and caller was routed here.
+
+I am also going to assume the 'E' is for English lines and 'S' is for Spanish lines. 
+
+## Calls Offered for All Payment Services
+
+To somewhat simplify this analysis, lets start by looking at calls offed for all payment services as a whole. 
+
+```{r payment monthly}
+payment_monthly <- data |>
+  mutate(`Reporting Date` = as_date(parse_date_time(`Reporting Date`, orders = c("ymd", "mdy")))) |>
+  filter(str_detect(`Service Name`, regex("payment", ignore_case = TRUE))) |>
+  group_by(`Reporting Date`) |>
+  summarise(`Calls Offered` = sum(`Calls Offered`, na.rm = TRUE)) |>
+  arrange(desc(`Reporting Date`))
+
+payment_monthly
+```
+
+# Visualize Payments by Month 
+
+Lets look at payments by month, and compare each year. 
+
+```{r payment monthly yoy}
+#| fig-height: 12
+#| fig-width: 8
+payment_monthly |>
+  mutate(
+    year = year(`Reporting Date`),
+    month = month(`Reporting Date`, label = TRUE, abbr = TRUE)
+  ) |>
+  ggplot(aes(x = month, y = `Calls Offered`)) +
+  geom_col() +
+  geom_text(aes(label = `Calls Offered`), vjust = -0.3) +
+  facet_wrap(~ year, ncol = 1) +
+  labs(
+    title = "Payment Calls Offered by Month",
+    x = "Month",
+    y = "Calls Offered"
+  )
+```
+
+Right away we can see a large range of calls between 1,502 and 6,491 since 2018. It also looks like call volume has been decreasing the last couple of years compared to pre-pandemic call volumes. 
+
+# Last 5 Years Summary Stats
+
+It looks like we are missing some data in 2021 from March - May. Lets filter out anything before June 2021 and observe the summary stats. 
+
+```{r}
+payment_monthly <- payment_monthly |>
+  filter(`Reporting Date` >= as.Date("2021-06-01"))
+summary(payment_monthly)
+```
+
+Cool! It looks like over the past 5 years Meza gets about 2k calls a month related to payments with a range of about 1k calls. 
+
+## Visualize Payments by Quarter
+
+Looks by month, I am not seeing obvious consistent spikes or dips in the data so I am going to look at it by quarter to see if there if there might be any seasonal trends. 
+
+```{r}
+#| fig-height: 12
+#| fig-width: 8
+payment_quarterly <- payment_monthly |>
+  mutate(
+    year = year(`Reporting Date`),
+    quarter = paste0("Q", quarter(`Reporting Date`))
+  ) |>
+  group_by(year, quarter) |>
+  summarise(`Calls Offered` = sum(`Calls Offered`, na.rm = TRUE), .groups = "drop")
+
+payment_quarterly |>
+  ggplot(aes(x = quarter, y = `Calls Offered`)) +
+  geom_col() +
+  geom_text(aes(label = `Calls Offered`), vjust = -0.3) +
+  facet_wrap(~ year, ncol = 1) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(
+    title = "Payment Calls Offered by Quarter",
+    x = "Quarter",
+    y = "Calls Offered"
+  )
+```
+
+I am not seeing any seasonal trends that are too obvious. Perhaps there is a dip in quarter three, but I will be curious to see what our forecast comes up with for the next few months (Q3) of 2026. 
+
+## Prepare for Prophet
+
+Now we need to slightly modify our data for the Prophet model. Mainly just changing the column headers. 
+
+```{r}
+prophet_payment <- payment_monthly |>
+  transmute(
+    ds = `Reporting Date`,
+    y = `Calls Offered`
+  ) |>
+  arrange(ds)
+```
+
+
+# Prophet
+
+```{r}
+# model data
+model_prophet <- prophet(
+  prophet_payment,
+  weekly.seasonality = FALSE,
+  daily.seasonality = FALSE
+)
+# forecast the next 12 month
+future <- make_future_dataframe(
+  model_prophet,
+  periods = 12,
+  freq = "month"
+)
+# generate forecast
+forecast <- predict(model_prophet, future)
+# plot
+plot(model_prophet, forecast) |>
+  ggplotly()
+```
+
+
+```{r}
+#| fig-height: 12
+#| fig-width: 8
+# modify data
+forecast_yoy <- forecast |>
+  select(ds, yhat, yhat_lower, yhat_upper) |>
+  left_join(prophet_payment, by = "ds") |>
+  mutate(
+    `Calls Offered` = if_else(is.na(y), yhat, y),
+    type = if_else(is.na(y), "Forecast", "Actual"),
+    year = year(ds),
+    month = month(ds, label = TRUE, abbr = TRUE)
+  )
+# plot 
+forecast_yoy |>
+  ggplot(aes(x = month, y = `Calls Offered`, fill = type)) +
+  geom_col() +
+  geom_text(aes(label = round(`Calls Offered`)), vjust = -0.3) +
+  facet_wrap(~ year, ncol = 1) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  labs(
+    title = "Payment Calls Offered Forecast by Month",
+    x = "Month",
+    y = "Calls Offered",
+    fill = NULL
+  ) 
+```
+
+
+# 
+
+# Sources
+
+[City of Mesa Public Data Hub - Utility Customer Calls Answered](https://data.mesaaz.gov/Business-Services/Utility-Customer-Calls-Answered/3mzs-jhfh?utm_source=chatgpt.com)

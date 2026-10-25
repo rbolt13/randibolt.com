@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-07-07">
+
+<title>Randi Bolt - Forecasting Phone Volume with R</title>
+
+<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0Z8G9C0SFQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-0Z8G9C0SFQ');
+</script>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../img/2025-bolt.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0Z8G9C0SFQ"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0Z8G9C0SFQ', { 'anonymize_ip': true});
+</script>
+<link href="../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="../site_libs/plotly-binding-4.12.0/plotly.js"></script>
+<script src="../site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="../site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="../site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+<script src="../site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+<link href="../site_libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="../site_libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&amp;display=swap" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Randi Bolt</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../dashboards.html"> 
+<span class="menu-text">Dashboards</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../talks.html"> 
+<span class="menu-text">Talks</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/rbolt13"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/randi-bolt/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#set-up" id="toc-set-up" class="nav-link active" data-scroll-target="#set-up">Set-up</a></li>
+  <li><a href="#breif-eda-cleaning" id="toc-breif-eda-cleaning" class="nav-link" data-scroll-target="#breif-eda-cleaning">Breif EDA &amp; Cleaning</a>
+  <ul class="collapse">
+  <li><a href="#calls-offered-by-service" id="toc-calls-offered-by-service" class="nav-link" data-scroll-target="#calls-offered-by-service">Calls Offered by Service</a></li>
+  <li><a href="#calls-offered-for-each-payment-related-services" id="toc-calls-offered-for-each-payment-related-services" class="nav-link" data-scroll-target="#calls-offered-for-each-payment-related-services">Calls Offered for Each Payment Related Services</a></li>
+  <li><a href="#calls-offered-for-all-payment-services" id="toc-calls-offered-for-all-payment-services" class="nav-link" data-scroll-target="#calls-offered-for-all-payment-services">Calls Offered for All Payment Services</a></li>
+  </ul></li>
+  <li><a href="#visualize-payments-by-month" id="toc-visualize-payments-by-month" class="nav-link" data-scroll-target="#visualize-payments-by-month">Visualize Payments by Month</a></li>
+  <li><a href="#last-5-years-summary-stats" id="toc-last-5-years-summary-stats" class="nav-link" data-scroll-target="#last-5-years-summary-stats">Last 5 Years Summary Stats</a>
+  <ul class="collapse">
+  <li><a href="#visualize-payments-by-quarter" id="toc-visualize-payments-by-quarter" class="nav-link" data-scroll-target="#visualize-payments-by-quarter">Visualize Payments by Quarter</a></li>
+  <li><a href="#prepare-for-prophet" id="toc-prepare-for-prophet" class="nav-link" data-scroll-target="#prepare-for-prophet">Prepare for Prophet</a></li>
+  </ul></li>
+  <li><a href="#prophet" id="toc-prophet" class="nav-link" data-scroll-target="#prophet">Prophet</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#sources" id="toc-sources" class="nav-link" data-scroll-target="#sources">Sources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Forecasting Phone Volume with R</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">R</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 7, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Can we use R to forecast phone volume for the city of Mesa Arizona?</p>
+<section id="set-up" class="level1">
+<h1>Set-up</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   4.0.0     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.4     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(prophet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Rcpp
+Loading required package: rlang
+
+Attaching package: 'rlang'
+
+The following objects are masked from 'package:purrr':
+
+    %@%, flatten, flatten_chr, flatten_dbl, flatten_int, flatten_lgl,
+    flatten_raw, invoke, splice</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'plotly'
+
+The following object is masked from 'package:ggplot2':
+
+    last_plot
+
+The following object is masked from 'package:stats':
+
+    filter
+
+The following object is masked from 'package:graphics':
+
+    layout</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Data</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Business_Services_-_Utility_Customer_Calls_20260706.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 2273 Columns: 24
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (7): Service Name, Percent Abandoned, Percent Service Level, Average Ca...
+dbl  (9): Application #, Calls Outgoing, Handled Xfr to Service, Handled Xfr...
+num  (5): RowID, Calls Offered, Calls Abandoned, Calls Answered, Handled Xfr...
+time (3): Average Call Time Out, Maximum To Answer, Maximum To Abandon
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View Data </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 24
+  RowID `Application #` `Service Name`          `Calls Offered` `Calls Outgoing`
+  &lt;dbl&gt;           &lt;dbl&gt; &lt;chr&gt;                             &lt;dbl&gt;            &lt;dbl&gt;
+1     1              31 88 - CIS_IS_StartStop_E            6017                0
+2     2              31 89 - CIS_IS_StartStop_S             162                0
+3     3              31 90 - CIS_IS_AllOther_E            10664                0
+4     4              31 91 - CIS_IS_AllOther_S              553                0
+5     5              31 92 - CIS_IS_Barrel_E               1216                0
+6     6              31 93 - CIS_IS_Barrel_S                 36                0
+# ℹ 19 more variables: `Calls Abandoned` &lt;dbl&gt;, `Calls Answered` &lt;dbl&gt;,
+#   `Percent Abandoned` &lt;chr&gt;, `Percent Service Level` &lt;chr&gt;,
+#   `Average Call Time In` &lt;chr&gt;, `Average Call Time Out` &lt;time&gt;,
+#   `Average Speed of Answer` &lt;chr&gt;, `Average Call Abandoned` &lt;chr&gt;,
+#   `Maximum To Answer` &lt;time&gt;, `Maximum To Abandon` &lt;time&gt;,
+#   `Handled Xfr Completed` &lt;dbl&gt;, `Handled Xfr to Service` &lt;dbl&gt;,
+#   `Handled Xfr to Agent` &lt;dbl&gt;, `Handled Xfr to Other` &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+</section>
+<section id="breif-eda-cleaning" class="level1">
+<h1>Breif EDA &amp; Cleaning</h1>
+<section id="calls-offered-by-service" class="level2">
+<h2 class="anchored" data-anchor-id="calls-offered-by-service">Calls Offered by Service</h2>
+<p>I’m starting by looking at the number of calls offered for each service.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>offer_by_q <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Service Name</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span>))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>offer_by_q</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 65 × 2
+   `Service Name`              `Calls Offered`
+   &lt;chr&gt;                                 &lt;dbl&gt;
+ 1 - CIS_IS_AllOther_E                  379919
+ 2 - CIS_IS_StartStop_E                 282772
+ 3 90 - CIS_IS_AllOther_E               255437
+ 4 88 - CIS_IS_StartStop_E              181203
+ 5 - CIS_IS_MakePayment_E               117157
+ 6 96 - CIS_IS_MakePayment_E            101005
+ 7 - CIS_IS_Barrel_E                     89225
+ 8 - CIS_IS_TooManyTries_E               44307
+ 9 92 - CIS_IS_Barrel_E                  43080
+10 119 - CIS_IS_TooManyTries_E           35978
+# ℹ 55 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="calls-offered-for-each-payment-related-services" class="level2">
+<h2 class="anchored" data-anchor-id="calls-offered-for-each-payment-related-services">Calls Offered for Each Payment Related Services</h2>
+<p>I am not sure what all the queues are, but see ‘payment’ in here. Lets focus our analysis on payment lines.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>payment_data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(<span class="st">`</span><span class="at">Service Name</span><span class="st">`</span>, <span class="fu">regex</span>(<span class="st">"payment"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Service Name</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span>))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>payment_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 2
+   `Service Name`                 `Calls Offered`
+   &lt;chr&gt;                                    &lt;dbl&gt;
+ 1 - CIS_IS_MakePayment_E                  117157
+ 2 96 - CIS_IS_MakePayment_E               101005
+ 3 - CIS_IS_MakePayment_S                   13072
+ 4 97 - CIS_IS_MakePayment_S                 8583
+ 5 94 - CIS_IS_MakePaymentError_E            5733
+ 6 - CIS_IS_MakePaymentError_E               5118
+ 7 - CIS_IS_MakePaymentError_S               1334
+ 8 95 - CIS_IS_MakePaymentError_S            1096
+ 9 - CIS_IS_PaymentsOff_E                      86
+10 - CIS_IS_PaymentsOff_S                      34
+11 103 - CIS_IS_PaymentsOff_S                  24
+12 102 - CIS_IS_PaymentsOff_E                   3</code></pre>
+</div>
+</div>
+<p>For payments, it looks like customers can call in to reach:</p>
+<ul>
+<li><p>Make Payment: Caller is trying to make a payment.</p></li>
+<li><p>Make Payment Error: Caller had an issue while making a payment.</p></li>
+<li><p>Payments Off: Payment option may have been unavailable, and caller was routed here.</p></li>
+</ul>
+<p>I am also going to assume the ‘E’ is for English lines and ‘S’ is for Spanish lines.</p>
+</section>
+<section id="calls-offered-for-all-payment-services" class="level2">
+<h2 class="anchored" data-anchor-id="calls-offered-for-all-payment-services">Calls Offered for All Payment Services</h2>
+<p>To somewhat simplify this analysis, lets start by looking at calls offed for all payment services as a whole.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>payment_monthly <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Reporting Date</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">as_date</span>(<span class="fu">parse_date_time</span>(<span class="st">`</span><span class="at">Reporting Date</span><span class="st">`</span>, <span class="at">orders =</span> <span class="fu">c</span>(<span class="st">"ymd"</span>, <span class="st">"mdy"</span>)))) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(<span class="st">`</span><span class="at">Service Name</span><span class="st">`</span>, <span class="fu">regex</span>(<span class="st">"payment"</span>, <span class="at">ignore_case =</span> <span class="cn">TRUE</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Reporting Date</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">Reporting Date</span><span class="st">`</span>))</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>payment_monthly</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 97 × 2
+   `Reporting Date` `Calls Offered`
+   &lt;date&gt;                     &lt;dbl&gt;
+ 1 2026-06-01                  2155
+ 2 2026-05-01                  1755
+ 3 2026-04-01                  1999
+ 4 2026-03-01                  1981
+ 5 2026-02-01                  1801
+ 6 2026-01-01                  1833
+ 7 2025-12-01                  2306
+ 8 2025-11-01                  1885
+ 9 2025-10-01                  2401
+10 2025-09-01                  2123
+# ℹ 87 more rows</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="visualize-payments-by-month" class="level1">
+<h1>Visualize Payments by Month</h1>
+<p>Lets look at payments by month, and compare each year.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>payment_monthly <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">year</span>(<span class="st">`</span><span class="at">Reporting Date</span><span class="st">`</span>),</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">month =</span> <span class="fu">month</span>(<span class="st">`</span><span class="at">Reporting Date</span><span class="st">`</span>, <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="at">abbr =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> <span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span>), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> year, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Payment Calls Offered by Month"</span>,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Month"</span>,</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Calls Offered"</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="forecasting-phone-volume_files/figure-html/payment monthly yoy-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Right away we can see a large range of calls between 1,502 and 6,491 since 2018. It also looks like call volume has been decreasing the last couple of years compared to pre-pandemic call volumes.</p>
+</section>
+<section id="last-5-years-summary-stats" class="level1">
+<h1>Last 5 Years Summary Stats</h1>
+<p>It looks like we are missing some data in 2021 from March - May. Lets filter out anything before June 2021 and observe the summary stats.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>payment_monthly <span class="ot">&lt;-</span> payment_monthly <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Reporting Date</span><span class="st">`</span> <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">"2021-06-01"</span>))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(payment_monthly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> Reporting Date       Calls Offered 
+ Min.   :2021-06-01   Min.   :1705  
+ 1st Qu.:2022-09-01   1st Qu.:1981  
+ Median :2023-12-01   Median :2150  
+ Mean   :2023-12-01   Mean   :2168  
+ 3rd Qu.:2025-03-01   3rd Qu.:2360  
+ Max.   :2026-06-01   Max.   :2654  </code></pre>
+</div>
+</div>
+<p>Cool! It looks like over the past 5 years Meza gets about 2k calls a month related to payments with a range of about 1k calls.</p>
+<section id="visualize-payments-by-quarter" class="level2">
+<h2 class="anchored" data-anchor-id="visualize-payments-by-quarter">Visualize Payments by Quarter</h2>
+<p>Looks by month, I am not seeing obvious consistent spikes or dips in the data so I am going to look at it by quarter to see if there if there might be any seasonal trends.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>payment_quarterly <span class="ot">&lt;-</span> payment_monthly <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">year</span>(<span class="st">`</span><span class="at">Reporting Date</span><span class="st">`</span>),</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">quarter =</span> <span class="fu">paste0</span>(<span class="st">"Q"</span>, <span class="fu">quarter</span>(<span class="st">`</span><span class="at">Reporting Date</span><span class="st">`</span>))</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, quarter) <span class="sc">|&gt;</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>payment_quarterly <span class="sc">|&gt;</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> quarter, <span class="at">y =</span> <span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span>), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> year, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Payment Calls Offered by Quarter"</span>,</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Quarter"</span>,</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Calls Offered"</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="forecasting-phone-volume_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>I am not seeing any seasonal trends that are too obvious. Perhaps there is a dip in quarter three, but I will be curious to see what our forecast comes up with for the next few months (Q3) of 2026.</p>
+</section>
+<section id="prepare-for-prophet" class="level2">
+<h2 class="anchored" data-anchor-id="prepare-for-prophet">Prepare for Prophet</h2>
+<p>Now we need to slightly modify our data for the Prophet model. Mainly just changing the column headers.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>prophet_payment <span class="ot">&lt;-</span> payment_monthly <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ds =</span> <span class="st">`</span><span class="at">Reporting Date</span><span class="st">`</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(ds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="prophet" class="level1">
+<h1>Prophet</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># model data</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>model_prophet <span class="ot">&lt;-</span> <span class="fu">prophet</span>(</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  prophet_payment,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">weekly.seasonality =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">daily.seasonality =</span> <span class="cn">FALSE</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># forecast the next 12 month</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>future <span class="ot">&lt;-</span> <span class="fu">make_future_dataframe</span>(</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  model_prophet,</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">periods =</span> <span class="dv">12</span>,</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">freq =</span> <span class="st">"month"</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co"># generate forecast</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>forecast <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_prophet, future)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_prophet, forecast) <span class="sc">|&gt;</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplotly</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Aspect ratios aren't yet implemented, but you can manually set a
+suitable height/width
+Warning: Aspect ratios aren't yet implemented, but you can manually set a
+suitable height/width</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-354b9a7645594e7c6322" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-354b9a7645594e7c6322">{"x":{"data":[{"x":[1622505600,1625097600,1627776000,1630454400,1633046400,1635724800,1638316800,1640995200,1643673600,1646092800,1648771200,1651363200,1654041600,1656633600,1659312000,1661990400,1664582400,1667260800,1669852800,1672531200,1675209600,1677628800,1680307200,1682899200,1685577600,1688169600,1690848000,1693526400,1696118400,1698796800,1701388800,1704067200,1706745600,1709251200,1711929600,1714521600,1717200000,1719792000,1722470400,1725148800,1727740800,1730419200,1733011200,1735689600,1738368000,1740787200,1743465600,1746057600,1748736000,1751328000,1754006400,1756684800,1759276800,1761955200,1764547200,1767225600,1769904000,1772323200,1775001600,1777593600,1780272000,1782864000,1785542400,1788220800,1790812800,1793491200,1796083200,1798761600,1801440000,1803859200,1806537600,1809129600,1811808000,1811808000,1811808000,1809129600,1806537600,1803859200,1801440000,1798761600,1796083200,1793491200,1790812800,1788220800,1785542400,1782864000,1780272000,1777593600,1775001600,1772323200,1769904000,1767225600,1764547200,1761955200,1759276800,1756684800,1754006400,1751328000,1748736000,1746057600,1743465600,1740787200,1738368000,1735689600,1733011200,1730419200,1727740800,1725148800,1722470400,1719792000,1717200000,1714521600,1711929600,1709251200,1706745600,1704067200,1701388800,1698796800,1696118400,1693526400,1690848000,1688169600,1685577600,1682899200,1680307200,1677628800,1675209600,1672531200,1669852800,1667260800,1664582400,1661990400,1659312000,1656633600,1654041600,1651363200,1648771200,1646092800,1643673600,1640995200,1638316800,1635724800,1633046400,1630454400,1627776000,1625097600,1622505600,1622505600],"y":[2015.6288227056559,1995.303915120478,1962.548364579402,2005.3365499810595,2153.6325952777825,2000.2174123987497,2082.7372424880327,2123.7759621666123,1832.1366836569587,2191.4327988663649,1987.038226649385,2047.4640172136442,2066.2566279653852,1826.2779362448016,1920.3792222720322,1924.0288495736322,2141.1999979953748,2042.1850273439909,1848.6507062720127,2066.0262449156353,1881.5114361765477,2112.2859421208764,1844.7397198931981,2075.7248106110737,2082.4009143855001,1628.7715860825047,1885.3919517095565,1833.9587956990063,2138.8942080283205,2077.6110859659634,1653.8123612052561,1972.9153872823813,1956.6970114296823,2134.1303820263738,2050.5631511292504,1782.7969281929011,1795.072873688257,1938.7729079152111,1749.2531073874006,1893.707009532932,1909.8068183694402,1737.2336939002869,2061.4491841286335,1967.320835567308,1537.8066255079207,2066.2421075094403,1911.0630304040715,1808.3803724275172,1802.7018692367674,1765.7573164027783,1717.4010348860413,1794.4778869020906,1934.5016884156103,1796.152992560377,1853.8818386943387,1908.2316857616293,1573.5033467691185,1964.3403972079218,1779.6769494905388,1820.5859046750732,1833.946671478747,1576.1569578791532,1685.9568293746727,1694.7965842201197,1939.8212496259421,1821.7996718894831,1641.5327994462896,1808.8864520897073,1637.0377856292762,1910.2530941444672,1612.6379597498653,1854.224072574169,1848.6401458561822,1848.6401458561822,2332.9887882792636,2331.1417726188229,2097.9681156872257,2388.1492118395886,2156.5382801088222,2315.2604198015151,2138.1199741417995,2311.3609220186272,2413.9805585620124,2198.7587783244135,2189.6515614562713,2069.869586756738,2312.4471747268758,2324.4335690595613,2259.131224696453,2459.4279868621757,2088.192619020353,2382.1155508035686,2338.0463641170081,2288.2853465904468,2398.4517465691397,2281.9615015044692,2221.3803952599346,2254.4685406716858,2298.9004081994053,2302.2418104881472,2395.8943063844918,2543.5460966923119,2029.4825653823832,2472.0688382873891,2545.4524852769955,2227.331799818206,2407.1375612006887,2391.4406239429923,2242.6055815147779,2437.2490374998706,2297.4393321714419,2292.3594236716085,2559.3363132229283,2629.4347620801245,2420.6248532547052,2475.3614549289109,2140.9669148175858,2583.2042430603237,2650.1372184006259,2331.6622479054486,2358.5737075189081,2130.3604871760785,2571.1391807128534,2583.7659649985035,2333.3623848650896,2611.0835512340909,2381.0026915838439,2548.759572188781,2343.3443396238367,2516.7051108815249,2629.1990509839243,2448.2027652887559,2399.3867655955328,2297.057195950551,2543.5146074347103,2552.5364824749568,2481.7286165597302,2701.0840686482579,2312.7129240816062,2622.6609308831644,2559.4535299964846,2510.3888456371396,2635.351871085807,2502.6298920904774,2434.0207139710906,2488.9118959930333,2525.9076644584311,2015.6288227056559],"text":["ds: 2021-06-01<br />y: 2644<br />yhat_lower: 2015.629<br />yhat_upper: 2525.908","ds: 2021-07-01<br />y: 2259<br />yhat_lower: 1995.304<br />yhat_upper: 2488.912","ds: 2021-08-01<br />y: 2405<br />yhat_lower: 1962.548<br />yhat_upper: 2434.021","ds: 2021-09-01<br />y: 2422<br />yhat_lower: 2005.337<br />yhat_upper: 2502.630","ds: 2021-10-01<br />y: 2120<br />yhat_lower: 2153.633<br />yhat_upper: 2635.352","ds: 2021-11-01<br />y: 2462<br />yhat_lower: 2000.217<br />yhat_upper: 2510.389","ds: 2021-12-01<br />y: 2442<br />yhat_lower: 2082.737<br />yhat_upper: 2559.454","ds: 2022-01-01<br />y: 2500<br />yhat_lower: 2123.776<br />yhat_upper: 2622.661","ds: 2022-02-01<br />y: 2071<br />yhat_lower: 1832.137<br />yhat_upper: 2312.713","ds: 2022-03-01<br />y: 2609<br />yhat_lower: 2191.433<br />yhat_upper: 2701.084","ds: 2022-04-01<br />y: 2084<br />yhat_lower: 1987.038<br />yhat_upper: 2481.729","ds: 2022-05-01<br />y: 2331<br />yhat_lower: 2047.464<br />yhat_upper: 2552.536","ds: 2022-06-01<br />y: 2150<br />yhat_lower: 2066.257<br />yhat_upper: 2543.515","ds: 2022-07-01<br />y: 1751<br />yhat_lower: 1826.278<br />yhat_upper: 2297.057","ds: 2022-08-01<br />y: 1989<br />yhat_lower: 1920.379<br />yhat_upper: 2399.387","ds: 2022-09-01<br />y: 1924<br />yhat_lower: 1924.029<br />yhat_upper: 2448.203","ds: 2022-10-01<br />y: 2152<br />yhat_lower: 2141.200<br />yhat_upper: 2629.199","ds: 2022-11-01<br />y: 2227<br />yhat_lower: 2042.185<br />yhat_upper: 2516.705","ds: 2022-12-01<br />y: 1827<br />yhat_lower: 1848.651<br />yhat_upper: 2343.344","ds: 2023-01-01<br />y: 2157<br />yhat_lower: 2066.026<br />yhat_upper: 2548.760","ds: 2023-02-01<br />y: 1928<br />yhat_lower: 1881.511<br />yhat_upper: 2381.003","ds: 2023-03-01<br />y: 2360<br />yhat_lower: 2112.286<br />yhat_upper: 2611.084","ds: 2023-04-01<br />y: 2036<br />yhat_lower: 1844.740<br />yhat_upper: 2333.362","ds: 2023-05-01<br />y: 2260<br />yhat_lower: 2075.725<br />yhat_upper: 2583.766","ds: 2023-06-01<br />y: 1913<br />yhat_lower: 2082.401<br />yhat_upper: 2571.139","ds: 2023-07-01<br />y: 1705<br />yhat_lower: 1628.772<br />yhat_upper: 2130.360","ds: 2023-08-01<br />y: 1922<br />yhat_lower: 1885.392<br />yhat_upper: 2358.574","ds: 2023-09-01<br />y: 1979<br />yhat_lower: 1833.959<br />yhat_upper: 2331.662","ds: 2023-10-01<br />y: 2448<br />yhat_lower: 2138.894<br />yhat_upper: 2650.137","ds: 2023-11-01<br />y: 2346<br />yhat_lower: 2077.611<br />yhat_upper: 2583.204","ds: 2023-12-01<br />y: 1989<br />yhat_lower: 1653.812<br />yhat_upper: 2140.967","ds: 2024-01-01<br />y: 2413<br />yhat_lower: 1972.915<br />yhat_upper: 2475.361","ds: 2024-02-01<br />y: 2302<br />yhat_lower: 1956.697<br />yhat_upper: 2420.625","ds: 2024-03-01<br />y: 2636<br />yhat_lower: 2134.130<br />yhat_upper: 2629.435","ds: 2024-04-01<br />y: 2654<br />yhat_lower: 2050.563<br />yhat_upper: 2559.336","ds: 2024-05-01<br />y: 2499<br />yhat_lower: 1782.797<br />yhat_upper: 2292.359","ds: 2024-06-01<br />y: 2119<br />yhat_lower: 1795.073<br />yhat_upper: 2297.439","ds: 2024-07-01<br />y: 2527<br />yhat_lower: 1938.773<br />yhat_upper: 2437.249","ds: 2024-08-01<br />y: 2222<br />yhat_lower: 1749.253<br />yhat_upper: 2242.606","ds: 2024-09-01<br />y: 2257<br />yhat_lower: 1893.707<br />yhat_upper: 2391.441","ds: 2024-10-01<br />y: 2368<br />yhat_lower: 1909.807<br />yhat_upper: 2407.138","ds: 2024-11-01<br />y: 1998<br />yhat_lower: 1737.234<br />yhat_upper: 2227.332","ds: 2024-12-01<br />y: 2154<br />yhat_lower: 2061.449<br />yhat_upper: 2545.452","ds: 2025-01-01<br />y: 2352<br />yhat_lower: 1967.321<br />yhat_upper: 2472.069","ds: 2025-02-01<br />y: 1913<br />yhat_lower: 1537.807<br />yhat_upper: 2029.483","ds: 2025-03-01<br />y: 2129<br />yhat_lower: 2066.242<br />yhat_upper: 2543.546","ds: 2025-04-01<br />y: 2035<br />yhat_lower: 1911.063<br />yhat_upper: 2395.894","ds: 2025-05-01<br />y: 1963<br />yhat_lower: 1808.380<br />yhat_upper: 2302.242","ds: 2025-06-01<br />y: 2074<br />yhat_lower: 1802.702<br />yhat_upper: 2298.900","ds: 2025-07-01<br />y: 2122<br />yhat_lower: 1765.757<br />yhat_upper: 2254.469","ds: 2025-08-01<br />y: 1878<br />yhat_lower: 1717.401<br />yhat_upper: 2221.380","ds: 2025-09-01<br />y: 2123<br />yhat_lower: 1794.478<br />yhat_upper: 2281.962","ds: 2025-10-01<br />y: 2401<br />yhat_lower: 1934.502<br />yhat_upper: 2398.452","ds: 2025-11-01<br />y: 1885<br />yhat_lower: 1796.153<br />yhat_upper: 2288.285","ds: 2025-12-01<br />y: 2306<br />yhat_lower: 1853.882<br />yhat_upper: 2338.046","ds: 2026-01-01<br />y: 1833<br />yhat_lower: 1908.232<br />yhat_upper: 2382.116","ds: 2026-02-01<br />y: 1801<br />yhat_lower: 1573.503<br />yhat_upper: 2088.193","ds: 2026-03-01<br />y: 1981<br />yhat_lower: 1964.340<br />yhat_upper: 2459.428","ds: 2026-04-01<br />y: 1999<br />yhat_lower: 1779.677<br />yhat_upper: 2259.131","ds: 2026-05-01<br />y: 1755<br />yhat_lower: 1820.586<br />yhat_upper: 2324.434","ds: 2026-06-01<br />y: 2155<br />yhat_lower: 1833.947<br />yhat_upper: 2312.447","ds: 2026-07-01<br />y:   NA<br />yhat_lower: 1576.157<br />yhat_upper: 2069.870","ds: 2026-08-01<br />y:   NA<br />yhat_lower: 1685.957<br />yhat_upper: 2189.652","ds: 2026-09-01<br />y:   NA<br />yhat_lower: 1694.797<br />yhat_upper: 2198.759","ds: 2026-10-01<br />y:   NA<br />yhat_lower: 1939.821<br />yhat_upper: 2413.981","ds: 2026-11-01<br />y:   NA<br />yhat_lower: 1821.800<br />yhat_upper: 2311.361","ds: 2026-12-01<br />y:   NA<br />yhat_lower: 1641.533<br />yhat_upper: 2138.120","ds: 2027-01-01<br />y:   NA<br />yhat_lower: 1808.886<br />yhat_upper: 2315.260","ds: 2027-02-01<br />y:   NA<br />yhat_lower: 1637.038<br />yhat_upper: 2156.538","ds: 2027-03-01<br />y:   NA<br />yhat_lower: 1910.253<br />yhat_upper: 2388.149","ds: 2027-04-01<br />y:   NA<br />yhat_lower: 1612.638<br />yhat_upper: 2097.968","ds: 2027-05-01<br />y:   NA<br />yhat_lower: 1854.224<br />yhat_upper: 2331.142","ds: 2027-06-01<br />y:   NA<br />yhat_lower: 1848.640<br />yhat_upper: 2332.989","ds: 2027-06-01<br />y:   NA<br />yhat_lower: 1848.640<br />yhat_upper: 2332.989","ds: 2027-06-01<br />y:   NA<br />yhat_lower: 1848.640<br />yhat_upper: 2332.989","ds: 2027-05-01<br />y:   NA<br />yhat_lower: 1854.224<br />yhat_upper: 2331.142","ds: 2027-04-01<br />y:   NA<br />yhat_lower: 1612.638<br />yhat_upper: 2097.968","ds: 2027-03-01<br />y:   NA<br />yhat_lower: 1910.253<br />yhat_upper: 2388.149","ds: 2027-02-01<br />y:   NA<br />yhat_lower: 1637.038<br />yhat_upper: 2156.538","ds: 2027-01-01<br />y:   NA<br />yhat_lower: 1808.886<br />yhat_upper: 2315.260","ds: 2026-12-01<br />y:   NA<br />yhat_lower: 1641.533<br />yhat_upper: 2138.120","ds: 2026-11-01<br />y:   NA<br />yhat_lower: 1821.800<br />yhat_upper: 2311.361","ds: 2026-10-01<br />y:   NA<br />yhat_lower: 1939.821<br />yhat_upper: 2413.981","ds: 2026-09-01<br />y:   NA<br />yhat_lower: 1694.797<br />yhat_upper: 2198.759","ds: 2026-08-01<br />y:   NA<br />yhat_lower: 1685.957<br />yhat_upper: 2189.652","ds: 2026-07-01<br />y:   NA<br />yhat_lower: 1576.157<br />yhat_upper: 2069.870","ds: 2026-06-01<br />y: 2155<br />yhat_lower: 1833.947<br />yhat_upper: 2312.447","ds: 2026-05-01<br />y: 1755<br />yhat_lower: 1820.586<br />yhat_upper: 2324.434","ds: 2026-04-01<br />y: 1999<br />yhat_lower: 1779.677<br />yhat_upper: 2259.131","ds: 2026-03-01<br />y: 1981<br />yhat_lower: 1964.340<br />yhat_upper: 2459.428","ds: 2026-02-01<br />y: 1801<br />yhat_lower: 1573.503<br />yhat_upper: 2088.193","ds: 2026-01-01<br />y: 1833<br />yhat_lower: 1908.232<br />yhat_upper: 2382.116","ds: 2025-12-01<br />y: 2306<br />yhat_lower: 1853.882<br />yhat_upper: 2338.046","ds: 2025-11-01<br />y: 1885<br />yhat_lower: 1796.153<br />yhat_upper: 2288.285","ds: 2025-10-01<br />y: 2401<br />yhat_lower: 1934.502<br />yhat_upper: 2398.452","ds: 2025-09-01<br />y: 2123<br />yhat_lower: 1794.478<br />yhat_upper: 2281.962","ds: 2025-08-01<br />y: 1878<br />yhat_lower: 1717.401<br />yhat_upper: 2221.380","ds: 2025-07-01<br />y: 2122<br />yhat_lower: 1765.757<br />yhat_upper: 2254.469","ds: 2025-06-01<br />y: 2074<br />yhat_lower: 1802.702<br />yhat_upper: 2298.900","ds: 2025-05-01<br />y: 1963<br />yhat_lower: 1808.380<br />yhat_upper: 2302.242","ds: 2025-04-01<br />y: 2035<br />yhat_lower: 1911.063<br />yhat_upper: 2395.894","ds: 2025-03-01<br />y: 2129<br />yhat_lower: 2066.242<br />yhat_upper: 2543.546","ds: 2025-02-01<br />y: 1913<br />yhat_lower: 1537.807<br />yhat_upper: 2029.483","ds: 2025-01-01<br />y: 2352<br />yhat_lower: 1967.321<br />yhat_upper: 2472.069","ds: 2024-12-01<br />y: 2154<br />yhat_lower: 2061.449<br />yhat_upper: 2545.452","ds: 2024-11-01<br />y: 1998<br />yhat_lower: 1737.234<br />yhat_upper: 2227.332","ds: 2024-10-01<br />y: 2368<br />yhat_lower: 1909.807<br />yhat_upper: 2407.138","ds: 2024-09-01<br />y: 2257<br />yhat_lower: 1893.707<br />yhat_upper: 2391.441","ds: 2024-08-01<br />y: 2222<br />yhat_lower: 1749.253<br />yhat_upper: 2242.606","ds: 2024-07-01<br />y: 2527<br />yhat_lower: 1938.773<br />yhat_upper: 2437.249","ds: 2024-06-01<br />y: 2119<br />yhat_lower: 1795.073<br />yhat_upper: 2297.439","ds: 2024-05-01<br />y: 2499<br />yhat_lower: 1782.797<br />yhat_upper: 2292.359","ds: 2024-04-01<br />y: 2654<br />yhat_lower: 2050.563<br />yhat_upper: 2559.336","ds: 2024-03-01<br />y: 2636<br />yhat_lower: 2134.130<br />yhat_upper: 2629.435","ds: 2024-02-01<br />y: 2302<br />yhat_lower: 1956.697<br />yhat_upper: 2420.625","ds: 2024-01-01<br />y: 2413<br />yhat_lower: 1972.915<br />yhat_upper: 2475.361","ds: 2023-12-01<br />y: 1989<br />yhat_lower: 1653.812<br />yhat_upper: 2140.967","ds: 2023-11-01<br />y: 2346<br />yhat_lower: 2077.611<br />yhat_upper: 2583.204","ds: 2023-10-01<br />y: 2448<br />yhat_lower: 2138.894<br />yhat_upper: 2650.137","ds: 2023-09-01<br />y: 1979<br />yhat_lower: 1833.959<br />yhat_upper: 2331.662","ds: 2023-08-01<br />y: 1922<br />yhat_lower: 1885.392<br />yhat_upper: 2358.574","ds: 2023-07-01<br />y: 1705<br />yhat_lower: 1628.772<br />yhat_upper: 2130.360","ds: 2023-06-01<br />y: 1913<br />yhat_lower: 2082.401<br />yhat_upper: 2571.139","ds: 2023-05-01<br />y: 2260<br />yhat_lower: 2075.725<br />yhat_upper: 2583.766","ds: 2023-04-01<br />y: 2036<br />yhat_lower: 1844.740<br />yhat_upper: 2333.362","ds: 2023-03-01<br />y: 2360<br />yhat_lower: 2112.286<br />yhat_upper: 2611.084","ds: 2023-02-01<br />y: 1928<br />yhat_lower: 1881.511<br />yhat_upper: 2381.003","ds: 2023-01-01<br />y: 2157<br />yhat_lower: 2066.026<br />yhat_upper: 2548.760","ds: 2022-12-01<br />y: 1827<br />yhat_lower: 1848.651<br />yhat_upper: 2343.344","ds: 2022-11-01<br />y: 2227<br />yhat_lower: 2042.185<br />yhat_upper: 2516.705","ds: 2022-10-01<br />y: 2152<br />yhat_lower: 2141.200<br />yhat_upper: 2629.199","ds: 2022-09-01<br />y: 1924<br />yhat_lower: 1924.029<br />yhat_upper: 2448.203","ds: 2022-08-01<br />y: 1989<br />yhat_lower: 1920.379<br />yhat_upper: 2399.387","ds: 2022-07-01<br />y: 1751<br />yhat_lower: 1826.278<br />yhat_upper: 2297.057","ds: 2022-06-01<br />y: 2150<br />yhat_lower: 2066.257<br />yhat_upper: 2543.515","ds: 2022-05-01<br />y: 2331<br />yhat_lower: 2047.464<br />yhat_upper: 2552.536","ds: 2022-04-01<br />y: 2084<br />yhat_lower: 1987.038<br />yhat_upper: 2481.729","ds: 2022-03-01<br />y: 2609<br />yhat_lower: 2191.433<br />yhat_upper: 2701.084","ds: 2022-02-01<br />y: 2071<br />yhat_lower: 1832.137<br />yhat_upper: 2312.713","ds: 2022-01-01<br />y: 2500<br />yhat_lower: 2123.776<br />yhat_upper: 2622.661","ds: 2021-12-01<br />y: 2442<br />yhat_lower: 2082.737<br />yhat_upper: 2559.454","ds: 2021-11-01<br />y: 2462<br />yhat_lower: 2000.217<br />yhat_upper: 2510.389","ds: 2021-10-01<br />y: 2120<br />yhat_lower: 2153.633<br />yhat_upper: 2635.352","ds: 2021-09-01<br />y: 2422<br />yhat_lower: 2005.337<br />yhat_upper: 2502.630","ds: 2021-08-01<br />y: 2405<br />yhat_lower: 1962.548<br />yhat_upper: 2434.021","ds: 2021-07-01<br />y: 2259<br />yhat_lower: 1995.304<br />yhat_upper: 2488.912","ds: 2021-06-01<br />y: 2644<br />yhat_lower: 2015.629<br />yhat_upper: 2525.908","ds: 2021-06-01<br />y: 2644<br />yhat_lower: 2015.629<br />yhat_upper: 2525.908"],"type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"transparent","dash":"solid"},"fill":"toself","fillcolor":"rgba(0,114,178,0.2)","hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1622505600,1625097600,1627776000,1630454400,1633046400,1635724800,1638316800,1640995200,1643673600,1646092800,1648771200,1651363200,1654041600,1656633600,1659312000,1661990400,1664582400,1667260800,1669852800,1672531200,1675209600,1677628800,1680307200,1682899200,1685577600,1688169600,1690848000,1693526400,1696118400,1698796800,1701388800,1704067200,1706745600,1709251200,1711929600,1714521600,1717200000,1719792000,1722470400,1725148800,1727740800,1730419200,1733011200,1735689600,1738368000,1740787200,1743465600,1746057600,1748736000,1751328000,1754006400,1756684800,1759276800,1761955200,1764547200,1767225600,1769904000,1772323200,1775001600,1777593600,1780272000,1782864000,1785542400,1788220800,1790812800,1793491200,1796083200,1798761600,1801440000,1803859200,1806537600,1809129600,1811808000],"y":[2644,2259,2405,2422,2120,2462,2442,2500,2071,2609,2084,2331,2150,1751,1989,1924,2152,2227,1827,2157,1928,2360,2036,2260,1913,1705,1922,1979,2448,2346,1989,2413,2302,2636,2654,2499,2119,2527,2222,2257,2368,1998,2154,2352,1913,2129,2035,1963,2074,2122,1878,2123,2401,1885,2306,1833,1801,1981,1999,1755,2155,null,null,null,null,null,null,null,null,null,null,null,null],"text":["ds: 2021-06-01<br />y: 2644","ds: 2021-07-01<br />y: 2259","ds: 2021-08-01<br />y: 2405","ds: 2021-09-01<br />y: 2422","ds: 2021-10-01<br />y: 2120","ds: 2021-11-01<br />y: 2462","ds: 2021-12-01<br />y: 2442","ds: 2022-01-01<br />y: 2500","ds: 2022-02-01<br />y: 2071","ds: 2022-03-01<br />y: 2609","ds: 2022-04-01<br />y: 2084","ds: 2022-05-01<br />y: 2331","ds: 2022-06-01<br />y: 2150","ds: 2022-07-01<br />y: 1751","ds: 2022-08-01<br />y: 1989","ds: 2022-09-01<br />y: 1924","ds: 2022-10-01<br />y: 2152","ds: 2022-11-01<br />y: 2227","ds: 2022-12-01<br />y: 1827","ds: 2023-01-01<br />y: 2157","ds: 2023-02-01<br />y: 1928","ds: 2023-03-01<br />y: 2360","ds: 2023-04-01<br />y: 2036","ds: 2023-05-01<br />y: 2260","ds: 2023-06-01<br />y: 1913","ds: 2023-07-01<br />y: 1705","ds: 2023-08-01<br />y: 1922","ds: 2023-09-01<br />y: 1979","ds: 2023-10-01<br />y: 2448","ds: 2023-11-01<br />y: 2346","ds: 2023-12-01<br />y: 1989","ds: 2024-01-01<br />y: 2413","ds: 2024-02-01<br />y: 2302","ds: 2024-03-01<br />y: 2636","ds: 2024-04-01<br />y: 2654","ds: 2024-05-01<br />y: 2499","ds: 2024-06-01<br />y: 2119","ds: 2024-07-01<br />y: 2527","ds: 2024-08-01<br />y: 2222","ds: 2024-09-01<br />y: 2257","ds: 2024-10-01<br />y: 2368","ds: 2024-11-01<br />y: 1998","ds: 2024-12-01<br />y: 2154","ds: 2025-01-01<br />y: 2352","ds: 2025-02-01<br />y: 1913","ds: 2025-03-01<br />y: 2129","ds: 2025-04-01<br />y: 2035","ds: 2025-05-01<br />y: 1963","ds: 2025-06-01<br />y: 2074","ds: 2025-07-01<br />y: 2122","ds: 2025-08-01<br />y: 1878","ds: 2025-09-01<br />y: 2123","ds: 2025-10-01<br />y: 2401","ds: 2025-11-01<br />y: 1885","ds: 2025-12-01<br />y: 2306","ds: 2026-01-01<br />y: 1833","ds: 2026-02-01<br />y: 1801","ds: 2026-03-01<br />y: 1981","ds: 2026-04-01<br />y: 1999","ds: 2026-05-01<br />y: 1755","ds: 2026-06-01<br />y: 2155","ds: 2026-07-01<br />y:   NA","ds: 2026-08-01<br />y:   NA","ds: 2026-09-01<br />y:   NA","ds: 2026-10-01<br />y:   NA","ds: 2026-11-01<br />y:   NA","ds: 2026-12-01<br />y:   NA","ds: 2027-01-01<br />y:   NA","ds: 2027-02-01<br />y:   NA","ds: 2027-03-01<br />y:   NA","ds: 2027-04-01<br />y:   NA","ds: 2027-05-01<br />y:   NA","ds: 2027-06-01<br />y:   NA"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,0,1)","opacity":1,"size":5.6692913385826778,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1622505600,1625097600,1627776000,1630454400,1633046400,1635724800,1638316800,1640995200,1643673600,1646092800,1648771200,1651363200,1654041600,1656633600,1659312000,1661990400,1664582400,1667260800,1669852800,1672531200,1675209600,1677628800,1680307200,1682899200,1685577600,1688169600,1690848000,1693526400,1696118400,1698796800,1701388800,1704067200,1706745600,1709251200,1711929600,1714521600,1717200000,1719792000,1722470400,1725148800,1727740800,1730419200,1733011200,1735689600,1738368000,1740787200,1743465600,1746057600,1748736000,1751328000,1754006400,1756684800,1759276800,1761955200,1764547200,1767225600,1769904000,1772323200,1775001600,1777593600,1780272000,1782864000,1785542400,1788220800,1790812800,1793491200,1796083200,1798761600,1801440000,1803859200,1806537600,1809129600,1811808000],"y":[2278.9853409782927,2238.4503840847237,2187.6549367378138,2269.112291246141,2389.3633595497377,2259.7420761698336,2322.7018692118418,2370.5986407977748,2074.1826164548074,2447.7577080243932,2238.8705158773755,2304.0835594166647,2303.127810222019,2054.932877037204,2155.062007893277,2177.6280335316219,2389.7903110429661,2302.2279250891452,2105.7167787115795,2297.4102274354732,2123.6112317327115,2362.3948372968066,2091.7126983519761,2320.4630150049161,2324.9502784075494,1870.6182679068409,2123.7937646340929,2087.3475283666089,2391.2426387718538,2341.8754198229999,1887.6038323380633,2227.3523992917476,2173.6229802824378,2382.6613605316893,2307.1046585204394,2047.1974686132235,2023.2832750220059,2191.7259855989978,1992.234868310986,2132.458174679643,2160.7230636376862,1985.1794391368337,2309.0612404711901,2217.5486376112631,1796.1145961331188,2301.6233984552709,2157.796568402488,2060.0629817113504,2049.6376679760165,2009.1001356560953,1958.3020270366701,2039.7567203707758,2160.0052133430872,2030.3812687350537,2093.3384863951601,2141.2325966259896,1844.8139109262552,2218.3865986334936,2009.4967448890839,2074.7072126884964,2073.7488018851418,1825.5512929516235,1925.6777556415182,1948.2411131126673,2160.4008083911331,2072.8357541303553,1876.3219882844598,2068.0127302250762,1894.2110275604111,2132.9921881308874,1862.3073420253131,2091.0550388443289,2095.5395950292209],"text":["ds: 2021-06-01<br />yhat: 2278.985","ds: 2021-07-01<br />yhat: 2238.450","ds: 2021-08-01<br />yhat: 2187.655","ds: 2021-09-01<br />yhat: 2269.112","ds: 2021-10-01<br />yhat: 2389.363","ds: 2021-11-01<br />yhat: 2259.742","ds: 2021-12-01<br />yhat: 2322.702","ds: 2022-01-01<br />yhat: 2370.599","ds: 2022-02-01<br />yhat: 2074.183","ds: 2022-03-01<br />yhat: 2447.758","ds: 2022-04-01<br />yhat: 2238.871","ds: 2022-05-01<br />yhat: 2304.084","ds: 2022-06-01<br />yhat: 2303.128","ds: 2022-07-01<br />yhat: 2054.933","ds: 2022-08-01<br />yhat: 2155.062","ds: 2022-09-01<br />yhat: 2177.628","ds: 2022-10-01<br />yhat: 2389.790","ds: 2022-11-01<br />yhat: 2302.228","ds: 2022-12-01<br />yhat: 2105.717","ds: 2023-01-01<br />yhat: 2297.410","ds: 2023-02-01<br />yhat: 2123.611","ds: 2023-03-01<br />yhat: 2362.395","ds: 2023-04-01<br />yhat: 2091.713","ds: 2023-05-01<br />yhat: 2320.463","ds: 2023-06-01<br />yhat: 2324.950","ds: 2023-07-01<br />yhat: 1870.618","ds: 2023-08-01<br />yhat: 2123.794","ds: 2023-09-01<br />yhat: 2087.348","ds: 2023-10-01<br />yhat: 2391.243","ds: 2023-11-01<br />yhat: 2341.875","ds: 2023-12-01<br />yhat: 1887.604","ds: 2024-01-01<br />yhat: 2227.352","ds: 2024-02-01<br />yhat: 2173.623","ds: 2024-03-01<br />yhat: 2382.661","ds: 2024-04-01<br />yhat: 2307.105","ds: 2024-05-01<br />yhat: 2047.197","ds: 2024-06-01<br />yhat: 2023.283","ds: 2024-07-01<br />yhat: 2191.726","ds: 2024-08-01<br />yhat: 1992.235","ds: 2024-09-01<br />yhat: 2132.458","ds: 2024-10-01<br />yhat: 2160.723","ds: 2024-11-01<br />yhat: 1985.179","ds: 2024-12-01<br />yhat: 2309.061","ds: 2025-01-01<br />yhat: 2217.549","ds: 2025-02-01<br />yhat: 1796.115","ds: 2025-03-01<br />yhat: 2301.623","ds: 2025-04-01<br />yhat: 2157.797","ds: 2025-05-01<br />yhat: 2060.063","ds: 2025-06-01<br />yhat: 2049.638","ds: 2025-07-01<br />yhat: 2009.100","ds: 2025-08-01<br />yhat: 1958.302","ds: 2025-09-01<br />yhat: 2039.757","ds: 2025-10-01<br />yhat: 2160.005","ds: 2025-11-01<br />yhat: 2030.381","ds: 2025-12-01<br />yhat: 2093.338","ds: 2026-01-01<br />yhat: 2141.233","ds: 2026-02-01<br />yhat: 1844.814","ds: 2026-03-01<br />yhat: 2218.387","ds: 2026-04-01<br />yhat: 2009.497","ds: 2026-05-01<br />yhat: 2074.707","ds: 2026-06-01<br />yhat: 2073.749","ds: 2026-07-01<br />yhat: 1825.551","ds: 2026-08-01<br />yhat: 1925.678","ds: 2026-09-01<br />yhat: 1948.241","ds: 2026-10-01<br />yhat: 2160.401","ds: 2026-11-01<br />yhat: 2072.836","ds: 2026-12-01<br />yhat: 1876.322","ds: 2027-01-01<br />yhat: 2068.013","ds: 2027-02-01<br />yhat: 1894.211","ds: 2027-03-01<br />yhat: 2132.992","ds: 2027-04-01<br />yhat: 1862.307","ds: 2027-05-01<br />yhat: 2091.055","ds: 2027-06-01<br />yhat: 2095.540"],"type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,114,178,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":23.305936073059364,"r":7.3059360730593621,"b":37.260273972602747,"l":48.949771689497723},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[1613040480,1821273120],"tickmode":"array","ticktext":["2022","2024","2026"],"tickvals":[1640995200,1704067200,1767225600],"categoryorder":"array","categoryarray":["2022","2024","2026"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"ds","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[1479.6427533509038,2759.247940805275],"tickmode":"array","ticktext":["1500","1750","2000","2250","2500","2750"],"tickvals":[1500,1750,2000,2250,2500,2750],"categoryorder":"array","categoryarray":["1500","1750","2000","2250","2500","2750"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"y","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"3b1126c83b33":{"x":{},"y":{},"ymin":{},"ymax":{},"type":"scatter"},"3b1123a6a529":{"x":{},"y":{}},"3b1111a53908":{"x":{},"y":{}}},"cur_data":"3b1126c83b33","visdat":{"3b1126c83b33":["function (y) ","x"],"3b1123a6a529":["function (y) ","x"],"3b1111a53908":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># modify data</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>forecast_yoy <span class="ot">&lt;-</span> forecast <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ds, yhat, yhat_lower, yhat_upper) <span class="sc">|&gt;</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(prophet_payment, <span class="at">by =</span> <span class="st">"ds"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(y), yhat, y),</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(y), <span class="st">"Forecast"</span>, <span class="st">"Actual"</span>),</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">year</span>(ds),</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">month =</span> <span class="fu">month</span>(ds, <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="at">abbr =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co"># plot </span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>forecast_yoy <span class="sc">|&gt;</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> <span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span>, <span class="at">fill =</span> type)) <span class="sc">+</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(<span class="st">`</span><span class="at">Calls Offered</span><span class="st">`</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> year, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Payment Calls Offered Forecast by Month"</span>,</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Month"</span>,</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Calls Offered"</span>,</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="cn">NULL</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="forecasting-phone-volume_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="section" class="level1">
+<h1></h1>
+</section>
+<section id="sources" class="level1">
+<h1>Sources</h1>
+<p><a href="https://data.mesaaz.gov/Business-Services/Utility-Customer-Calls-Answered/3mzs-jhfh?utm_source=chatgpt.com">City of Mesa Public Data Hub - Utility Customer Calls Answered</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

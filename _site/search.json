@@ -46,7 +46,7 @@
     "href": "index.html",
     "title": "Randi Bolt",
     "section": "",
-    "text": "I’m a data analyst for the Oregon Employment Department, where I support the Contributions and Recovery team transform complex data into actionable insights with Tableau and R.\nOutside of work, I explore data through various personal projects that incorporate analytics, visualization, and storytelling. Check out my blogs, dashboards, and talks to see more."
+    "text": "I’m Randi Bolt, a Data Analytics Lead for the Oregon Employment Department. I use technical analysis to bring clarity to complex, high-stakes decisions. My projects and talks show how R, statistics, and visualization can make data and its limitations easier to understand.\n      \n        Email\n        GitHub\n        LinkedIn\n      \n    \n  \n\n  \n    Featured talk\n    Making Sense of Messy Data\n    Presented at Cascadia R Conf · June 2026\n    A practical introduction to text mining in R, motivated by the challenge of analyzing thousands of open-ended survey responses in government work, covering sentiment analysis, topic modeling, and the tradeoffs in choosing a model.\n    \n      View slides\n      Read related notes"
   },
   {
     "objectID": "pages/talks.html",
@@ -123,7 +123,7 @@
     "href": "blog.html",
     "title": "Randi Bolt",
     "section": "",
-    "text": "Text Mining, Sentiment Analysis, & Topic Modeling\n\n\n\n\n\n\nR\n\n\nText Mining\n\n\nTopic Modeling\n\n\nSentiment Analysis\n\n\n\n\n\n\n\n\n\nJun 3, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nWeekly Updates\n\n\n\n\n\n\nUpdates\n\n\n\n\n\n\n\n\n\nMay 31, 2026\n\n\n\n\n\n\nNo matching items"
+    "text": "Text Mining, Sentiment Analysis, & Topic Modeling\n\n\n\n\n\n\nR\n\n\nText Mining\n\n\nTopic Modeling\n\n\nSentiment Analysis\n\n\n\n\n\n\n\n\n\nJun 3, 2026\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/PawneeSurveyAnalysis.html",
@@ -131,13 +131,6 @@
     "title": "PawneeSurveyAnalysis",
     "section": "",
     "text": "Here is a test ladyy."
-  },
-  {
-    "objectID": "blog/weekly-updates.html",
-    "href": "blog/weekly-updates.html",
-    "title": "Weekly Updates",
-    "section": "",
-    "text": "Each week I plan to post professional updates on what worked in the previous week, what I learned, what felt difficult, and what I’m focused on in the coming week.\n\nMay 31st, 2026\nFull moon tonight, and I have my blog open to publish some notes for other posts. I didn’t really stick to this weekly updates thing did I? Sorry about it. Guess I’m too busy collecting my roses being a data rock star. 🌹😘 ✨\nLast week I did some data validation that I feel very confident in, a fun little ad-hoc analysis around scheduling, and I have two dashboards in test ready to publish this week. OMG data queen. Save some analysis for the rest of us, will ya!\nThere is so much trust and confidence in me from leaders and collaborators that I’ve started researching forecasting models for time series data. The first one is Prophet which I used many years ago for a blog post related to stocks. The second is ETS (Error, Trend, Seasonality), which is also commonly used for forecasting, but I am hoping to use R for this (instead of excel). My initial goal is to compare different forecasting methods to explore trends in phone volume, but I think this knowledge could be applied to so much that we do here. Why not add another jewel to my crown?\n\n\nJanuary 5th, 2026\nLast week I spent time exploring a new, very large dataset and getting a feel for what is and isn’t possible. Along the way, it became clear that high level aggregations will require more granular exploration due to the different nuances and triggers across workflows. I also built an employee hierarchy dataset and dashboard to support this exploration that ultimately will not work for a larger build. While it was not a finished solution, it was a useful starting point. It surfaced assumptions I was making and served as a reminder that early exploratory analysis often raises more questions than answers, and that is just part of the process.\nIt has been strange adjusting from being a manager to an individual contributor. At times, I feel an internal pressure to join conversations or meetings about work I used to own or make decisions about. I am being intentional about setting boundaries and letting my manager or other analysts own their work, even when that feels uncomfortable or frustrating.\nThis week I have several important meetings that should help clarify my focus over the next few months. I want to stay focused, define a clear path forward for these large scale projects, and make intentional choices rather than reacting to outside pressure."
   },
   {
     "objectID": "blog/text-mining-notes.html",
@@ -187,5 +180,61 @@
     "title": "Text Mining, Sentiment Analysis, & Topic Modeling",
     "section": "Definitions",
     "text": "Definitions\n\n(\\(\\beta\\)) Distribution of Words in a Topic\nThe vocabulary (mix of words) that defines a topic.\n(How likely a word occurs in a topic.)\n\\[\\beta_{d,k}=P(w_v|k,y_d)\\]\nThe word distribution for topic \\(k\\) is the probability of vocabulary word \\(w_v\\), given topic \\(k\\) and the document-level covariates \\(y_d\\).\n\n\n(\\(z_{d,n}\\)) Topic Assignment (per word\nThe topic assigned to a specific word in a specific document.\n(Which topic generated a specific word.)\n\\[z_{d,n} \\in \\{1, \\ldots, K\\}\\]\nFor the \\(n\\)th word in document \\(d\\), which topic \\(k\\) generated that word.\n\n\n(\\(\\theta\\)) Distribution of Topic sin a Document\nThe mix of topics a document covers.\n(Document d is 70% topic 1 and 30% topic 2. )\n\\[\\theta_{d,k} = P(z = k \\mid d)\\]\nFor document \\(d\\), \\(\\theta_{d,k}\\) is the probability that a word in that document belongs to topic \\(k\\).\n\n\n(\\(y_d\\)) Covariate Effect\nDocument-level information that can change how a topic is expressed in words, and helps explain why the same topic might use different words in different documents.\n\n\nLatent Variables\nHidden variables that are a part of the model that we do not directly observe, but want to infer."
+  },
+  {
+    "objectID": "blog/text-mining-movie-reviews.html",
+    "href": "blog/text-mining-movie-reviews.html",
+    "title": "Text Mining Movie Reviews",
+    "section": "",
+    "text": "library(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   4.0.0     ✔ tibble    3.3.0\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.4     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(tidytext)\nlibrary(wordcloud)\n\nLoading required package: RColorBrewer\n\nlibrary(readr)\nlibrary(stm)\n\nstm v1.3.7 successfully loaded. See ?stm for help. \n Papers, resources, and other materials at structuraltopicmodel.com\n\n\n\ndogville &lt;- read_csv(\"data/dogville_reviews_text_only.csv\")\n\nRows: 552 Columns: 15\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (6): imdb_review_id, review_title, review_text, review_date_raw, userna...\ndbl  (6): row_id, movie_review_score, helpful_up, helpful_down, helpful_net,...\nlgl  (2): spoiler_collapsed_in_source_file, review_text_available\ndate (1): review_date\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\nhead(dogville)\n\n# A tibble: 6 × 15\n  row_id imdb_review_id review_title     review_text review_date review_date_raw\n   &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;            &lt;chr&gt;       &lt;date&gt;      &lt;chr&gt;          \n1      1 rw1159999      Hard to digest,… \"Tough. On… 2005-08-28  Aug 28, 2005   \n2      2 rw2166534      Are you shiveri… \"This is p… 2009-11-30  Nov 30, 2009   \n3      6 rw0792832      Incredible!!!    \"When I st… 2004-09-03  Sep 3, 2004    \n4      9 rw7513237      A Brilliant Mov… \"Dogville … 2021-11-05  Nov 5, 2021    \n5     11 rw0792692      You'll Either L… \"The story… 2004-03-19  Mar 19, 2004   \n6     12 rw6798562      If you take eve… \"Here Trie… 2021-04-10  Apr 10, 2021   \n# ℹ 9 more variables: movie_review_score &lt;dbl&gt;, helpful_up &lt;dbl&gt;,\n#   helpful_down &lt;dbl&gt;, helpful_net &lt;dbl&gt;, username &lt;chr&gt;,\n#   spoiler_collapsed_in_source_file &lt;lgl&gt;, review_text_available &lt;lgl&gt;,\n#   review_word_count &lt;dbl&gt;, permalink &lt;chr&gt;"
+  },
+  {
+    "objectID": "blog/text-mining-movie-reviews.html#clean-data",
+    "href": "blog/text-mining-movie-reviews.html#clean-data",
+    "title": "Text Mining Movie Reviews",
+    "section": "Clean Data",
+    "text": "Clean Data\n\nclean_text &lt;- function(data, text) {\n  data |&gt;\n    mutate(\n      text_clean = {{ text }} |&gt;\n        str_to_lower() |&gt;\n        str_replace_all(\"&lt;br\\\\s*/?&gt;\", \" \") |&gt;\n        str_replace_all(\"[^a-z0-9\\\\s]\", \" \") |&gt;\n        str_squish()\n    )\n}"
+  },
+  {
+    "objectID": "blog/text-mining-movie-reviews.html#tokenize-text",
+    "href": "blog/text-mining-movie-reviews.html#tokenize-text",
+    "title": "Text Mining Movie Reviews",
+    "section": "Tokenize Text",
+    "text": "Tokenize Text\n\ntokenize_text &lt;- function(data) {\n  data |&gt;\n    unnest_tokens(word, text_clean) |&gt;\n    anti_join(stop_words, by = \"word\")\n}"
+  },
+  {
+    "objectID": "blog/text-mining-movie-reviews.html#term-frequencies",
+    "href": "blog/text-mining-movie-reviews.html#term-frequencies",
+    "title": "Text Mining Movie Reviews",
+    "section": "Term Frequencies",
+    "text": "Term Frequencies\n\nterm_frequencies &lt;- function(data) {\n  data |&gt;\n    count(word, sort = TRUE) \n}"
+  },
+  {
+    "objectID": "blog/text-mining-movie-reviews.html#sentiment-analysis",
+    "href": "blog/text-mining-movie-reviews.html#sentiment-analysis",
+    "title": "Text Mining Movie Reviews",
+    "section": "Sentiment Analysis",
+    "text": "Sentiment Analysis\n\nsentiment_wordcloud &lt;- function(data, lexicon = \"bing\") {\n  data |&gt;\n    inner_join(get_sentiments(lexicon), by = \"word\") |&gt;\n    count(word, sentiment) |&gt;\n    pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) |&gt;\n    column_to_rownames(\"word\") |&gt;\n    as.matrix() |&gt;\n    comparison.cloud(colors = c(\"#C0392B\", \"#2E7D32\"))\n}"
+  },
+  {
+    "objectID": "blog/text-mining-movie-reviews.html#prepare-data-for-model",
+    "href": "blog/text-mining-movie-reviews.html#prepare-data-for-model",
+    "title": "Text Mining Movie Reviews",
+    "section": "Prepare Data for Model",
+    "text": "Prepare Data for Model\n\nstm_data &lt;- function(data) {\n  dtm &lt;- data |&gt;\n    count(row_id, word) |&gt;\n    cast_sparse(row_id, word, n)\n\n  readCorpus(\n    as.matrix(dtm),\n    type = \"dtm\"\n  )\n}"
+  },
+  {
+    "objectID": "blog/text-mining-movie-reviews.html#choosing-k",
+    "href": "blog/text-mining-movie-reviews.html#choosing-k",
+    "title": "Text Mining Movie Reviews",
+    "section": "Choosing K",
+    "text": "Choosing K\n\nsearch_topics &lt;- function(stm_data, k = 2:10) {\n  searchK(\n    documents = stm_data$documents,\n    vocab = stm_data$vocab,\n    K = k\n  )\n}"
+  },
+  {
+    "objectID": "index.html#making-sense-of-messy-data",
+    "href": "index.html#making-sense-of-messy-data",
+    "title": "Randi Bolt",
+    "section": "",
+    "text": "Presented at Cascadia R Conf · June 2026\nA practical introduction to text mining in R, motivated by the challenge of analyzing thousands of open-ended survey responses in government work, covering sentiment analysis, topic modeling, and the tradeoffs in choosing a model.\nView slides · Read related notes"
   }
 ]

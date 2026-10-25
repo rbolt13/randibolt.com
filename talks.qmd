@@ -10,16 +10,16 @@ My presentations connect technical methods with the questions and decisions they
 
 ## Making Sense of Messy Data
 
-::: {.talk-tags aria-label="Topics"}
-[R]{.talk-tag} [Text mining]{.talk-tag} [Topic modeling]{.talk-tag}
-:::
-
 ::: {.talk-event}
 Presented at Cascadia R Conf · June 2026
 :::
 
 ::: {.talk-description}
 Learn a practical workflow for text mining in R, from cleaning open-ended responses to sentiment analysis and topic modeling. Motivated by the challenges of analyzing survey responses in government work, this talk uses movie reviews to demonstrate the methods and explain the tradeoffs in choosing a model.
+:::
+
+::: {.talk-tags aria-label="Topics"}
+[R]{.talk-tag} [Text mining]{.talk-tag} [Topic modeling]{.talk-tag}
 :::
 
 ::: {.talk-resources}
@@ -32,10 +32,6 @@ Learn a practical workflow for text mining in R, from cleaning open-ended respon
 
 ## Code to Content
 
-::: {.talk-tags aria-label="Topics"}
-[R]{.talk-tag} [Quarto]{.talk-tag} [Technical communication]{.talk-tag}
-:::
-
 ::: {.talk-event}
 Presented at [PDX R User Group](https://www.meetup.com/portland-r-user-group/events/298359537/) · February 2024  
 Presented at [Cascadia R Conference](https://cascadiarconf.com/) · June 2024
@@ -43,6 +39,10 @@ Presented at [Cascadia R Conference](https://cascadiarconf.com/) · June 2024
 
 ::: {.talk-description}
 Learn how a technical blog can help you share your R projects, explain what you’re learning, and build a record of your work. This six-minute talk draws on four years of blogging experience, with slides created using Quarto.
+:::
+
+::: {.talk-tags aria-label="Topics"}
+[R]{.talk-tag} [Quarto]{.talk-tag} [Technical communication]{.talk-tag}
 :::
 
 ::: {.talk-resources}
@@ -59,16 +59,16 @@ Learn how a technical blog can help you share your R projects, explain what you�
 
 ## Oregon Grown
 
-::: {.talk-tags aria-label="Topics"}
-[GIS]{.talk-tag} [Spatial analysis]{.talk-tag}
-:::
-
 ::: {.talk-event}
 Presented virtually at [GIS in Action](https://gisinaction2021.sched.com/directory/speakers) · April 2021
 :::
 
 ::: {.talk-description}
 See how mapping and spatial analysis can reveal patterns in business ownership. Using Oregon dispensary data from November 2020, this talk examines chain ownership statewide and within Portland’s Urban Growth Boundary.
+:::
+
+::: {.talk-tags aria-label="Topics"}
+[GIS]{.talk-tag} [Spatial analysis]{.talk-tag}
 :::
 
 ::: {.talk-resources}

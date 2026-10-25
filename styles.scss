@@ -1,9 +1,10 @@
 /*-- scss:defaults --*/
-$col1: #FAF7F5;
-$col2: #C8959A;
-$col3: #343039;
-$col4: #784852;
-$text-color: #343039;
+$col1: #F6F2EB;
+$col2: #E5D9C9;
+$accent-color: #BD858D;
+$col3: #245B60;
+$col4: #183F43;
+$text-color: #245B60;
 
 @import url('https://fonts.googleapis.com/css2?family=Tinos&display=swap');
 
@@ -106,14 +107,14 @@ a.about-link:hover, span.about-link-text:hover {
   text-underline-offset: .22em;
 }
 .landing a:focus-visible {
-  outline: 3px solid #784852;
+  outline: 3px solid $col3;
   outline-offset: 5px;
 }
 .landing-feature {
   margin-top: clamp(2.5rem, 6vw, 4.5rem);
   padding: clamp(1.5rem, 4vw, 2.5rem);
   border: 1px solid rgba($col3, .18);
-  border-top: 4px solid $col2;
+  border-top: 4px solid $accent-color;
   border-radius: 12px;
   background: rgba(255, 255, 255, .45);
 }

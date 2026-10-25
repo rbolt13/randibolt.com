@@ -1,10 +1,10 @@
 /*-- scss:defaults --*/
-$col1: #FAF5EF;
-$col2: #DED0BE;
-$accent-color: #AD737A;
-$col3: #443A35;
-$col4: #805057;
-$text-color: #443A35;
+$col1: #F5F3EF;
+$col2: #24434A;
+$accent-color: #7C9FA4;
+$col3: #24434A;
+$col4: #385E66;
+$text-color: #283438;
 
 @import url('https://fonts.googleapis.com/css2?family=Tinos&display=swap');
 
@@ -145,5 +145,27 @@ a.about-link:hover, span.about-link-text:hover {
 }
 
 .landing-links .bi { margin-right: .4rem; }
+
+// Contrast on the petrol navigation
+.navbar .navbar-brand,
+.navbar .navbar-brand span,
+.navbar .nav-link,
+.navbar .nav-link span,
+.navbar .quarto-navigation-tool,
+.navbar i,
+.navbar svg {
+  color: #FFFFFF !important;
+}
+.navbar svg {
+  fill: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+}
+.navbar .navbar-toggler {
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, .6);
+}
+.navbar .navbar-toggler-icon {
+  filter: brightness(0) invert(1);
+}
 
 /*-- scss:uses --*/

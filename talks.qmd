@@ -1,12 +1,18 @@
 ---
-title: "Talks"
+pagetitle: "Presentations | Randi Bolt"
 toc: true
 comments: false
 ---
 
+My presentations connect technical methods with the questions and decisions they can help us address. Through practical examples, I share approaches to analyzing data and communicating what we learn.
+
 ::: {.talk-card}
 
 ## Making Sense of Messy Data
+
+::: {.talk-tags aria-label="Topics"}
+[R]{.talk-tag} [Text mining]{.talk-tag} [Topic modeling]{.talk-tag}
+:::
 
 ::: {.talk-event}
 Presented at Cascadia R Conf · June 2026
@@ -25,6 +31,10 @@ Learn a practical workflow for text mining in R, from cleaning open-ended respon
 ::: {.talk-card}
 
 ## Code to Content
+
+::: {.talk-tags aria-label="Topics"}
+[R]{.talk-tag} [Quarto]{.talk-tag} [Technical communication]{.talk-tag}
+:::
 
 ::: {.talk-event}
 Presented at [PDX R User Group](https://www.meetup.com/portland-r-user-group/events/298359537/) · February 2024  
@@ -48,6 +58,10 @@ Learn how a technical blog can help you share your R projects, explain what you�
 ::: {.talk-card}
 
 ## Oregon Grown
+
+::: {.talk-tags aria-label="Topics"}
+[GIS]{.talk-tag} [Spatial analysis]{.talk-tag}
+:::
 
 ::: {.talk-event}
 Presented virtually at [GIS in Action](https://gisinaction2021.sched.com/directory/speakers) · April 2021

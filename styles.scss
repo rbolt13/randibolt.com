@@ -215,4 +215,19 @@ a.about-link:hover, span.about-link-text:hover {
   line-height: 1.5;
 }
 
+.talk-thumbnail {
+  margin-top: 1.5rem;
+  max-width: 760px;
+}
+.talk-thumbnail img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+.talk-thumbnail p,
+.talk-thumbnail figure {
+  margin-bottom: 0;
+}
+
 /*-- scss:uses --*/

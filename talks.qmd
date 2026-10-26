@@ -28,6 +28,10 @@ comments: false
 ::: {.talk-video}
 <iframe src="https://making-sense-talk.netlify.app/#/title-slide" title="Making Sense of Messy Data slides" loading="lazy" allowfullscreen></iframe>
 :::
+
+::: {.talk-event}
+Presented at Cascadia R Conf · June 2026
+:::
 :::::
 
 ::::: {.talk-content}
@@ -41,10 +45,6 @@ Learn a practical workflow for text mining in R, from cleaning open-ended respon
 :::::
 
 ::::::
-
-::: {.talk-event}
-Presented at Cascadia R Conf · June 2026
-:::
 
 :::::::
 
@@ -66,6 +66,11 @@ Presented at Cascadia R Conf · June 2026
 ::: {.talk-video}
 <iframe src="https://www.youtube.com/embed/soFDbl02svY" title="Code to Content presentation recording" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 :::
+
+::: {.talk-event}
+Presented at [PDX R User Group](https://www.meetup.com/portland-r-user-group/events/298359537/) · February 2024  
+Presented at [Cascadia R Conference](https://cascadiarconf.com/) · June 2024
+:::
 :::::
 
 ::::: {.talk-content}
@@ -79,11 +84,6 @@ Learn how a technical blog can help you share your R projects, explain what you�
 :::::
 
 ::::::
-
-::: {.talk-event}
-Presented at [PDX R User Group](https://www.meetup.com/portland-r-user-group/events/298359537/) · February 2024  
-Presented at [Cascadia R Conference](https://cascadiarconf.com/) · June 2024
-:::
 
 :::::::
 
@@ -105,6 +105,10 @@ Presented at [Cascadia R Conference](https://cascadiarconf.com/) · June 2024
 ::: {.talk-thumbnail}
 [![Map from the Oregon Grown project](https://raw.githubusercontent.com/rbolt13/Oregon-Grown/gh-pages/assets/UGB.png)](https://rbolt13.github.io/Oregon-Grown/)
 :::
+
+::: {.talk-event}
+Presented virtually at [GIS in Action](https://gisinaction2021.sched.com/directory/speakers) · April 2021
+:::
 :::::
 
 ::::: {.talk-content}
@@ -118,10 +122,6 @@ See how mapping and spatial analysis can reveal patterns in business ownership. 
 :::::
 
 ::::::
-
-::: {.talk-event}
-Presented virtually at [GIS in Action](https://gisinaction2021.sched.com/directory/speakers) · April 2021
-:::
 
 :::::::
 

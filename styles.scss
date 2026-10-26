@@ -266,41 +266,23 @@ a.about-link:hover, span.about-link-text:hover {
   }
 }
 
-.talk-card > h2 {
-  margin-bottom: 1.5rem;
-}
-
-
-// Talk title and tags share one row above the divider
-.talk-card-header {
+.talk-card {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
   gap: .5rem 1rem;
-  padding-bottom: 0;
-  margin-bottom: .7rem;
-  border-bottom: 0;
 }
-.talk-card-header > section {
-  display: contents;
-}
-.talk-card-header h2 {
+.talk-card > h2 {
   flex: 0 1 auto;
   min-width: max-content;
   max-width: 100%;
-  margin: 0;
-  padding: 0;
-  border-bottom: 0;
+  margin: 0 auto 0 0;
 }
-.talk-card-header .talk-tags {
-  flex: 0 1 auto;
-  min-width: 0;
-}
-.talk-card-header .talk-tags p {
-  margin: 0;
-  justify-content: flex-end;
-}
+.talk-card > .talk-tags { min-width: 0; }
+.talk-card > .talk-tags p { margin: 0; justify-content: flex-end; }
+.talk-card > .talk-card-grid,
+.talk-card > .talk-event { flex-basis: 100%; }
+
 .talk-card .talk-description {
   font-size: 1rem;
   line-height: 1.6;
@@ -322,12 +304,5 @@ a.about-link:hover, span.about-link-text:hover {
 .talk-card .talk-resources { margin-top: .3rem; }
 .talk-card .talk-resources p { margin-bottom: 0; }
 .talk-card .talk-event { margin-top: .3rem; }
-.talks-toc { font-size: .9rem; margin: 1rem 0; }
-.talks-toc p { margin-bottom: .3rem; }
-@media (min-width: 992px) {
-  .talks-page main.content { position: relative; padding-right: 220px; }
-  .talks-toc { position: absolute; top: 7rem; right: 0; width: 190px; }
-}
-.talks-toc a { display: inline-block; margin-bottom: .35rem; }
 
 /*-- scss:uses --*/

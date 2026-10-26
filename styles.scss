@@ -265,9 +265,11 @@ a.about-link:hover, span.about-link-text:hover {
   }
 }
 
-.talks-page .talk-card > h2 {
+.talk-card > h2,
+h2.talk-card {
   margin: 0 0 .3rem;
   padding: 0;
+  background: transparent;
 }
 .talk-card > .talk-tags p {
   margin: 0 0 .4rem;

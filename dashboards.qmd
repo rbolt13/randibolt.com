@@ -1,18 +1,61 @@
 ---
+pagetitle: "Dashboards | Randi Bolt"
 toc: true
+toc-depth: 2
+toc-location: right
 comments: false
 ---
 
-# 📊 [2024 Oscar Prediction Challenge](https://rbolt.shinyapps.io/2024-oscars/)
+<center><h1>Dashboards</h1></center>
 
+## 2024 Oscar Prediction Challenge {.talk-card}
+
+::: {.talk-tags aria-label="Topics"}
+[R]{.talk-tag} [Shiny]{.talk-tag} [Survey data]{.talk-tag}
+:::
+
+:::::: {.talk-card-grid}
+
+::::: {.talk-media}
+::: {.talk-video}
+<iframe src="https://rbolt.shinyapps.io/2024-oscars/" title="2024 Oscar Prediction Challenge dashboard" loading="lazy"></iframe>
+:::
+:::::
+
+::::: {.talk-content}
+::: {.talk-description}
 This interactive Shiny app presents the results of a survey where participants predicted the winners of various Oscar categories. Built as part of my efforts to create and share data-driven projects, the dashboard lets users explore trends, accuracy, and insights from the challenge.
+:::
 
-<iframe src="https://rbolt.shinyapps.io/2024-oscars/" width="100%" height="600px">
+::: {.talk-resources}
+[View dashboard](https://rbolt.shinyapps.io/2024-oscars/)
+:::
+:::::
 
-</iframe>
+::::::
 
-# 📊 [COvid-19 Dashboard](https://rbolt13.github.io/covid-dashboard/)
+## COVID-19 Dashboard {.talk-card}
 
-The Covid-19 Dashboard is an interactive tool analyzing cases and fatalities in both the United States and my home state of Oregon. Originally created as a class project at the start of the pandemic, it has gone through multiple iterations to become a fully functional and informative resource for exploring trends over time.
+::: {.talk-tags aria-label="Topics"}
+[Public health]{.talk-tag} [Data visualization]{.talk-tag}
+:::
 
-<iframe src="https://rbolt13.github.io/covid-dashboard/" width="100%" height="600px" style="border:none;"></iframe>
+:::::: {.talk-card-grid}
+
+::::: {.talk-media}
+::: {.talk-video}
+<iframe src="https://rbolt13.github.io/covid-dashboard/" title="COVID-19 dashboard" loading="lazy"></iframe>
+:::
+:::::
+
+::::: {.talk-content}
+::: {.talk-description}
+The COVID-19 Dashboard is an interactive tool analyzing cases and fatalities in both the United States and my home state of Oregon. Originally created as a class project at the start of the pandemic, it has gone through multiple iterations to become a fully functional and informative resource for exploring trends over time.
+:::
+
+::: {.talk-resources}
+[View dashboard](https://rbolt13.github.io/covid-dashboard/)
+:::
+:::::
+
+::::::

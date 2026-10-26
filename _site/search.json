@@ -257,5 +257,19 @@
     "title": "\nTalks\n",
     "section": "Oregon Grown",
     "text": "Oregon Grown\n\nGIS Spatial analysis\n\n\n\n\n\n\n\nMap from the Oregon Grown project\n\n\n\n\n\n\nSee how mapping and spatial analysis can reveal patterns in business ownership. Using Oregon dispensary data from November 2020, this talk examines chain ownership statewide and within Portland’s Urban Growth Boundary.\n\n\nView project and source\n\n\n\n\nPresented virtually at GIS in Action · April 2021"
+  },
+  {
+    "objectID": "dashboards.html#oscar-prediction-challenge",
+    "href": "dashboards.html#oscar-prediction-challenge",
+    "title": "\nDashboards\n",
+    "section": "2024 Oscar Prediction Challenge",
+    "text": "2024 Oscar Prediction Challenge\n\nR Shiny Survey data\n\n\n\n\n\n\n\n\n\n\nThis interactive Shiny app presents the results of a survey where participants predicted the winners of various Oscar categories. Built as part of my efforts to create and share data-driven projects, the dashboard lets users explore trends, accuracy, and insights from the challenge.\n\n\nView dashboard"
+  },
+  {
+    "objectID": "dashboards.html#covid-19-dashboard",
+    "href": "dashboards.html#covid-19-dashboard",
+    "title": "\nDashboards\n",
+    "section": "COVID-19 Dashboard",
+    "text": "COVID-19 Dashboard\n\nPublic health Data visualization\n\n\n\n\n\n\n\n\n\n\nThe COVID-19 Dashboard is an interactive tool analyzing cases and fatalities in both the United States and my home state of Oregon. Originally created as a class project at the start of the pandemic, it has gone through multiple iterations to become a fully functional and informative resource for exploring trends over time.\n\n\nView dashboard"
   }
 ]

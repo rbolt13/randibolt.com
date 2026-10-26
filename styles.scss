@@ -317,4 +317,12 @@ a.about-link:hover, span.about-link-text:hover {
   margin-bottom: 0;
 }
 
+.talk-card .talk-description { margin-bottom: .3rem; }
+.talk-card .talk-description p { margin-bottom: 0; }
+.talk-card .talk-resources { margin-top: .3rem; }
+.talk-card .talk-resources p { margin-bottom: 0; }
+.talk-card .talk-event { margin-top: .3rem; }
+.talks-toc { font-size: .9rem; margin: 1rem 0; }
+.talks-toc p { margin-bottom: .3rem; }
+
 /*-- scss:uses --*/

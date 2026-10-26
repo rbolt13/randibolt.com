@@ -240,22 +240,22 @@
   {
     "objectID": "talks.html#making-sense-of-messy-data",
     "href": "talks.html#making-sense-of-messy-data",
-    "title": "Talks",
+    "title": "\nTalks\n",
     "section": "Making Sense of Messy Data",
-    "text": "Making Sense of Messy Data\n\nR Text mining Topic modeling"
+    "text": "Making Sense of Messy Data\n\nR Text mining Topic modeling\n\n\n\n\n\n\n\n\n\n\nLearn a practical workflow for text mining in R, from cleaning open-ended responses to sentiment analysis and topic modeling. Motivated by the challenges of analyzing survey responses in government work, this talk uses movie reviews to demonstrate the methods and explain the tradeoffs in choosing a model.\n\n\nView slides · Read related notes\n\n\n\n\nPresented at Cascadia R Conf · June 2026"
   },
   {
     "objectID": "talks.html#code-to-content",
     "href": "talks.html#code-to-content",
-    "title": "Talks",
+    "title": "\nTalks\n",
     "section": "Code to Content",
-    "text": "Code to Content\n\nR Quarto Technical communication"
+    "text": "Code to Content\n\nR Quarto Technical communication\n\n\n\n\n\n\n\n\n\n\nLearn how a technical blog can help you share your R projects, explain what you’re learning, and build a record of your work. This six-minute talk draws on four years of blogging experience, with slides created using Quarto.\n\n\nView source and slides · Watch recording\n\n\n\n\nPresented at PDX R User Group · February 2024\nPresented at Cascadia R Conference · June 2024"
   },
   {
     "objectID": "talks.html#oregon-grown",
     "href": "talks.html#oregon-grown",
-    "title": "Talks",
+    "title": "\nTalks\n",
     "section": "Oregon Grown",
-    "text": "Oregon Grown\n\nGIS Spatial analysis"
+    "text": "Oregon Grown\n\nGIS Spatial analysis\n\n\n\n\n\n\n\nMap from the Oregon Grown project\n\n\n\n\n\n\nSee how mapping and spatial analysis can reveal patterns in business ownership. Using Oregon dispensary data from November 2020, this talk examines chain ownership statewide and within Portland’s Urban Growth Boundary.\n\n\nView project and source\n\n\n\n\nPresented virtually at GIS in Action · April 2021"
   }
 ]

@@ -175,6 +175,8 @@ a.about-link:hover, span.about-link-text:hover {
 // Talks page
 .talk-card {
   margin-top: 2rem;
+  padding-top: 1.1rem;
+  padding-bottom: 1.1rem;
   text-align: left;
 }
 .talk-card h2 a {
@@ -276,8 +278,8 @@ a.about-link:hover, span.about-link-text:hover {
   align-items: center;
   justify-content: space-between;
   gap: .5rem 1rem;
-  padding-bottom: .75rem;
-  margin-bottom: 1.25rem;
+  padding-bottom: 0;
+  margin-bottom: .7rem;
   border-bottom: 0;
 }
 .talk-card-header > section {
@@ -305,6 +307,14 @@ a.about-link:hover, span.about-link-text:hover {
 }
 .talk-card .talk-resources {
   font-size: .9rem;
+}
+
+.talk-card .talk-event {
+  margin-top: .75rem;
+  margin-bottom: 0;
+}
+.talk-card .talk-event p {
+  margin-bottom: 0;
 }
 
 /*-- scss:uses --*/

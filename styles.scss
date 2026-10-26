@@ -175,8 +175,7 @@ a.about-link:hover, span.about-link-text:hover {
 // Talks page
 .talk-card {
   margin-top: 2rem;
-  padding-top: 1.1rem;
-  padding-bottom: 1.1rem;
+  padding: 1rem;
   text-align: left;
 }
 .talk-card h2 a {
@@ -237,7 +236,7 @@ a.about-link:hover, span.about-link-text:hover {
 .talk-card-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-  gap: 1.75rem;
+  gap: 1rem;
   align-items: start;
 }
 .talk-media,
@@ -266,22 +265,14 @@ a.about-link:hover, span.about-link-text:hover {
   }
 }
 
-.talk-card {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: .5rem 1rem;
+.talks-page .talk-card > h2 {
+  margin: 0 0 .3rem;
+  padding: 0;
 }
-.talk-card > h2 {
-  flex: 0 1 auto;
-  min-width: max-content;
-  max-width: 100%;
-  margin: 0 auto 0 0;
+.talk-card > .talk-tags p {
+  margin: 0 0 .4rem;
+  justify-content: flex-start;
 }
-.talk-card > .talk-tags { min-width: 0; }
-.talk-card > .talk-tags p { margin: 0; justify-content: flex-end; }
-.talk-card > .talk-card-grid,
-.talk-card > .talk-event { flex-basis: 100%; }
 
 .talk-card .talk-description {
   font-size: 1rem;

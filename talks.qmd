@@ -1,7 +1,7 @@
 ---
 pagetitle: "Presentations | Randi Bolt"
 body-classes: talks-page
-toc: true
+toc: false
 toc-depth: 2
 toc-location: right
 comments: false
@@ -12,7 +12,9 @@ comments: false
 ::: {.talks-toc}
 **On this page**
 
-[Making Sense of Messy Data](#making-sense-of-messy-data) · [Code to Content](#code-to-content) · [Oregon Grown](#oregon-grown)
+[Making Sense of Messy Data](#making-sense-of-messy-data)  
+[Code to Content](#code-to-content)  
+[Oregon Grown](#oregon-grown)
 :::
 
 

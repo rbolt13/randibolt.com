@@ -203,17 +203,17 @@ a.about-link:hover, span.about-link-text:hover {
 .talk-tags p {
   display: flex;
   flex-wrap: wrap;
-  gap: .5rem;
+  gap: .3rem;
   margin: .75rem 0 1rem;
 }
 .talk-tag {
   display: inline-block;
-  padding: .2rem .65rem;
+  padding: .15rem .45rem;
   border-radius: 999px;
   background: rgba($accent-color, .2);
   color: $col3 !important;
-  font-size: .85rem;
-  line-height: 1.5;
+  font-size: .75rem;
+  line-height: 1.4;
 }
 
 .talk-thumbnail {
@@ -292,7 +292,7 @@ a.about-link:hover, span.about-link-text:hover {
   border-bottom: 0;
 }
 .talk-card-header .talk-tags {
-  flex: 1 1 8rem;
+  flex: 0 1 auto;
   min-width: 0;
 }
 .talk-card-header .talk-tags p {

@@ -9,6 +9,12 @@ comments: false
 
 <center><h1>Talks</h1></center>
 
+::: {.talks-toc}
+**On this page**
+
+[Making Sense of Messy Data](#making-sense-of-messy-data) · [Code to Content](#code-to-content) · [Oregon Grown](#oregon-grown)
+:::
+
 
 ::::::: {.talk-card}
 
@@ -83,7 +89,8 @@ Learn how a technical blog can help you share your R projects, explain what you�
 
 
 ::: {.talk-event}
-Presented at [PDX R User Group](https://www.meetup.com/portland-r-user-group/events/298359537/) · February 2024; [Cascadia R Conference](https://cascadiarconf.com/) · June 2024
+Presented at [PDX R User Group](https://www.meetup.com/portland-r-user-group/events/298359537/) · February 2024  
+Presented at [Cascadia R Conference](https://cascadiarconf.com/) · June 2024
 :::
 
 :::::::

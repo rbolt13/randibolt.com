@@ -284,10 +284,16 @@ a.about-link:hover, span.about-link-text:hover {
   display: contents;
 }
 .talk-card-header h2 {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
+  min-width: max-content;
+  max-width: 100%;
   margin: 0;
   padding: 0;
   border-bottom: 0;
+}
+.talk-card-header .talk-tags {
+  flex: 1 1 8rem;
+  min-width: 0;
 }
 .talk-card-header .talk-tags p {
   margin: 0;

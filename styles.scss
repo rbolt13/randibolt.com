@@ -298,4 +298,23 @@ h2.talk-card {
 .talk-card .talk-resources p { margin-bottom: 0; }
 .talk-card .talk-event { margin-top: .3rem; }
 
+// Quiet, site-wide footer
+.nav-footer {
+  background-color: $col1 !important;
+  border-top: 0 !important;
+  padding: .75rem 1rem !important;
+  font-size: .8rem;
+}
+.nav-footer .nav-footer-center {
+  color: $col4 !important;
+}
+.nav-footer a {
+  text-decoration: none;
+}
+.nav-footer a:hover,
+.nav-footer a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
 /*-- scss:uses --*/

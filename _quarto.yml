@@ -6,7 +6,7 @@ website:
   favicon: img/petrol-logo.png
   google-analytics: "G-0Z8G9C0SFQ"
   page-footer:
-    center: "[AI Use](ai-use.qmd)"
+    center: "© 2026 Randi Bolt · [AI Use](ai-use.qmd)"
   navbar:
     right:
       - text: "Blog"

@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../img/2025-bolt.png" rel="icon" type="image/png">
+<link href="../img/petrol-logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -191,8 +191,8 @@ window.Quarto = {
   <li><a href="#definitions-2" id="toc-definitions-2" class="nav-link" data-scroll-target="#definitions-2">Definitions</a>
   <ul class="collapse">
   <li><a href="#beta-distribution-of-words-in-a-topic" id="toc-beta-distribution-of-words-in-a-topic" class="nav-link" data-scroll-target="#beta-distribution-of-words-in-a-topic">(<span class="math inline">\(\beta\)</span>) <strong>Distribution of Words in a Topic</strong></a></li>
-  <li><a href="#z_dn-topic-assignment-per-word" id="toc-z_dn-topic-assignment-per-word" class="nav-link" data-scroll-target="#z_dn-topic-assignment-per-word">(<span class="math inline">\(z_{d,n}\)</span>) <strong>Topic Assignment (per word</strong></a></li>
-  <li><a href="#theta-distribution-of-topic-sin-a-document" id="toc-theta-distribution-of-topic-sin-a-document" class="nav-link" data-scroll-target="#theta-distribution-of-topic-sin-a-document">(<span class="math inline">\(\theta\)</span>) <strong>Distribution of Topic sin a Document</strong></a></li>
+  <li><a href="#z_dn-topic-assignment-per-word" id="toc-z_dn-topic-assignment-per-word" class="nav-link" data-scroll-target="#z_dn-topic-assignment-per-word">(<span class="math inline">\(z_{d,n}\)</span>) <strong>Topic Assignment (per word)</strong></a></li>
+  <li><a href="#theta-distribution-of-topics-in-a-document" id="toc-theta-distribution-of-topics-in-a-document" class="nav-link" data-scroll-target="#theta-distribution-of-topics-in-a-document">(<span class="math inline">\(\theta\)</span>) <strong>Distribution of Topics in a Document</strong></a></li>
   <li><a href="#y_d-covariate-effect" id="toc-y_d-covariate-effect" class="nav-link" data-scroll-target="#y_d-covariate-effect">(<span class="math inline">\(y_d\)</span>) Covariate Effect</a></li>
   <li><a href="#latent-variables" id="toc-latent-variables" class="nav-link" data-scroll-target="#latent-variables">Latent Variables</a></li>
   </ul></li>
@@ -208,6 +208,7 @@ window.Quarto = {
 <h1 class="title">Text Mining, Sentiment Analysis, &amp; Topic Modeling</h1>
   <div class="quarto-categories">
     <div class="quarto-category">R</div>
+    <div class="quarto-category">Statistics</div>
     <div class="quarto-category">Text Mining</div>
     <div class="quarto-category">Topic Modeling</div>
     <div class="quarto-category">Sentiment Analysis</div>
@@ -234,17 +235,17 @@ window.Quarto = {
 </header>
 
 
-<p>These are my notes related to text mining, sentiment analysis, and topic modeling.</p>
+<p>These notes provide a quick reference for key concepts in text mining, sentiment analysis, and topic modeling, including considerations for choosing and interpreting a topic model.</p>
 <section id="text-mining-sentiment-analysis" class="level1">
 <h1>Text Mining &amp; Sentiment Analysis</h1>
 <section id="definitions" class="level2">
 <h2 class="anchored" data-anchor-id="definitions">Definitions</h2>
 <p>(<span class="math inline">\(w\)</span>) <strong>Word</strong>: a single word. This is the smallest unit of analysis.</p>
 <p><strong>Text</strong>: written content (aka the words) within a single document.</p>
-<p>(<span class="math inline">\(d\)</span>) <strong>Document</strong>: a unit a of text.</p>
+<p>(<span class="math inline">\(d\)</span>) <strong>Document</strong>: a unit of text.</p>
 <p><strong>Corpus</strong>: the full collection of texts (documents).</p>
 <p><strong>Stop Words</strong>: common words that don’t add much meaning for text analysis.</p>
-<p>(<span class="math inline">\(y\)</span>) <strong>Covariates</strong>: documents attributes.</p>
+<p>(<span class="math inline">\(y\)</span>) <strong>Covariates</strong>: document attributes.</p>
 <p>(<span class="math inline">\(v\)</span>) <strong>Vocabulary</strong>: a unique set of words from a corpus.</p>
 <p><strong>N-Grams</strong>: sequence of words we can use to look for corpus themes such as uni-gram (one word), bi-gram (two words), and tri-gram (three words).</p>
 <p><strong>Sentiment</strong>: emotional tone or attitude expressed in the text.</p>
@@ -257,7 +258,7 @@ window.Quarto = {
 <p><strong>Topics</strong>: groups of words that tend to appear together and represent possible themes.</p>
 <p>(<span class="math inline">\(k\)</span>) <strong>Number of Topics</strong>: the number of themes your model should look for, where each topic is a probability distribution over the words. Higher K can capture more nuance but risks redundancy and noise.</p>
 <p><strong>Exclusivity</strong>: is how unique a topic’s top words are to that topic. Higher exclusivity means the words are more distinct, but topics can also get more fragmented. This often trades off with coherence.</p>
-<p><strong>Semantic Coherence</strong>: is how frequent a topic’s top words co-occur within a document, and tell us how closely related topics are. This tends to decrease as <span class="math inline">\(k\)</span> grows and topics get thinner.</p>
+<p><strong>Semantic Coherence</strong>: measures how often a topic’s top words occur together in documents, helping assess whether the words in that topic are related. This tends to decrease as <span class="math inline">\(k\)</span> grows and topics get thinner.</p>
 <p><strong>Held-Out</strong>: predicts the fit on held out words or unseen data. Higher is better, and you want to look for when K levels out (the elbow).</p>
 <p><strong>Residuals</strong>: this shows the unexplained variance, and is the difference between predicted and actual values. High residuals suggests missing topics or vocabulary issues. This usually drops fast with K, and then should flatten out.</p>
 </section>
@@ -273,6 +274,12 @@ window.Quarto = {
 </section>
 <section id="topic-modeling" class="level1">
 <h1>Topic Modeling</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="topic-distributions.svg" class="img-fluid figure-img"></p>
+<figcaption>Illustrative topic model distributions: beta describes word probabilities within a topic and theta describes topic proportions within a document.</figcaption>
+</figure>
+</div>
 <section id="definitions-2" class="level2">
 <h2 class="anchored" data-anchor-id="definitions-2">Definitions</h2>
 <section id="beta-distribution-of-words-in-a-topic" class="level3">
@@ -283,14 +290,14 @@ window.Quarto = {
 <p>The word distribution for topic <span class="math inline">\(k\)</span> is the probability of vocabulary word <span class="math inline">\(w_v\)</span>, given topic <span class="math inline">\(k\)</span> and the document-level covariates <span class="math inline">\(y_d\)</span>.</p>
 </section>
 <section id="z_dn-topic-assignment-per-word" class="level3">
-<h3 class="anchored" data-anchor-id="z_dn-topic-assignment-per-word">(<span class="math inline">\(z_{d,n}\)</span>) <strong>Topic Assignment (per word</strong></h3>
+<h3 class="anchored" data-anchor-id="z_dn-topic-assignment-per-word">(<span class="math inline">\(z_{d,n}\)</span>) <strong>Topic Assignment (per word)</strong></h3>
 <p>The topic assigned to a specific word in a specific document.</p>
 <p>(Which topic generated a specific word.)</p>
 <p><span class="math display">\[z_{d,n} \in \{1, \ldots, K\}\]</span></p>
 <p>For the <span class="math inline">\(n\)</span>th word in document <span class="math inline">\(d\)</span>, which topic <span class="math inline">\(k\)</span> generated that word.</p>
 </section>
-<section id="theta-distribution-of-topic-sin-a-document" class="level3">
-<h3 class="anchored" data-anchor-id="theta-distribution-of-topic-sin-a-document">(<span class="math inline">\(\theta\)</span>) <strong>Distribution of Topic sin a Document</strong></h3>
+<section id="theta-distribution-of-topics-in-a-document" class="level3">
+<h3 class="anchored" data-anchor-id="theta-distribution-of-topics-in-a-document">(<span class="math inline">\(\theta\)</span>) <strong>Distribution of Topics in a Document</strong></h3>
 <p>The mix of topics a document covers.</p>
 <p>(Document d is 70% topic 1 and 30% topic 2. )</p>
 <p><span class="math display">\[\theta_{d,k} = P(z = k \mid d)\]</span></p>
@@ -298,7 +305,7 @@ window.Quarto = {
 </section>
 <section id="y_d-covariate-effect" class="level3">
 <h3 class="anchored" data-anchor-id="y_d-covariate-effect">(<span class="math inline">\(y_d\)</span>) Covariate Effect</h3>
-<p>Document-level information that can change how a topic is expressed in words, and helps explain why the same topic might use different words in different documents.</p>
+<p>Document-level attributes, such as a response date or group, that can help explain differences in how common topics are across documents, the words used to express a topic, or both.</p>
 </section>
 <section id="latent-variables" class="level3">
 <h3 class="anchored" data-anchor-id="latent-variables">Latent Variables</h3>
@@ -720,6 +727,19 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© 2026 Randi Bolt · <a href="ai-use.qmd">AI Use</a></p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 

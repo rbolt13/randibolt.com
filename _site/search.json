@@ -123,7 +123,7 @@
     "href": "blog.html",
     "title": "\nBlog\n",
     "section": "",
-    "text": "Blog\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nText Mining, Sentiment Analysis, & Topic Modeling\n\n\n\n\n\n\nR\n\n\nText Mining\n\n\nTopic Modeling\n\n\nSentiment Analysis\n\n\n\n\n\n\n\n\n\nJun 3, 2026\n\n\n\n\n\n\nNo matching items"
+    "text": "Blog\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nText Mining, Sentiment Analysis, & Topic Modeling\n\n\n\n\n\n\nR\n\n\nStatistics\n\n\nText Mining\n\n\nTopic Modeling\n\n\nSentiment Analysis\n\n\n\n\n\n\n\n\n\nJun 3, 2026\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/PawneeSurveyAnalysis.html",
@@ -137,7 +137,7 @@
     "href": "blog/text-mining-notes.html",
     "title": "Text Mining, Sentiment Analysis, & Topic Modeling",
     "section": "",
-    "text": "These are my notes related to text mining, sentiment analysis, and topic modeling."
+    "text": "These notes provide a quick reference for key concepts in text mining, sentiment analysis, and topic modeling, including considerations for choosing and interpreting a topic model."
   },
   {
     "objectID": "blog/text-mining-notes.html#word-textw",
@@ -158,14 +158,14 @@
     "href": "blog/text-mining-notes.html#definitions",
     "title": "Text Mining, Sentiment Analysis, & Topic Modeling",
     "section": "Definitions",
-    "text": "Definitions\n(\\(w\\)) Word: a single word. This is the smallest unit of analysis.\nText: written content (aka the words) within a single document.\n(\\(d\\)) Document: a unit a of text.\nCorpus: the full collection of texts (documents).\nStop Words: common words that don’t add much meaning for text analysis.\n(\\(y\\)) Covariates: documents attributes.\n(\\(v\\)) Vocabulary: a unique set of words from a corpus.\nN-Grams: sequence of words we can use to look for corpus themes such as uni-gram (one word), bi-gram (two words), and tri-gram (three words).\nSentiment: emotional tone or attitude expressed in the text."
+    "text": "Definitions\n(\\(w\\)) Word: a single word. This is the smallest unit of analysis.\nText: written content (aka the words) within a single document.\n(\\(d\\)) Document: a unit of text.\nCorpus: the full collection of texts (documents).\nStop Words: common words that don’t add much meaning for text analysis.\n(\\(y\\)) Covariates: document attributes.\n(\\(v\\)) Vocabulary: a unique set of words from a corpus.\nN-Grams: sequence of words we can use to look for corpus themes such as uni-gram (one word), bi-gram (two words), and tri-gram (three words).\nSentiment: emotional tone or attitude expressed in the text."
   },
   {
     "objectID": "blog/text-mining-notes.html#definitions-1",
     "href": "blog/text-mining-notes.html#definitions-1",
     "title": "Text Mining, Sentiment Analysis, & Topic Modeling",
     "section": "Definitions",
-    "text": "Definitions\nTopics: groups of words that tend to appear together and represent possible themes.\n(\\(k\\)) Number of Topics: the number of themes your model should look for, where each topic is a probability distribution over the words. Higher K can capture more nuance but risks redundancy and noise.\nExclusivity: is how unique a topic’s top words are to that topic. Higher exclusivity means the words are more distinct, but topics can also get more fragmented. This often trades off with coherence.\nSemantic Coherence: is how frequent a topic’s top words co-occur within a document, and tell us how closely related topics are. This tends to decrease as \\(k\\) grows and topics get thinner.\nHeld-Out: predicts the fit on held out words or unseen data. Higher is better, and you want to look for when K levels out (the elbow).\nResiduals: this shows the unexplained variance, and is the difference between predicted and actual values. High residuals suggests missing topics or vocabulary issues. This usually drops fast with K, and then should flatten out."
+    "text": "Definitions\nTopics: groups of words that tend to appear together and represent possible themes.\n(\\(k\\)) Number of Topics: the number of themes your model should look for, where each topic is a probability distribution over the words. Higher K can capture more nuance but risks redundancy and noise.\nExclusivity: is how unique a topic’s top words are to that topic. Higher exclusivity means the words are more distinct, but topics can also get more fragmented. This often trades off with coherence.\nSemantic Coherence: measures how often a topic’s top words occur together in documents, helping assess whether the words in that topic are related. This tends to decrease as \\(k\\) grows and topics get thinner.\nHeld-Out: predicts the fit on held out words or unseen data. Higher is better, and you want to look for when K levels out (the elbow).\nResiduals: this shows the unexplained variance, and is the difference between predicted and actual values. High residuals suggests missing topics or vocabulary issues. This usually drops fast with K, and then should flatten out."
   },
   {
     "objectID": "blog/text-mining-notes.html#considerations",
@@ -179,7 +179,7 @@
     "href": "blog/text-mining-notes.html#definitions-2",
     "title": "Text Mining, Sentiment Analysis, & Topic Modeling",
     "section": "Definitions",
-    "text": "Definitions\n\n(\\(\\beta\\)) Distribution of Words in a Topic\nThe vocabulary (mix of words) that defines a topic.\n(How likely a word occurs in a topic.)\n\\[\\beta_{d,k}=P(w_v|k,y_d)\\]\nThe word distribution for topic \\(k\\) is the probability of vocabulary word \\(w_v\\), given topic \\(k\\) and the document-level covariates \\(y_d\\).\n\n\n(\\(z_{d,n}\\)) Topic Assignment (per word\nThe topic assigned to a specific word in a specific document.\n(Which topic generated a specific word.)\n\\[z_{d,n} \\in \\{1, \\ldots, K\\}\\]\nFor the \\(n\\)th word in document \\(d\\), which topic \\(k\\) generated that word.\n\n\n(\\(\\theta\\)) Distribution of Topic sin a Document\nThe mix of topics a document covers.\n(Document d is 70% topic 1 and 30% topic 2. )\n\\[\\theta_{d,k} = P(z = k \\mid d)\\]\nFor document \\(d\\), \\(\\theta_{d,k}\\) is the probability that a word in that document belongs to topic \\(k\\).\n\n\n(\\(y_d\\)) Covariate Effect\nDocument-level information that can change how a topic is expressed in words, and helps explain why the same topic might use different words in different documents.\n\n\nLatent Variables\nHidden variables that are a part of the model that we do not directly observe, but want to infer."
+    "text": "Definitions\n\n(\\(\\beta\\)) Distribution of Words in a Topic\nThe vocabulary (mix of words) that defines a topic.\n(How likely a word occurs in a topic.)\n\\[\\beta_{d,k}=P(w_v|k,y_d)\\]\nThe word distribution for topic \\(k\\) is the probability of vocabulary word \\(w_v\\), given topic \\(k\\) and the document-level covariates \\(y_d\\).\n\n\n(\\(z_{d,n}\\)) Topic Assignment (per word)\nThe topic assigned to a specific word in a specific document.\n(Which topic generated a specific word.)\n\\[z_{d,n} \\in \\{1, \\ldots, K\\}\\]\nFor the \\(n\\)th word in document \\(d\\), which topic \\(k\\) generated that word.\n\n\n(\\(\\theta\\)) Distribution of Topics in a Document\nThe mix of topics a document covers.\n(Document d is 70% topic 1 and 30% topic 2. )\n\\[\\theta_{d,k} = P(z = k \\mid d)\\]\nFor document \\(d\\), \\(\\theta_{d,k}\\) is the probability that a word in that document belongs to topic \\(k\\).\n\n\n(\\(y_d\\)) Covariate Effect\nDocument-level attributes, such as a response date or group, that can help explain differences in how common topics are across documents, the words used to express a topic, or both.\n\n\nLatent Variables\nHidden variables that are a part of the model that we do not directly observe, but want to infer."
   },
   {
     "objectID": "blog/text-mining-movie-reviews.html",

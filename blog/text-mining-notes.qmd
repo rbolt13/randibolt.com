@@ -9,7 +9,7 @@ format:
     toc: true
 ---
 
-These are my notes related to text mining, sentiment analysis, and topic modeling.
+These notes provide a quick reference for key concepts in text mining, sentiment analysis, and topic modeling, including considerations for choosing and interpreting a topic model.
 
 
 # Text Mining & Sentiment Analysis

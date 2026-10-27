@@ -424,9 +424,6 @@ RSQLite::dbGetQuery(hosp,
 This map visualizes the patient counts from question 7. It uses a subset of the practice data, so it does not represent actual patient populations. Provinces and territories without matching records are shown as zero.
 
 ```{r}
-#| fig-alt: "Map of Canadian provinces and territories shaded from light to dark teal by the number of practice-dataset patients."
-#| fig-width: 8
-#| fig-height: 5
 # Install these packages if needed:
 # install.packages(c("ggplot2", "sf", "rnaturalearth"))
 
@@ -440,7 +437,6 @@ canada <- rnaturalearth::ne_download(
   filter(grepl("^CA-", iso_3166_2)) %>%
   mutate(province_id = sub("^CA-", "", iso_3166_2))
 
-# Check that all province IDs in the practice data have a map match.
 stopifnot(all(province_counts$province_id %in% canada$province_id))
 
 canada <- canada %>%
@@ -448,10 +444,17 @@ canada <- canada %>%
   mutate(patient_count = dplyr::coalesce(patient_count, 0L))
 
 province_plot <- ggplot2::ggplot(canada) +
+  ggplot2::geom_sf(ggplot2::aes(fill = patient_count))
+```
+
+```{r}
+#| echo: false
+#| fig-alt: "Map of Canadian provinces and territories shaded from light to dark teal by the number of practice-dataset patients."
+#| fig-width: 8
+#| fig-height: 5
+province_plot <- province_plot +
   ggplot2::geom_sf(ggplot2::aes(fill = patient_count), color = "#385E66", linewidth = 0.3) +
-  ggplot2::scale_fill_gradient(
-    low = "#C2D4D3", high = "#24434A", name = "Patients"
-  ) +
+  ggplot2::scale_fill_gradient(low = "#C2D4D3", high = "#24434A", name = "Patients") +
   ggplot2::coord_sf(crs = 3347, datum = NA) +
   ggplot2::labs(
     title = "Patients by Province and Territory",

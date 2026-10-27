@@ -1,8 +1,8 @@
 ---
 title: "Text Mining, Sentiment Analysis, & Topic Modeling"
 date: "6-3-2026"
-image: text-mining-themes.svg
-categories: ["R", "Text Mining", "Topic Modeling", "Sentiment Analysis"]
+image: topic-distributions.svg
+categories: ["R", "Statistics", "Text Mining", "Topic Modeling", "Sentiment Analysis"]
 draft: false
 format:
   html:
@@ -11,7 +11,6 @@ format:
 
 These are my notes related to text mining, sentiment analysis, and topic modeling.
 
-![Illustrative survey responses grouped into example topics: access and service.](text-mining-themes.svg)
 
 # Text Mining & Sentiment Analysis
 
@@ -62,6 +61,8 @@ When choosing $k$, the main things to consider are:
 3. Where are exclusivity and coherence both reasonable? 
 
 # Topic Modeling
+
+![Illustrative topic model distributions: beta describes word probabilities within a topic and theta describes topic proportions within a document.](topic-distributions.svg)
 
 ## Definitions
 

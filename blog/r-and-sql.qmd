@@ -423,6 +423,8 @@ RSQLite::dbGetQuery(hosp,
 
 This map visualizes the patient counts from question 7. It uses a subset of the practice data, so it does not represent actual patient populations. Provinces and territories without matching records are shown as zero.
 
+One benefit of R is its wide range of open-source packages. Packages like ggplot2 can help turn results into visualizations that make patterns easier to see, stories easier to share, and data more accessible to different audiences.
+
 ```{r}
 # Install these packages if needed:
 # install.packages(c("ggplot2", "sf", "rnaturalearth"))
@@ -447,8 +449,11 @@ province_plot <- ggplot2::ggplot(canada) +
   ggplot2::geom_sf(ggplot2::aes(fill = patient_count))
 ```
 
+::: {#sql-map}
+
 ```{r}
 #| echo: false
+#| out-width: "100%"
 #| fig-alt: "Map of Canadian provinces and territories shaded from light to dark teal by the number of practice-dataset patients."
 #| fig-width: 8
 #| fig-height: 5
@@ -474,6 +479,17 @@ province_plot <- province_plot +
 province_plot
 ggplot2::ggsave("r-and-sql-plot.png", plot = province_plot, width = 8, height = 5, dpi = 150)
 ```
+
+:::
+
+```{=html}
+<style>
+#sql-map .cell-output-display { background: transparent; }
+#sql-map img { display: block; }
+</style>
+```
+
+*AI use: I used AI to help revise this post, correct code examples, and create the map. I guided the changes and reviewed the results.*
 
 Close the database connection when finished:
 

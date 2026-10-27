@@ -2,17 +2,19 @@
 title: "R and SQLite"
 date: "2023-01-23"
 categories: [R, SQL]
+image: r-and-sqlite/SQL-and-R.png
 format:
   html:
+    df-print: paged
     toc: true
     toc-depth: 1
     toc-location: right
-draft: true
+draft: false
 ---
 
 This post compares R and SQL approaches to the same data questions. It is for anyone learning either language or interested in seeing how familiar data tasks translate between them. 
 
-![Naruto with SQL logo, and Sauske with the R Studio logo, standing back to back.](SQL-and-R.png)
+![Naruto with SQL logo, and Sauske with the R Studio logo, standing back to back.](r-and-sqlite/SQL-and-R.png)
 
 # Getting Started
 
@@ -41,19 +43,19 @@ This post will use three data sets that I copied from [Learn SQL](https://www.sq
 1. `patients`: Which includes patient_id, first_name, last_name, gender, birth_date, city, province_id, allergies, height, and weight. Note I only copied the first 1000 entries. 
 
 ```{r patients data}
-patients <- utils::read.csv('data/patients.csv')
+patients <- utils::read.csv('r-and-sqlite/data/patients.csv')
 ```
 
 2. `province_names`: Which includes province_id, and province_name. 
 
 ```{r province_names data}
-province_names <- utils::read.csv("data/province_names.csv")
+province_names <- utils::read.csv("r-and-sqlite/data/province_names.csv")
 ```
 
 3. `admissions`: which includes patient_id, admission_date, discharge_date, diagnosis, attending_doctor_id
 
 ```{r admissions data}
-admissions <- utils::read.csv("data/admissions.csv")
+admissions <- utils::read.csv("r-and-sqlite/data/admissions.csv")
 ```
 
 
@@ -330,9 +332,9 @@ RSQLite::dbGetQuery(hosp,
 
 :::
 
-# `9.` For this example, assign a cost of $50 to each patient without insurance and $10 to each patient with insurance. All patients with an even patient_id have insurance.
+# `9.` Calculate the total cost per insurance group.
 
-Give each patient a 'Yes' if they have insurance, and a 'No' if they don't have insurance. Add up the cost for each has_insurance group. Both examples use the patients table, so they count one cost per patient, not per admission.
+For this example, assume patients with even-numbered IDs have insurance. Assign a cost of $10 to each patient with insurance and $50 to each patient without insurance, then add the costs for each group. Count one cost per patient.
 
 ::: {.panel-tabset}
 

@@ -419,25 +419,54 @@ RSQLite::dbGetQuery(hosp,
 
 
 
-# Bonus: Visualize patients by province
+# Bonus: Map patients by province
 
-We can also visualize the counts from question 7. This chart uses the practice data, including the subset of patient records used throughout this post.
+This map visualizes the patient counts from question 7. It uses a subset of the practice data, so it does not represent actual patient populations. Provinces and territories without matching records are shown as zero.
 
 ```{r}
-#| fig-alt: "Horizontal bar chart of patient counts by province in the practice dataset."
+#| fig-alt: "Map of Canadian provinces and territories shaded from light to dark teal by the number of practice-dataset patients."
 #| fig-width: 8
 #| fig-height: 5
-province_counts <- merge(province_names, patients, by = "province_id") %>%
-  count(province_name, name = "patient_count")
+# Install these packages if needed:
+# install.packages(c("ggplot2", "sf", "rnaturalearth"))
 
-province_plot <- ggplot2::ggplot(
-  province_counts,
-  ggplot2::aes(x = reorder(province_name, patient_count), y = patient_count)
-) +
-  ggplot2::geom_col(fill = "#7C9FA4") +
-  ggplot2::coord_flip() +
-  ggplot2::labs(title = "Patients by Province", x = NULL, y = "Number of patients") +
-  ggplot2::theme_minimal()
+province_counts <- patients %>%
+  count(province_id, name = "patient_count")
+
+canada <- rnaturalearth::ne_download(
+  scale = 50, type = "states", category = "cultural",
+  returnclass = "sf"
+) %>%
+  filter(grepl("^CA-", iso_3166_2)) %>%
+  mutate(province_id = sub("^CA-", "", iso_3166_2))
+
+# Check that all province IDs in the practice data have a map match.
+stopifnot(all(province_counts$province_id %in% canada$province_id))
+
+canada <- canada %>%
+  left_join(province_counts, by = "province_id") %>%
+  mutate(patient_count = dplyr::coalesce(patient_count, 0L))
+
+province_plot <- ggplot2::ggplot(canada) +
+  ggplot2::geom_sf(ggplot2::aes(fill = patient_count), color = "#F5F3EF", linewidth = 0.3) +
+  ggplot2::scale_fill_gradient(
+    low = "#DFE8E7", high = "#24434A", name = "Patients"
+  ) +
+  ggplot2::coord_sf(crs = 3347, datum = NA) +
+  ggplot2::labs(
+    title = "Patients by Province and Territory",
+    subtitle = "SQL practice data · subset of records"
+  ) +
+  ggplot2::theme_void(base_family = "serif") +
+  ggplot2::theme(
+    plot.background = ggplot2::element_rect(fill = "#F5F3EF", color = NA),
+    panel.background = ggplot2::element_rect(fill = "#F5F3EF", color = NA),
+    plot.title = ggplot2::element_text(color = "#24434A", face = "bold", size = 16),
+    plot.subtitle = ggplot2::element_text(color = "#385E66", size = 10),
+    legend.title = ggplot2::element_text(color = "#283438"),
+    legend.text = ggplot2::element_text(color = "#283438"),
+    plot.margin = ggplot2::margin(12, 12, 12, 12)
+  )
 
 province_plot
 ggplot2::ggsave("r-and-sql-plot.png", plot = province_plot, width = 8, height = 5, dpi = 150)

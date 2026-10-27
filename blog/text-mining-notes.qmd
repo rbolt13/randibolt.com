@@ -1,6 +1,7 @@
 ---
 title: "Text Mining, Sentiment Analysis, & Topic Modeling"
 date: "6-3-2026"
+image: text-mining-themes.svg
 categories: ["R", "Text Mining", "Topic Modeling", "Sentiment Analysis"]
 draft: false
 format:
@@ -8,7 +9,9 @@ format:
     toc: true
 ---
 
-These are my notes related to text mining, sentiment analysis, and topic modeling. 
+These are my notes related to text mining, sentiment analysis, and topic modeling.
+
+![Illustrative survey responses grouped into example topics: access and service.](text-mining-themes.svg)
 
 # Text Mining & Sentiment Analysis
 
@@ -18,13 +21,13 @@ These are my notes related to text mining, sentiment analysis, and topic modelin
 
 **Text**: written content (aka the words) within a single document. 
 
-($d$) **Document**: a unit a of text. 
+($d$) **Document**: a unit of text. 
 
 **Corpus**: the full collection of texts (documents). 
 
 **Stop Words**: common words that don't add much meaning for text analysis. 
 
-($y$) **Covariates**: documents attributes.
+($y$) **Covariates**: document attributes.
 
 ($v$) **Vocabulary**: a unique set of words from a corpus. 
 
@@ -42,7 +45,7 @@ These are my notes related to text mining, sentiment analysis, and topic modelin
 
 **Exclusivity**: is how unique a topic's top words are to that topic. Higher exclusivity means the words are more distinct, but topics can also get more fragmented. This often trades off with coherence. 
 
-**Semantic Coherence**: is how frequent a topic's top words co-occur within a document, and tell us how closely related topics are. This tends to decrease as $k$ grows and topics get thinner. 
+**Semantic Coherence**: measures how often a topic's top words occur together in documents, helping assess whether the words in that topic are related. This tends to decrease as $k$ grows and topics get thinner. 
 
 **Held-Out**: predicts the fit on held out words or unseen data. Higher is better, and you want to look for when K levels out (the elbow). 
 
@@ -72,7 +75,7 @@ $$\beta_{d,k}=P(w_v|k,y_d)$$
 
 The word distribution for topic $k$ is the probability of vocabulary word $w_v$, given topic $k$ and the document-level covariates $y_d$.
 
-### ($z_{d,n}$) **Topic Assignment (per word**
+### ($z_{d,n}$) **Topic Assignment (per word)**
 
 The topic assigned to a specific word in a specific document. 
 
@@ -82,7 +85,7 @@ $$z_{d,n} \in \{1, \ldots, K\}$$
 
 For the $n$th word in document $d$, which topic $k$ generated that word.
 
-### ($\theta$) **Distribution of Topic sin a Document**
+### ($\theta$) **Distribution of Topics in a Document**
 
 The mix of topics a document covers. 
 
@@ -93,7 +96,7 @@ $$\theta_{d,k} = P(z = k \mid d)$$
 For document $d$, $\theta_{d,k}$ is the probability that a word in that document belongs to topic $k$.
 
 ### ($y_d$) Covariate Effect 
-Document-level information that can change how a topic is expressed in words, and helps explain why the same topic might use different words in different documents.
+Document-level attributes, such as a response date or group, that can help explain differences in how common topics are across documents, the words used to express a topic, or both.
 
 ### Latent Variables
 

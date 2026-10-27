@@ -5,6 +5,8 @@ website:
   title: "Randi Bolt"
   favicon: img/petrol-logo.png
   google-analytics: "G-0Z8G9C0SFQ"
+  page-footer:
+    center: "[AI Use](ai-use.qmd)"
   navbar:
     right:
       - text: "Blog"

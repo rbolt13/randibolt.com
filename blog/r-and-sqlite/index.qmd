@@ -2,31 +2,23 @@
 title: "R and SQLite"
 date: "2023-01-23"
 categories: [R, SQL]
-toc: true
+format:
+  html:
+    toc: true
+    toc-depth: 1
+    toc-location: right
 draft: true
 ---
 
-This post uses the RSQLite package to answer data questions with both R and SQL (Structured Query Language). 
+This post compares R and SQL approaches to the same data questions. It is for anyone learning either language or interested in seeing how familiar data tasks translate between them. 
 
 ![Naruto with SQL logo, and Sauske with the R Studio logo, standing back to back.](SQL-and-R.png)
 
-# `0.` Introduction 
+# Getting Started
 
-There are a handful of programming languages that data scientists use when querying, analyzing, and manipulating data. What I have found is that while R and Python have a lot more power in what they are capable of producing, SQL is used by a wider variety of roles to access and query data. So to get more practice using both SQL and R I pulled 10 questions and some data off a website called [Learn SQL](https://www.sql-practice.com/), and will be answering the following questions in both languages. 
+The examples use practice questions from [SQL Practice](https://www.sql-practice.com/). We will load the data into R, create a temporary SQLite database, and work through each question in both languages.
 
-::: {.panel-tabset}
-
-### `0.0 Set-Up`
-
-**Contents:**
-
-* 0.1 Packages
-
-* 0.2 Data
-
-* 0.3 Database
-
-### `0.1 Packages`
+## Packages
 
 For all my data queries and manipulation in R I will be using base R, [dplyr](https://dplyr.tidyverse.org/), and [magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html).
 
@@ -42,7 +34,7 @@ To create a SQL database, and run SQL queries in R chunks I will be using a pack
 library(RSQLite)
 ```
 
-### `0.2 Data` 
+## Data 
 
 This post will use three data sets that I copied from [Learn SQL](https://www.sql-practice.com/): 
 
@@ -65,7 +57,7 @@ admissions <- utils::read.csv("data/admissions.csv")
 ```
 
 
-### `0.3 Database`  
+## Database  
 
 Create an in-memory SQLite database with `dbConnect()` and `SQLite()`. It exists for this R session and does not change a database file. 
 
@@ -96,45 +88,21 @@ Verify the three data sets are in the database using:
 RSQLite::dbListTables(hosp)
 ```
 
-:::
-
 # `1.` Show the first ten rows of patients data.
 
 ::: {.panel-tabset}
 
-### `1.0`
+### R
 
-**Contents**
-
-* 1.1 Solution in R
-
-* 1.2 Solution in SQL
-
-### `1.1 R`
-
-In R use:
-
-* `head()` to view the first 10 rows of the patients data.
+Use `head()` to display the first ten patient records.
 
 ```{r}
 utils::head(patients, 10)
 ```
 
-### `1.2 SQL`
+### SQL
 
-In R use: 
-
-* `dbGetQuery()` to run SQL commands from a given database.
-
-In SQL use:
-
-* `SELECT` to select. 
-
-* `*` to include all columns. 
-
-* `FROM` to define the patients data for select to include all columns from. 
-
-* `LIMIT` to only show the top ten rows. 
+Use `SELECT *` to choose all columns and `LIMIT` to return ten rows.
 
 ```{r}
 RSQLite::dbGetQuery(hosp, 
@@ -150,38 +118,18 @@ RSQLite::dbGetQuery(hosp,
 
 ::: {.panel-tabset}
 
-### `2.0`
+### R
 
-**Contents**
-
-* 2.1 Solution in R
-
-* 2.2 Solution in SQL
-
-### `2.1 R`
-
-In R use:
-
-* `data.frame()` to define a column for total_patients.
-
-* `nrow()` to count the rows in the patients data which will equal the total_patients.
+Use `nrow()` to count patient records and `data.frame()` to label the result.
 
 ```{r}
 base::data.frame("total_patients" = base::nrow(patients))
 ```
 
-### `2.2 SQL`
+### SQL
 
-In SQL use:
+Use `COUNT(*)` to count rows and `AS` to name the result.
 
-* `SELECT` to select. 
-
-* `COUNT(*)` to count the total number of rows.
-
-* `AS` to define that count as a new variable, total_patients.
-
-* `FROM` to define the patients data for select to count the total numbers of rows for, and define as total_patients.
-	
 ```{r}
 RSQLite::dbGetQuery(hosp,
                     "SELECT COUNT(*) AS total_patients 
@@ -195,23 +143,9 @@ RSQLite::dbGetQuery(hosp,
 
 ::: {.panel-tabset}
 
-### `3.0`
+### R
 
-**Contents**
-
-* 3.1 Solution in R
-
-* 3.2 Solution in SQL
-
-### `3.1 R`
-
-In R use: 
-
-* `head()` to show the first 10 rows of data. 
-
-* `data.frame()` to define a data frame that includes full_name.
-
-* `paste0()` to paste together the first_name, a space, and the last_name. This will equal the full_name. 
+Use `paste0()` to combine first and last names, then show the first ten results.
 
 ```{r}
 utils::head(
@@ -222,19 +156,9 @@ utils::head(
   10)
 ```
 
-### `3.2 SQL`
+### SQL
 
-In SQL use:
-
-* `SELECT` to select.
-
-* `||` to concatenate first_name, space, and last name.
-
-* `AS` to define the concatenation as full_name. 
-
-* `FROM` to define the patients data for select to concatenate data from.  
-
-* `LIMIT` to show the first 10 rows of data. 
+Use `||` to join the names, `AS` to label the result, and `LIMIT` to show ten rows.
 
 ```{r}
 RSQLite::dbGetQuery(hosp,
@@ -250,25 +174,9 @@ RSQLite::dbGetQuery(hosp,
 
 ::: {.panel-tabset}
 
-### `4.0`
+### R
 
-**Contents**
-
-* 4.1 Solution in R
-
-* 4.2 Solution in SQL
-
-### `4.1 R`
-
-In R define the patients data then use: 
-
-* `%>%` to pipe data.
-
-* `filter()` to filter for all province_id that is equal to "NS".
-
-* `distinct()` to keep one row for each city.
-
-* `rename()` to name the output column `unique_cities`.
+Filter to Nova Scotia, keep distinct cities, and rename the output column.
 
 ```{r}
 patients %>% 
@@ -277,21 +185,9 @@ patients %>%
   rename(unique_cities = city) 
 ```
 
-### `4.2 SQL`
+### SQL
 
-In SQL:
-
-* `SELECT` to select.
-
-* `DISTINCT()` to define city as the column to remove duplicates from. 
-
-* `AS` to define those cities as unique_cities.
-
-* `FROM` to define the patients data for select to get unique_cities from. 
-
-* `WHERE` specifies a condition.
-
-* `IS` is the condition that 'NS' is equal to province_id. 
+Use `WHERE` to filter to Nova Scotia and `DISTINCT` to return each city once.
 
 ```{r}
 dbGetQuery(hosp,
@@ -309,23 +205,9 @@ Display the two results in the same row.
 
 ::: {.panel-tabset}
 
-### `5.0`
+### R
 
-**Contents**
-
-* 5.1 Solution in R
-
-* 5.2 Solution in SQL
-
-### `5.1 R`
-
-In R use:
-
-* `data.frame()` to create a data frame with two columns: male_count, and female_count. 
-
-* `length()` to count the length of the input. 
-
-* `which()` to indicate which gender equals "M" or "F", and counts that length accordingly. 
+Use `which()` and `length()` to count patients marked “M” and “F.”
 
 ```{r}
 base::data.frame(
@@ -334,19 +216,9 @@ base::data.frame(
   )
 ```
 
-### `5.2 SQL`
+### SQL
 
-In SQL use:
-
-* `SELECT` to select. 
-
-* `COUNT(*)` to count all input values.
-
-* `FROM` to define the patients data for select to count on.
-
-* `WHERE` is a condition defined as gender = "M" or "F".
-
-* `AS` is defining the count as male_count, or female_count respectively. 
+Use two filtered counts to return both totals in one row.
 
 ```{r}
 dbGetQuery(hosp,
@@ -361,31 +233,9 @@ dbGetQuery(hosp,
 
 ::: {.panel-tabset}
 
-### `6.0`
+### R
 
-**Contents**
-
-* 6.1 Solution in R
-
-* 6.2 Solution in SQL
-
-### `6.1 R`
-
-In R define the patients data then use:
-
-* `%>%` pipe the data.
-
-* `filter()` to exclude missing values and the literal string `"NULL"`. 
-
-* `group_by()` to convert the table into one that is grouped by allergies.
-
-* `summarise()` to define total_diagnosis.
-
-* `n()` to count the size of each group. 
-
-* `arrange()` to define how the data is arranged.
-
-* `desc()` to define that the data is arranged in descending order by total_diagnosis. 
+Exclude missing values and the literal string `"NULL"`, count each allergy, and show the ten most common.
 
 ```{r}
 patients %>% 
@@ -396,29 +246,9 @@ patients %>%
   utils::head(10)
 ```
 
-### `6.2 SQL`
+### SQL
 
-In SQL: 
-
-* `SELECT` the allergies column.
-
-* `COUNT(*)` count all input. 
-
-* `AS` to define the count as total_diagnosis. 
-
-* `FROM` to define the patients data to select the allergies column from.
-
-* `WHERE` to define a condition.
-
-* `IS NOT` excludes the literal string 'NULL'; `IS NOT NULL` excludes SQL missing values. 
-
-* `GROUP BY` groups the data by allergies.
-
-* `Order BY` to define how the data order is output.
-
-* `DESC` is the given condition that the data is ordered in descending order by total_diagnosis. 
-
-* `LIMIT` to limit output to the first 10 rows. 
+Exclude missing values and the literal string `'NULL'`, then group and count allergies in descending order.
 
 ```{r}
 dbGetQuery(hosp,
@@ -438,31 +268,9 @@ dbGetQuery(hosp,
 
 ::: {.panel-tabset}
 
-### `7.0`
+### R
 
-**Contents**
-
-* 7.1 Solution in R
-
-* 7.2 Solution in SQL
-
-### `7.1 R`
-
-In R use:
-
-* `merge()` to join the data sets province_names, and patients by "province_id". 
-
-* `%>%` to pipe the data.
-
-* `group_by()` to group by province name.
-
-* `summarise()` to define the patient count.
-
-* `n()` to count the number of patients in each province. This will equal patient_count.
-
-* `arrange()` to define how the data is arranged.
-
-* `desc()` to define that the data is arranged in descending order by patient_count.
+Join patients to province names, count patients in each province, and sort from highest to lowest.
 
 ```{r}
 base::merge(province_names, patients, by = "province_id") %>%
@@ -471,27 +279,9 @@ base::merge(province_names, patients, by = "province_id") %>%
   dplyr::arrange(dplyr::desc(patient_count))
 ```
 
-### `7.2 SQL`
+### SQL
 
-In SQL use:
-
-* `SELECT` select the province_name column.
-
-* `COUNT(*)` to count all input.
-
-* `AS` to define count as patient_count.
-
-* `FROM` to define the patients data `AS` **pa** to select province_name to count the number of patients from. 
-
-* `JOIN` to join the province_names data `AS` **pr**. 
-
-* `ON` is the clause to join databased on pr.province_id = pa.province_id. 
-
-* `GROUP BY` to group the data by pr.province_id.
-
-* `ORDER BY` to define the order of the data output.
-
-* `DESC` defines that the output data be arranged in order of descending patient_count. 
+Join the tables by province ID, then group and count patients by province.
 
 ```{r}
 RSQLite::dbGetQuery(hosp,
@@ -509,27 +299,9 @@ RSQLite::dbGetQuery(hosp,
 
 ::: {.panel-tabset}
 
-### `8.0`
+### R
 
-**Contents**
-
-* 8.1 Solution in R
-
-* 8.2 Solution in SQL
-
-### `8.1 R`
-
-In R use,
-
-* `merge()` to join the data sets province_names, and patients by "province_id".
-
-* `group_by()` to group by province name.
-
-* `summarise()` to count patients marked "M" and "F" in each province.
-
-* `filter()` to keep provinces where the "M" count is greater.
-
-* `select()` to show only the province name.
+Join the tables, count patients marked “M” and “F” in each province, and keep provinces where the first count is higher.
 
 ```{r}
 base::merge(province_names, patients, by = "province_id") %>%
@@ -541,33 +313,9 @@ base::merge(province_names, patients, by = "province_id") %>%
   dplyr::select(province_name)
 ```
 
-### `8.2 SQL` 
+### SQL
 
-In SQL use,
-
-* `SELECT` to select pr.province_name column.
-
-* `FROM` to define the patients data to select pr.province_name from.
-
-* `AS` to define patients data as pa.
-
-* `JOIN` to join pa.province data with pr.province_name data.
-
-* `AS` to define province_name data as pr.
-
-* `ON` to join pa.patients and pr.province_names data by province_id. 
-
-* `GROUP BY` to group data by province_id. 
-
-* `HAVING` to define a clause to filter the data where the number of "M" patients is greater than "F" patients. 
-
-* `COUNT()` to count the given input. 
-
-* `CASE` to go through the condition of gender = "M" or when gender = "F"
-
-* `WHEN` to perform the count when the condition is true.
-
-* `THEN 1 END` to add a 1 to the count when the case is met. 
+Join the tables and use `HAVING` to keep provinces with more patients marked “M” than “F.”
 
 ```{r}
 RSQLite::dbGetQuery(hosp,
@@ -588,29 +336,9 @@ Give each patient a 'Yes' if they have insurance, and a 'No' if they don't have 
 
 ::: {.panel-tabset}
 
-### `9.0`
+### R
 
-**Contents**
-
-* 9.1 Solution in R
-
-* 9.2 Solution in SQL
-
-### `9.1 R`
-
-In R use, 
-
-* `%>%` to pipe the data.
-
-* `mutate()` to mutate the data to include has_insurance, and cost_after_insurance information.
-
-* `case_when()` to define a case where if the patient id is odd then they don't have insurance, and if they are even they do have insurance. 
-
-* `group_by()` to group the data by has_insurance.
-
-* `summarize()` to define cost_after_insurance. 
-
-* `sum()` to add up the cost for all those with and without insurance. 
+Use `case_when()` to assign insurance status and cost, then sum costs by group.
 
 ```{r}
 patients %>%
@@ -626,41 +354,9 @@ patients %>%
   summarise(cost_after_insurance = base::sum(cost_after_insurance))
 ```
 
-### `9.2 SQL`
+### SQL
 
-In SQL use, 
-
-* `SELECT` to select.
-
-* `CASE` to define a case. 
-
-* `WHEN` to select when a patient_id is even.
-
-* `THEN` to set insurance to "Yes" if patient_id is even.
-
-* `ELSE` to set has_insurance to "No" when patient_id is not even. 
-
-* `END` to end the case. 
-
-* `AS` to define the first case values as has_insurance.
-
-* `SUM()` to add up input. 
-
-* `CASE` to define another case. 
-
-* `WHEN` to select when a patient has an even id.
-
-* `THEN` to set cost_after_insurance to 10 if the patient id is even. 
-
-* `ELSE` to set the cost_after_insurance to 50 if the patient id is not even. 
-
-* `END` to end the case.
-
-* `AS` to define the second case values as cost_after_insurance. 
-
-* `FROM` to define the patients data to select and figure out insurance costs for. 
-
-* `GROUP BY` to group data by has_insurance. 
+Use `CASE` to assign insurance status and cost, then sum costs by group.
 
 ```{r}
 RSQLite::dbGetQuery(hosp,
@@ -689,23 +385,9 @@ RSQLite::dbGetQuery(hosp,
 
 ::: {.panel-tabset}
 
-### `10.0`
+### R
 
-**Contents**
-
-* 10.1 Solution in R
-
-* 10.2 Solution in SQL
-
-### `10.1 R`
-
-In R define the patients data then use,
-
-* `%>%` to pipe the data.
-
-* `filter` to filter the database on first name, gender, weight, patient_id, and city.
-
-* `grepl` to select first_names where the third letter is b, ignoring case. 
+Filter by name, gender, weight, patient ID, and city. The name check ignores case, and the weight range includes both endpoints.
 
 ```{r}
 patients %>%
@@ -716,21 +398,9 @@ patients %>%
          city == "Burlington")
 ```
 
-### `10.2 SQL`
+### SQL
 
-In SQL use: 
-
-* `SELECT` to select all * columns.
-
-* `FROM` to select all columns from the patients data.
-
-* `Where` defines multiple conditions. 
-
-* `LIKE` is a condition where first_name has the third letter equal to b, ignoring case for ASCII text in SQLite.
-
-* `AND` to define multiple conditions such as gender, patient_id, and city.
-
-* `BETWEEN` to select weights from 50 to 70, including both endpoints. 
+Use `LIKE` and the other conditions to filter records. `BETWEEN` includes 50 and 70.
 
 ```{r}
 RSQLite::dbGetQuery(hosp,

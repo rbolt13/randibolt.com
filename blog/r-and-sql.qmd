@@ -3,7 +3,7 @@ title: "R and SQLite"
 description: "Compare R and SQL solutions to ten practical data questions."
 date: "2023-01-23"
 date-modified: "2026-10-27"
-categories: [R, SQL]
+categories: [R, SQL, Data Wrangling, Data Visualization]
 image: r-and-sql-plot.png
 format:
   html:

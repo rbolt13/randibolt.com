@@ -317,46 +317,4 @@ h2.talk-card {
   text-underline-offset: .2em;
 }
 
-// Blog listings
-body.blog-page div.quarto-post {
-  background-color: mix($accent-color, $col1, 18%) !important;
-  border: 0;
-  margin: 1.5rem 0;
-  padding: 1rem;
-}
-.blog-page .quarto-post .listing-title {
-  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
-  line-height: 1.2;
-  margin: 0 0 .4rem;
-}
-.blog-page .listing-title a {
-  text-decoration: none;
-}
-.blog-page .listing-title a:hover {
-  text-decoration: underline;
-}
-.blog-page .listing-categories {
-  margin-bottom: .4rem;
-}
-.blog-page .listing-category {
-  background: rgba($accent-color, .2);
-  border: 0;
-  border-radius: 999px;
-  color: $col3 !important;
-  font-size: .75rem;
-  padding: .15rem .45rem;
-}
-.blog-page .quarto-post .thumbnail:has(.listing-item-img-placeholder) {
-  display: none;
-}
-.blog-page .listing-description {
-  line-height: 1.6;
-}
-.blog-page .listing-description a {
-  text-decoration: none;
-}
-.blog-page .quarto-post .metadata {
-  font-size: .9rem;
-}
-
 /*-- scss:uses --*/

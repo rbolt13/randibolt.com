@@ -1,6 +1,8 @@
 ---
 pagetitle: "Blog | Randi Bolt"
-body-classes: blog-page
+format:
+  html:
+    css: blog-listing.css
 listing:
   contents: blog
   sort: "date desc"

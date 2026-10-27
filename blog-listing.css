@@ -1,0 +1,27 @@
+/* Blog listing cards */
+#listing-listing .quarto-post {
+  background-color: #dfe4e2;
+  border: 0;
+  margin: 1.5rem 0;
+  padding: 1rem;
+}
+#listing-listing .listing-title {
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  line-height: 1.2;
+  margin: 0 0 .4rem;
+}
+#listing-listing .listing-title a { text-decoration: none; }
+#listing-listing .listing-title a:hover { text-decoration: underline; }
+#listing-listing .listing-categories { margin-bottom: .4rem; }
+#listing-listing .listing-category {
+  background: rgba(124, 159, 164, .2);
+  border: 0;
+  border-radius: 999px;
+  color: #24434a !important;
+  font-size: .75rem;
+  padding: .15rem .45rem;
+}
+#listing-listing .thumbnail:has(.listing-item-img-placeholder) { display: none; }
+#listing-listing .listing-description { line-height: 1.6; }
+#listing-listing .listing-description a { text-decoration: none; }
+#listing-listing .metadata { font-size: .9rem; }

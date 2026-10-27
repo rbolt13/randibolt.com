@@ -123,7 +123,7 @@
     "href": "blog.html",
     "title": "\nBlog\n",
     "section": "",
-    "text": "Blog\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nText Mining, Sentiment Analysis, & Topic Modeling\n\n\n\n\n\n\nR\n\n\nStatistics\n\n\nText Mining\n\n\nTopic Modeling\n\n\nSentiment Analysis\n\n\n\n\n\n\n\n\n\nJun 3, 2026\n\n\n\n\n\n\nNo matching items"
+    "text": "Blog\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nText Mining, Sentiment Analysis, & Topic Modeling\n\n\n\n\n\n\nR\n\n\nStatistics\n\n\nText Mining\n\n\nTopic Modeling\n\n\nSentiment Analysis\n\n\n\nA quick reference for text mining, sentiment analysis, and topic modeling.\n\n\n\n\n\nJun 3, 2026\n\n\n\n\n\n\n\n\n\n\n\n\nR and SQLite\n\n\n\n\n\n\nR\n\n\nSQL\n\n\nData Wrangling\n\n\nData Visualization\n\n\n\nCompare R and SQL solutions to ten practical data questions.\n\n\n\n\n\nJan 23, 2023\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "blog/PawneeSurveyAnalysis.html",
@@ -278,5 +278,33 @@
     "title": "How I Use AI",
     "section": "",
     "text": "I use AI as a tool to support my personal projects and explore new ideas. Depending on the project, I may use it to brainstorm, work through questions, refine writing, or help develop and troubleshoot code.\nFor this website, I have used AI to help update the design and code. I guide the process, make decisions about what to include, and review the results.\nMy use of AI varies from project to project. When it plays a significant role in a post or project, I may include additional details about how I used it."
+  },
+  {
+    "objectID": "blog/r-and-sql.html",
+    "href": "blog/r-and-sql.html",
+    "title": "R and SQLite",
+    "section": "",
+    "text": "This post compares R and SQL approaches to the same data questions. It is for anyone learning either language or interested in seeing how familiar data tasks translate between them."
+  },
+  {
+    "objectID": "blog/r-and-sql.html#packages",
+    "href": "blog/r-and-sql.html#packages",
+    "title": "R and SQLite",
+    "section": "Packages",
+    "text": "Packages\nFor all my data queries and manipulation in R I will be using base R, dplyr, and magrittr.\n\nlibrary(dplyr)\nlibrary(magrittr)\n\nTo create a SQL database, and run SQL queries in R chunks I will be using a package called RSQLite.\n\n# install.packages(\"RSQLite\")\nlibrary(RSQLite)\n\nWarning: package 'RSQLite' was built under R version 4.5.2"
+  },
+  {
+    "objectID": "blog/r-and-sql.html#data",
+    "href": "blog/r-and-sql.html#data",
+    "title": "R and SQLite",
+    "section": "Data",
+    "text": "Data\nData source: These examples use practice data from SQL Practice. The patient table contains a subset of 1,000 records used for this post.\nThe examples use three data sets:\n\npatients: Which includes patient_id, first_name, last_name, gender, birth_date, city, province_id, allergies, height, and weight.\n\n\npatients &lt;- utils::read.csv('data/patients.csv')\n\n\nprovince_names: Which includes province_id, and province_name.\n\n\nprovince_names &lt;- utils::read.csv(\"data/province_names.csv\")\n\n\nadmissions: which includes patient_id, admission_date, discharge_date, diagnosis, attending_doctor_id\n\n\nadmissions &lt;- utils::read.csv(\"data/admissions.csv\")"
+  },
+  {
+    "objectID": "blog/r-and-sql.html#database",
+    "href": "blog/r-and-sql.html#database",
+    "title": "R and SQLite",
+    "section": "Database",
+    "text": "Database\nCreate an in-memory SQLite database with dbConnect() and SQLite(). It exists for this R session and does not change a database file.\n\nhosp &lt;- RSQLite::dbConnect(RSQLite::SQLite(),\n                           \":memory:\")\n\nUse dbWriteTable() to add each data frame as a table in the database.\n\nRSQLite::dbWriteTable(hosp,\n                      \"patients\",\n                      patients)\nRSQLite::dbWriteTable(hosp,\n                      \"province_names\",\n                      province_names)\nRSQLite::dbWriteTable(hosp,\n                      \"admissions\",\n                      admissions)\n\nVerify the three data sets are in the database using:\n\ndbListTables() to list the tables within the hosp database.\n\n\nRSQLite::dbListTables(hosp)\n\n[1] \"admissions\"     \"patients\"       \"province_names\""
   }
 ]

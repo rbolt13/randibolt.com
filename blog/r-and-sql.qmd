@@ -2,7 +2,7 @@
 title: "R and SQLite"
 date: "2023-01-23"
 categories: [R, SQL]
-image: r-and-sqlite/SQL-and-R.png
+image: r-and-sql-plot.png
 format:
   html:
     df-print: paged
@@ -14,7 +14,6 @@ draft: false
 
 This post compares R and SQL approaches to the same data questions. It is for anyone learning either language or interested in seeing how familiar data tasks translate between them. 
 
-![Naruto with SQL logo, and Sauske with the R Studio logo, standing back to back.](r-and-sqlite/SQL-and-R.png)
 
 # Getting Started
 
@@ -43,19 +42,19 @@ This post will use three data sets that I copied from [Learn SQL](https://www.sq
 1. `patients`: Which includes patient_id, first_name, last_name, gender, birth_date, city, province_id, allergies, height, and weight. Note I only copied the first 1000 entries. 
 
 ```{r patients data}
-patients <- utils::read.csv('r-and-sqlite/data/patients.csv')
+patients <- utils::read.csv('data/patients.csv')
 ```
 
 2. `province_names`: Which includes province_id, and province_name. 
 
 ```{r province_names data}
-province_names <- utils::read.csv("r-and-sqlite/data/province_names.csv")
+province_names <- utils::read.csv("data/province_names.csv")
 ```
 
 3. `admissions`: which includes patient_id, admission_date, discharge_date, diagnosis, attending_doctor_id
 
 ```{r admissions data}
-admissions <- utils::read.csv("r-and-sqlite/data/admissions.csv")
+admissions <- utils::read.csv("data/admissions.csv")
 ```
 
 
@@ -419,6 +418,30 @@ RSQLite::dbGetQuery(hosp,
 :::
 
 
+
+# Bonus: Visualize patients by province
+
+We can also visualize the counts from question 7. This chart uses the practice data, including the subset of patient records used throughout this post.
+
+```{r}
+#| fig-alt: "Horizontal bar chart of patient counts by province in the practice dataset."
+#| fig-width: 8
+#| fig-height: 5
+province_counts <- merge(province_names, patients, by = "province_id") %>%
+  count(province_name, name = "patient_count")
+
+province_plot <- ggplot2::ggplot(
+  province_counts,
+  ggplot2::aes(x = reorder(province_name, patient_count), y = patient_count)
+) +
+  ggplot2::geom_col(fill = "#7C9FA4") +
+  ggplot2::coord_flip() +
+  ggplot2::labs(title = "Patients by Province", x = NULL, y = "Number of patients") +
+  ggplot2::theme_minimal()
+
+province_plot
+ggplot2::ggsave("r-and-sql-plot.png", plot = province_plot, width = 8, height = 5, dpi = 150)
+```
 
 Close the database connection when finished:
 

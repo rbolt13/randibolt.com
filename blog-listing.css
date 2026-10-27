@@ -26,24 +26,33 @@
 #listing-listing .listing-description a { text-decoration: none; }
 #listing-listing .metadata { font-size: .9rem; font-family: 'Tinos', serif; }
 
-/* Date and thumbnail beside the post description */
+/* Title above the thumbnail and post details */
 #listing-listing .quarto-post {
   display: grid;
   grid-template-columns: minmax(125px, 34%) minmax(0, 1fr);
-  grid-template-areas: "date body" "image body";
-  grid-template-rows: min-content 1fr;
+  grid-template-areas:
+    "title title"
+    "subtitle subtitle"
+    "image tags"
+    "image description";
+  grid-template-rows: auto auto auto 1fr;
   align-items: start;
   gap: .2rem 1rem;
 }
-#listing-listing .quarto-post .metadata { grid-area: date; width: auto; }
+#listing-listing .quarto-post .body { display: contents; }
+#listing-listing .quarto-post .metadata { display: none; }
+#listing-listing .quarto-post .listing-title { grid-area: title; }
+#listing-listing .quarto-post .listing-subtitle { grid-area: subtitle; }
+#listing-listing .quarto-post .listing-categories { grid-area: tags; }
+#listing-listing .quarto-post .listing-description { grid-area: description; }
 #listing-listing .quarto-post .thumbnail { grid-area: image; width: 100%; align-self: start; margin: 0; }
 #listing-listing .quarto-post .thumbnail p { margin: 0; }
 #listing-listing .quarto-post .thumbnail img { width: 100%; height: auto; }
-#listing-listing .quarto-post .body { grid-area: body; width: auto; min-width: 0; }
 @media (max-width: 600px) {
   #listing-listing .quarto-post {
     grid-template-columns: 1fr;
-    grid-template-areas: "date" "image" "body";
+    grid-template-areas: "title" "subtitle" "tags" "image" "description";
+    grid-template-rows: auto;
   }
   #listing-listing .quarto-post .thumbnail { max-width: 280px; }
 }

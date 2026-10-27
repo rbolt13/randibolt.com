@@ -29,11 +29,11 @@
 /* Date and thumbnail beside the post description */
 #listing-listing .quarto-post {
   display: grid;
-  grid-template-columns: minmax(125px, 28%) minmax(0, 1fr);
+  grid-template-columns: minmax(125px, 34%) minmax(0, 1fr);
   grid-template-areas: "date body" "image body";
   grid-template-rows: min-content 1fr;
   align-items: start;
-  gap: .35rem 1.25rem;
+  gap: .2rem 1rem;
 }
 #listing-listing .quarto-post .metadata { grid-area: date; width: auto; }
 #listing-listing .quarto-post .thumbnail { grid-area: image; width: 100%; align-self: start; margin: 0; }

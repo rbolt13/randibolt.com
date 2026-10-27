@@ -1,6 +1,7 @@
 ---
 title: "R and SQLite"
 date: "2023-01-23"
+date-modified: "2026-10-27"
 categories: [R, SQL]
 image: r-and-sql-plot.png
 format:
@@ -37,9 +38,11 @@ library(RSQLite)
 
 ## Data 
 
-This post will use three data sets that I copied from [Learn SQL](https://www.sql-practice.com/): 
+**Data source:** These examples use practice data from [SQL Practice](https://www.sql-practice.com/). The patient table contains a subset of 1,000 records used for this post.
 
-1. `patients`: Which includes patient_id, first_name, last_name, gender, birth_date, city, province_id, allergies, height, and weight. Note I only copied the first 1000 entries. 
+The examples use three data sets: 
+
+1. `patients`: Which includes patient_id, first_name, last_name, gender, birth_date, city, province_id, allergies, height, and weight. 
 
 ```{r patients data}
 patients <- utils::read.csv('data/patients.csv')

@@ -1,5 +1,6 @@
 ---
 title: "Text Mining, Sentiment Analysis, & Topic Modeling"
+description: "A quick reference for text mining, sentiment analysis, and topic modeling."
 date: "6-3-2026"
 image: topic-distributions.svg
 categories: ["R", "Statistics", "Text Mining", "Topic Modeling", "Sentiment Analysis"]

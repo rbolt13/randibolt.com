@@ -48,6 +48,9 @@
 #listing-listing .quarto-post .thumbnail { grid-area: image; width: 100%; align-self: start; margin: 0; }
 #listing-listing .quarto-post .thumbnail p { margin: 0; }
 #listing-listing .quarto-post .thumbnail img { width: 100%; height: auto; }
+/* Trim the extra side margins in the map thumbnail. */
+#listing-listing .thumbnail:has(img[src*="r-and-sql-plot.png"]) { overflow: hidden; }
+#listing-listing .thumbnail img[src*="r-and-sql-plot.png"] { width: 136%; max-width: none; margin-left: -18%; }
 @media (max-width: 600px) {
   #listing-listing .quarto-post {
     grid-template-columns: 1fr;

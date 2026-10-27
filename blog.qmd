@@ -11,4 +11,4 @@ listing:
 comments: false
 ---
 
-<center><h1>Blog</h1></center>
+<h1 class="visually-hidden">Blog</h1>

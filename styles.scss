@@ -318,8 +318,8 @@ h2.talk-card {
 }
 
 // Blog listings
-.blog-page .quarto-post {
-  background: mix($accent-color, $col1, 18%);
+body.blog-page div.quarto-post {
+  background-color: mix($accent-color, $col1, 18%) !important;
   border: 0;
   margin: 1.5rem 0;
   padding: 1rem;

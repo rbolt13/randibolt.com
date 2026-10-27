@@ -448,9 +448,9 @@ canada <- canada %>%
   mutate(patient_count = dplyr::coalesce(patient_count, 0L))
 
 province_plot <- ggplot2::ggplot(canada) +
-  ggplot2::geom_sf(ggplot2::aes(fill = patient_count), color = "#F5F3EF", linewidth = 0.3) +
+  ggplot2::geom_sf(ggplot2::aes(fill = patient_count), color = "#385E66", linewidth = 0.3) +
   ggplot2::scale_fill_gradient(
-    low = "#DFE8E7", high = "#24434A", name = "Patients"
+    low = "#C2D4D3", high = "#24434A", name = "Patients"
   ) +
   ggplot2::coord_sf(crs = 3347, datum = NA) +
   ggplot2::labs(
@@ -459,8 +459,8 @@ province_plot <- ggplot2::ggplot(canada) +
   ) +
   ggplot2::theme_void(base_family = "serif") +
   ggplot2::theme(
-    plot.background = ggplot2::element_rect(fill = "#F5F3EF", color = NA),
-    panel.background = ggplot2::element_rect(fill = "#F5F3EF", color = NA),
+    plot.background = ggplot2::element_rect(fill = "#FFFFFF", color = "#385E66", linewidth = 0.6),
+    panel.background = ggplot2::element_rect(fill = "#FFFFFF", color = NA),
     plot.title = ggplot2::element_text(color = "#24434A", face = "bold", size = 16),
     plot.subtitle = ggplot2::element_text(color = "#385E66", size = 10),
     legend.title = ggplot2::element_text(color = "#283438"),

@@ -62,138 +62,138 @@ data <- read_csv(I(resp_body_string(response)), show_col_types = FALSE) |>
   mutate(date = as_date(date))
 ```
 
-# Breif EDA & Cleaning
+# Explore and Prepare the Data
 
-## Calls Offered by Service
+Before fitting either model, I'll check the coverage and look for patterns in recorded inquiries. I'll use daily counts to keep the analysis manageable while retaining differences between weekdays and weekends. The exploration uses 2015–2017, leaving 2018 aside for testing.
 
-I'm starting by looking at the number of calls offered for each service. 
+## Check Coverage
 
-```{r offered by q}
-offer_by_q <- data |>
-  group_by(`Service Name`) |>
-  summarise(`Calls Offered` = sum(`Calls Offered`, na.rm = TRUE)) |>
-  arrange(desc(`Calls Offered`))
-offer_by_q
-```
+The download has one row per recorded date and hour. I'll check for duplicate rows and invalid values, then compare it with a full calendar of expected hours. Missing hours stay missing rather than becoming zeros.
 
-## Calls Offered for Each Payment Related Services
+```{r check-coverage}
+#| code-summary: "Show Code"
 
-I am not sure what all the queues are, but see 'payment' in here. Lets focus our analysis on payment lines. 
+stopifnot(
+  nrow(data) > 0,
+  !anyNA(data),
+  !anyDuplicated(data[c("date", "hour")]),
+  all(data$hour %in% 0:23),
+  all(data$inquiry_count >= 0)
+)
 
-```{r}
-payment_data <- data |>
-  filter(str_detect(`Service Name`, regex("payment", ignore_case = TRUE))) |>
-  group_by(`Service Name`) |>
-  summarise(`Calls Offered` = sum(`Calls Offered`, na.rm = TRUE)) |>
-  arrange(desc(`Calls Offered`))
-payment_data
-```
+hourly <- expand_grid(
+  date = seq(as.Date("2015-01-01"), as.Date("2018-12-31"), by = "day"),
+  hour = 0:23
+) |>
+  left_join(data, by = c("date", "hour"))
 
-For payments, it looks like customers can call in to reach:
-
-* Make Payment: Caller is trying to make a payment.
-
-* Make Payment Error: Caller had an issue while making a payment.
-
-* Payments Off: Payment option may have been unavailable, and caller was routed here.
-
-I am also going to assume the 'E' is for English lines and 'S' is for Spanish lines. 
-
-## Calls Offered for All Payment Services
-
-To somewhat simplify this analysis, lets start by looking at calls offed for all payment services as a whole. 
-
-```{r payment monthly}
-payment_monthly <- data |>
-  mutate(`Reporting Date` = as_date(parse_date_time(`Reporting Date`, orders = c("ymd", "mdy")))) |>
-  filter(str_detect(`Service Name`, regex("payment", ignore_case = TRUE))) |>
-  group_by(`Reporting Date`) |>
-  summarise(`Calls Offered` = sum(`Calls Offered`, na.rm = TRUE)) |>
-  arrange(desc(`Reporting Date`))
-
-payment_monthly
-```
-
-# Visualize Payments by Month 
-
-Lets look at payments by month, and compare each year. 
-
-```{r payment monthly yoy}
-#| fig-height: 12
-#| fig-width: 8
-payment_monthly |>
-  mutate(
-    year = year(`Reporting Date`),
-    month = month(`Reporting Date`, label = TRUE, abbr = TRUE)
-  ) |>
-  ggplot(aes(x = month, y = `Calls Offered`)) +
-  geom_col() +
-  geom_text(aes(label = `Calls Offered`), vjust = -0.3) +
-  facet_wrap(~ year, ncol = 1) +
-  labs(
-    title = "Payment Calls Offered by Month",
-    x = "Month",
-    y = "Calls Offered"
+coverage <- hourly |>
+  group_by(year = year(date)) |>
+  summarise(
+    expected_hours = n(),
+    recorded_hours = sum(!is.na(inquiry_count)),
+    missing_hours = sum(is.na(inquiry_count)),
+    .groups = "drop"
   )
+
+knitr::kable(coverage, col.names = c(
+  "Year", "Expected hours", "Recorded hours", "Missing hours"
+))
 ```
 
-Right away we can see a large range of calls between 1,502 and 6,491 since 2018. It also looks like call volume has been decreasing the last couple of years compared to pre-pandemic call volumes. 
+A missing hour could reflect no inquiries or a reporting gap. This check also flags calendar quirks such as daylight saving time. Any gaps need review before modeling; I won't assume an incomplete day's total represents a full day.
 
-# Last 5 Years Summary Stats
+## Daily Volume
 
-It looks like we are missing some data in 2021 from March - May. Lets filter out anything before June 2021 and observe the summary stats. 
+I'll total each day's inquiries, keeping incomplete days as missing. The first chart shows changes over time and any unusually high or low days worth investigating.
 
-```{r}
-payment_monthly <- payment_monthly |>
-  filter(`Reporting Date` >= as.Date("2021-06-01"))
-summary(payment_monthly)
-```
+```{r daily-volume}
+#| code-summary: "Show Code"
 
-Cool! It looks like over the past 5 years Meza gets about 2k calls a month related to payments with a range of about 1k calls. 
-
-## Visualize Payments by Quarter
-
-Looks by month, I am not seeing obvious consistent spikes or dips in the data so I am going to look at it by quarter to see if there if there might be any seasonal trends. 
-
-```{r}
-#| fig-height: 12
-#| fig-width: 8
-payment_quarterly <- payment_monthly |>
-  mutate(
-    year = year(`Reporting Date`),
-    quarter = paste0("Q", quarter(`Reporting Date`))
-  ) |>
-  group_by(year, quarter) |>
-  summarise(`Calls Offered` = sum(`Calls Offered`, na.rm = TRUE), .groups = "drop")
-
-payment_quarterly |>
-  ggplot(aes(x = quarter, y = `Calls Offered`)) +
-  geom_col() +
-  geom_text(aes(label = `Calls Offered`), vjust = -0.3) +
-  facet_wrap(~ year, ncol = 1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
-  labs(
-    title = "Payment Calls Offered by Quarter",
-    x = "Quarter",
-    y = "Calls Offered"
+daily <- hourly |>
+  group_by(date) |>
+  summarise(
+    missing_hours = sum(is.na(inquiry_count)),
+    inquiry_count = if (anyNA(inquiry_count)) NA_real_ else sum(inquiry_count),
+    .groups = "drop"
   )
+
+train <- daily |> filter(date < as.Date("2018-01-01"))
+test <- daily |> filter(date >= as.Date("2018-01-01"))
+
+daily_plot <- ggplot(train, aes(date, inquiry_count)) +
+  geom_line(color = "#355C7D", linewidth = 0.4) +
+  scale_y_continuous(labels = scales::label_comma()) +
+  labs(
+    title = "Daily NYC 311 Inquiries, 2015–2017",
+    x = NULL, y = "Recorded inquiries"
+  ) +
+  theme_minimal()
+
+ggplotly(daily_plot)
 ```
 
-I am not seeing any seasonal trends that are too obvious. Perhaps there is a dip in quarter three, but I will be curious to see what our forecast comes up with for the next few months (Q3) of 2026. 
+## Weekly and Yearly Patterns
 
-## Prepare for Prophet
+Next, I'll compare average daily volume by weekday and by month within each year. Averages make the monthly comparison less sensitive to the number of days in each month. Both summaries exclude incomplete days.
 
-Now we need to slightly modify our data for the Prophet model. Mainly just changing the column headers. 
+```{r weekly-pattern}
+#| code-summary: "Show Code"
 
-```{r}
-prophet_payment <- payment_monthly |>
-  transmute(
-    ds = `Reporting Date`,
-    y = `Calls Offered`
-  ) |>
-  arrange(ds)
+weekly_pattern <- train |>
+  filter(!is.na(inquiry_count)) |>
+  mutate(weekday = wday(date, label = TRUE, week_start = 1)) |>
+  group_by(weekday) |>
+  summarise(avg_inquiries = mean(inquiry_count), .groups = "drop")
+
+weekly_plot <- ggplot(weekly_pattern, aes(weekday, avg_inquiries)) +
+  geom_col(fill = "#355C7D") +
+  scale_y_continuous(labels = scales::label_comma()) +
+  labs(
+    title = "Average Daily Inquiries by Weekday",
+    x = NULL, y = "Average recorded inquiries"
+  ) +
+  theme_minimal()
+
+ggplotly(weekly_plot)
 ```
 
+```{r yearly-pattern}
+#| code-summary: "Show Code"
+
+monthly_pattern <- train |>
+  filter(!is.na(inquiry_count)) |>
+  mutate(year = factor(year(date)), month = month(date, label = TRUE)) |>
+  group_by(year, month) |>
+  summarise(avg_inquiries = mean(inquiry_count), .groups = "drop")
+
+monthly_plot <- ggplot(
+  monthly_pattern, aes(month, avg_inquiries, color = year, group = year)
+) +
+  geom_line() +
+  geom_point() +
+  scale_y_continuous(labels = scales::label_comma()) +
+  labs(
+    title = "Average Daily Inquiries by Month and Year",
+    x = NULL, y = "Average recorded inquiries", color = "Year"
+  ) +
+  theme_minimal()
+
+ggplotly(monthly_plot)
+```
+
+I'll look for weekday differences, recurring monthly peaks, and changes in the overall level. These plots can suggest seasonal patterns, but three years of history provide only three observations of each annual cycle.
+
+## Prepare for Modeling
+
+Both models will use the same daily training data from 2015–2017 and be evaluated against 2018. I'll resolve any missing days before fitting them. Using daily totals preserves weekly patterns, though it won't tell us how many people are needed during individual hours.
+
+```{r check-model-inputs}
+#| code-summary: "Show Code"
+
+# Pause modeling if any daily totals still need review.
+stopifnot(!anyNA(train$inquiry_count), !anyNA(test$inquiry_count))
+```
 
 # Prophet
 

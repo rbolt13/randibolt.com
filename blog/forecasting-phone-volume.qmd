@@ -66,11 +66,11 @@ data <- read_csv(I(resp_body_string(response)), show_col_types = FALSE) |>
 
 # Explore and Prepare the Data
 
-Before fitting either model, I'll check the coverage and look for patterns in recorded inquiries. I'll focus on Monday–Friday to reflect a weekday phone operation. For now, each daily total includes all hours; narrowing the analysis to business hours will require a specific time window. The exploration uses 2015–2017, leaving 2018 aside for testing.
+Before fitting either model, I'll check the coverage and look for patterns in recorded inquiries. I'll focus on Monday–Friday to reflect a weekday phone operation. Each daily total includes inquiries recorded from 8 a.m. up to 5 p.m., using the dataset's recorded clock hours. The exploration uses 2015–2017, leaving 2018 aside for testing.
 
 ## Check Coverage
 
-The download has one row per recorded date and hour. I'll check for duplicate rows and invalid values, then compare it with the expected hours for Monday–Friday. Missing hours stay missing rather than becoming zeros.
+The download has one row per recorded date and hour. I'll check for duplicate rows and invalid values, then compare it with the nine expected hourly intervals for each Monday–Friday, from 8–9 a.m. through 4–5 p.m. Missing hours stay missing rather than becoming zeros.
 
 ```{r check-coverage}
 #| eval: true
@@ -86,7 +86,7 @@ stopifnot(
 
 hourly <- expand_grid(
   date = seq(as.Date("2015-01-01"), as.Date("2018-12-31"), by = "day"),
-  hour = 0:23
+  hour = 8:16
 ) |>
   filter(wday(date, week_start = 1) <= 5) |>
   left_join(data, by = c("date", "hour"))
@@ -109,7 +109,7 @@ A missing hour could reflect no inquiries or a reporting gap. This check also fl
 
 ## Daily Volume
 
-I'll total each day's inquiries, keeping incomplete days as missing. The first chart shows changes over time and any unusually high or low days worth investigating.
+I'll total each weekday's inquiries from 8 a.m. up to 5 p.m., keeping days with missing business hours as missing. The first chart shows changes over time and any unusually high or low days worth investigating.
 
 ```{r daily-volume}
 #| eval: true
@@ -130,7 +130,7 @@ daily_plot <- ggplot(train, aes(date, inquiry_count)) +
   geom_line(color = "#355C7D", linewidth = 0.4) +
   scale_y_continuous(labels = scales::label_comma()) +
   labs(
-    title = "Weekday NYC 311 Inquiries, 2015–2017",
+    title = "Weekday NYC 311 Inquiries, 8 a.m.–5 p.m., 2015–2017",
     x = NULL, y = "Recorded inquiries"
   ) +
   theme_minimal()
@@ -193,7 +193,7 @@ I'll look for weekday differences, recurring monthly peaks, and changes in the o
 
 ## Prepare for Modeling
 
-Both models will use the same daily training data from 2015–2017 and be evaluated against 2018. I'll resolve any missing days before fitting them. Using daily totals preserves weekly patterns, though it won't tell us how many people are needed during individual hours.
+Both models will use the same Monday–Friday, 8 a.m.–5 p.m. daily totals, training on 2015–2017 and being evaluated against 2018. I'll resolve any missing days before fitting them. Using daily totals preserves weekly patterns, though it won't tell us how many people are needed during individual hours.
 
 ```{r check-model-inputs}
 #| code-summary: "Show Code"

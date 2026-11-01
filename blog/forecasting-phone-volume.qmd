@@ -22,6 +22,8 @@ I'll start with Prophet, which models trends and recurring patterns and can inco
 
 # Set-up
 
+Before building the forecasts, I'll load the packages and bring in the data we'll use throughout the analysis.
+
 I'll use tidyverse and lubridate to prepare the data, httr2 to download it, Prophet and ETS to forecast volume, and plotly for interactive charts.
 
 ```{r setup}
@@ -40,7 +42,8 @@ library(plotly)
 The [NYC 311 Call Center Inquiry dataset](https://data.cityofnewyork.us/City-Government/311-Call-Center-Inquiry/wewp-mm3p/about_data) records agent-handled inquiries. I'll download hourly counts for 2015–2018, using the first three years for training and 2018 for testing. These counts exclude abandoned calls, and missing hours may not mean zero activity. This period also avoids pandemic-related underreporting beginning in March 2020.
 
 ```{r data}
-#| code-fold: false
+#| code-fold: true
+#| code-summary: "Show Code"
 #| warning: false
 #| message: false
 

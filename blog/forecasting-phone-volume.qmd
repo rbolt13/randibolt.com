@@ -24,7 +24,7 @@ I'll start with Prophet, which models trends and recurring patterns and can inco
 
 Before building the forecasts, I'll load the packages and bring in the data we'll use throughout the analysis.
 
-I'll use tidyverse and lubridate to prepare the data, httr2 to download it, Prophet and ETS to forecast volume, and plotly for interactive charts.
+I'll use tidyverse and lubridate to prepare the data, httr2 to download it, Prophet and ETS to forecast volume.
 
 ```{r setup}
 #| eval: true
@@ -37,7 +37,6 @@ library(lubridate)
 library(httr2)
 library(prophet)
 library(forecast)
-library(plotly)
 ```
 
 The [NYC 311 Call Center Inquiry dataset](https://data.cityofnewyork.us/City-Government/311-Call-Center-Inquiry/wewp-mm3p/about_data) records agent-handled inquiries. I'll download hourly counts for 2015–2018, using the first three years for training and 2018 for testing. These counts exclude abandoned calls, and missing hours may not mean zero activity. This period also avoids pandemic-related underreporting beginning in March 2020.
@@ -64,197 +63,24 @@ data <- read_csv(I(resp_body_string(response)), show_col_types = FALSE) |>
   mutate(date = as_date(date))
 ```
 
-# Explore and Prepare the Data
+# Explore the Data
 
-Before fitting either model, I'll check the coverage and look for patterns in recorded inquiries. I'll focus on Monday–Friday to reflect a weekday phone operation. Each daily total includes inquiries recorded from 8 a.m. up to 5 p.m., using the dataset's recorded clock hours. The exploration uses 2015–2017, leaving 2018 aside for testing.
+I'll start with the first six rows of the hourly extract.
 
-## Check Coverage
-
-The download has one row per recorded date and hour. I'll check for duplicate rows and invalid values, then compare it with the nine expected hourly intervals for each Monday–Friday, from 8–9 a.m. through 4–5 p.m. Missing hours stay missing rather than becoming zeros.
-
-```{r check-coverage}
+```{r preview-data}
 #| eval: true
-#| code-summary: "Show Code"
+#| code-fold: false
 
-stopifnot(
-  nrow(data) > 0,
-  !anyNA(data),
-  !anyDuplicated(data[c("date", "hour")]),
-  all(data$hour %in% 0:23),
-  all(data$inquiry_count >= 0)
-)
-
-hourly <- expand_grid(
-  date = seq(as.Date("2015-01-01"), as.Date("2018-12-31"), by = "day"),
-  hour = 8:16
-) |>
-  filter(wday(date, week_start = 1) <= 5) |>
-  left_join(data, by = c("date", "hour"))
-
-coverage <- hourly |>
-  group_by(year = year(date)) |>
-  summarise(
-    expected_hours = n(),
-    recorded_hours = sum(!is.na(inquiry_count)),
-    missing_hours = sum(is.na(inquiry_count)),
-    .groups = "drop"
-  )
-
-knitr::kable(coverage, col.names = c(
-  "Year", "Expected hours", "Recorded hours", "Missing hours"
-))
+head(data)
 ```
 
-A missing hour could reflect no inquiries or a reporting gap. This check also flags calendar quirks such as daylight saving time. Any gaps need review before modeling; I won't assume an incomplete day's total represents a full day.
+Each row represents one date and hour, with three fields:
 
-## Daily Volume
+- **`date`:** The inquiry date. This will let us identify weekdays, compare volume over time, and separate the training and testing periods.
+- **`hour`:** The hour of day, from 0 to 23. We'll use hours 8–16 to include inquiries from 8 a.m. up to 5 p.m.
+- **`inquiry_count`:** The number of inquiry records for that date and hour. This is the volume we'll summarize and forecast.
 
-I'll total each weekday's inquiries from 8 a.m. up to 5 p.m., keeping days with missing business hours as missing. The first chart shows changes over time and any unusually high or low days worth investigating.
-
-```{r daily-volume}
-#| eval: true
-#| code-summary: "Show Code"
-
-daily <- hourly |>
-  group_by(date) |>
-  summarise(
-    missing_hours = sum(is.na(inquiry_count)),
-    inquiry_count = if (anyNA(inquiry_count)) NA_real_ else sum(inquiry_count),
-    .groups = "drop"
-  )
-
-train <- daily |> filter(date < as.Date("2018-01-01"))
-test <- daily |> filter(date >= as.Date("2018-01-01"))
-
-daily_plot <- ggplot(train, aes(date, inquiry_count)) +
-  geom_line(color = "#355C7D", linewidth = 0.4) +
-  scale_y_continuous(labels = scales::label_comma()) +
-  labs(
-    title = "Weekday NYC 311 Inquiries, 8 a.m.–5 p.m., 2015–2017",
-    x = NULL, y = "Recorded inquiries"
-  ) +
-  theme_minimal()
-
-ggplotly(daily_plot)
-```
-
-## Weekly and Yearly Patterns
-
-Next, I'll compare average daily volume by weekday and by month within each year. Averages make the monthly comparison less sensitive to the number of days in each month. Both summaries exclude incomplete days.
-
-```{r weekly-pattern}
-#| eval: true
-#| code-summary: "Show Code"
-
-weekly_pattern <- train |>
-  filter(!is.na(inquiry_count)) |>
-  mutate(weekday = wday(date, label = TRUE, week_start = 1) |> droplevels()) |>
-  group_by(weekday) |>
-  summarise(avg_inquiries = mean(inquiry_count), .groups = "drop")
-
-weekly_plot <- ggplot(weekly_pattern, aes(weekday, avg_inquiries)) +
-  geom_col(fill = "#355C7D") +
-  scale_y_continuous(labels = scales::label_comma()) +
-  labs(
-    title = "Average Daily Inquiries by Weekday",
-    x = NULL, y = "Average recorded inquiries"
-  ) +
-  theme_minimal()
-
-ggplotly(weekly_plot)
-```
-
-```{r yearly-pattern}
-#| eval: true
-#| code-summary: "Show Code"
-
-monthly_pattern <- train |>
-  filter(!is.na(inquiry_count)) |>
-  mutate(year = factor(year(date)), month = month(date, label = TRUE)) |>
-  group_by(year, month) |>
-  summarise(avg_inquiries = mean(inquiry_count), .groups = "drop")
-
-monthly_plot <- ggplot(
-  monthly_pattern, aes(month, avg_inquiries, color = year, group = year)
-) +
-  geom_line() +
-  geom_point() +
-  scale_y_continuous(labels = scales::label_comma()) +
-  labs(
-    title = "Average Weekday Inquiries by Month and Year",
-    x = NULL, y = "Average recorded inquiries", color = "Year"
-  ) +
-  theme_minimal()
-
-ggplotly(monthly_plot)
-```
-
-I'll look for weekday differences, recurring monthly peaks, and changes in the overall level. These plots can suggest seasonal patterns, but three years of history provide only three observations of each annual cycle.
-
-## Prepare for Modeling
-
-Both models will use the same Monday–Friday, 8 a.m.–5 p.m. daily totals, training on 2015–2017 and being evaluated against 2018. I'll resolve any missing days before fitting them. Using daily totals preserves weekly patterns, though it won't tell us how many people are needed during individual hours.
-
-```{r check-model-inputs}
-#| code-summary: "Show Code"
-
-# Pause modeling if any daily totals still need review.
-stopifnot(!anyNA(train$inquiry_count), !anyNA(test$inquiry_count))
-```
-
-# Prophet
-
-```{r}
-# model data
-model_prophet <- prophet(
-  prophet_payment,
-  weekly.seasonality = FALSE,
-  daily.seasonality = FALSE
-)
-# forecast the next 12 month
-future <- make_future_dataframe(
-  model_prophet,
-  periods = 12,
-  freq = "month"
-)
-# generate forecast
-forecast <- predict(model_prophet, future)
-# plot
-plot(model_prophet, forecast) |>
-  ggplotly()
-```
-
-
-```{r}
-#| fig-height: 12
-#| fig-width: 8
-# modify data
-forecast_yoy <- forecast |>
-  select(ds, yhat, yhat_lower, yhat_upper) |>
-  left_join(prophet_payment, by = "ds") |>
-  mutate(
-    `Calls Offered` = if_else(is.na(y), yhat, y),
-    type = if_else(is.na(y), "Forecast", "Actual"),
-    year = year(ds),
-    month = month(ds, label = TRUE, abbr = TRUE)
-  )
-# plot 
-forecast_yoy |>
-  ggplot(aes(x = month, y = `Calls Offered`, fill = type)) +
-  geom_col() +
-  geom_text(aes(label = round(`Calls Offered`)), vjust = -0.3) +
-  facet_wrap(~ year, ncol = 1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
-  labs(
-    title = "Payment Calls Offered Forecast by Month",
-    x = "Month",
-    y = "Calls Offered",
-    fill = NULL
-  ) 
-```
-
-
-# 
+This extract is already grouped into hourly counts, so it doesn't include the original inquiry-level fields. For our analysis, we'll focus on Monday–Friday business hours. These counts describe recorded agent-handled inquiries, so they won't capture all incoming demand.
 
 # Sources
 

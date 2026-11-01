@@ -16,7 +16,7 @@ format:
 
 Forecasting tools can make it easy to generate predictions, but understanding how they work helps us decide when to rely on them. Different workloads have different patterns, and a model that works well for one may be less useful for another. In this post, I'll explore two forecasting approaches in R and test how well they predict phone volume.
 
-Accurate phone forecasts can help teams balance phone coverage with other work and plan time for training, staff meetings, or system updates. Here, I'll use hourly counts of recorded inquiries to New York City's 311 call center to explore daily, weekly, and yearly patterns and test predictions against later observations.
+Accurate phone forecasts can help teams balance phone coverage with other work and plan time for training, staff meetings, or system updates. My goal is to compare how well Prophet and ETS predict daily recorded inquiries for the next four weeks, focusing on Monday–Friday, 8 a.m.–5 p.m. I'll use New York City's 311 inquiry data, starting with 2015–2017 for training and testing four-week forecasts against recorded activity in 2018. Each forecast will cover 20 weekdays, including holidays that fall on weekdays.
 
 I'll start with Prophet, which models trends and recurring patterns and can incorporate holidays or other predictors. Then I'll explore ETS (Error, Trend, Seasonality), an exponential smoothing approach that gives more weight to recent observations. I'll compare their predictions against actual call volumes and finish with a recommendation for this dataset, including the limitations of that comparison.
 
@@ -66,6 +66,54 @@ The first six rows show the three fields we'll use: `date` identifies weekdays a
 
 style_table(head(data))
 
+```
+
+## Historical Business-Hour Volume
+
+I'll start by totaling inquiries for each weekday from 8 a.m. up to 5 p.m. and plotting the 2015–2017 training period. This gives us a first look at changes in volume, recurring patterns, and unusually high or low days before building either model. Days with missing business hours are left as gaps rather than treated as complete totals.
+
+```{r historical-volume}
+#| eval: true
+#| code-summary: "Show Code"
+#| warning: false
+#| message: false
+#| fig-width: 9
+#| fig-height: 4
+#| fig-alt: "Line chart of daily recorded NYC 311 inquiries during weekday business hours, from 2015 through 2017. Days with missing hourly records are left as gaps."
+
+daily <- expand_grid(
+  date = seq(as.Date("2015-01-01"), as.Date("2017-12-31"), by = "day"),
+  hour = 8:16
+) |>
+  filter(wday(date, week_start = 1) <= 5) |>
+  left_join(data, by = c("date", "hour")) |>
+  group_by(date) |>
+  summarise(
+    inquiry_count = if (anyNA(inquiry_count)) NA_real_ else sum(inquiry_count),
+    .groups = "drop"
+  )
+
+ggplot(daily, aes(date, inquiry_count)) +
+  geom_line(color = "#385E66", linewidth = 0.4) +
+  scale_x_date(date_breaks = "6 months", date_labels = "%b %Y") +
+  scale_y_continuous(labels = scales::label_comma(), limits = c(0, NA)) +
+  labs(
+    title = "Daily NYC 311 Inquiries",
+    subtitle = "Monday–Friday, 8 a.m.–5 p.m. | 2015–2017",
+    x = NULL, y = "Recorded inquiries",
+    caption = "Source: NYC Open Data. Days with missing business hours are not totaled."
+  ) +
+  theme_minimal(base_family = "serif", base_size = 12) +
+  theme(
+    text = element_text(color = "#283438"),
+    plot.title = element_text(color = "#24434A", face = "bold"),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_line(color = "#DDDCD6"),
+    plot.background = element_rect(fill = "#F5F3EF", color = NA),
+    panel.background = element_rect(fill = "#F5F3EF", color = NA),
+    plot.caption = element_text(hjust = 0, size = 9)
+  )
 ```
 
 # Sources

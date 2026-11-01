@@ -1,5 +1,6 @@
 ---
-title: "Forecasting Phone Volume with R"
+title: "Phone Demand Forecasting with R: ETS vs. Prophet"
+description: "Developing and comparing ETS and Prophet models to evaluate how accurately they forecast phone demand."
 categories: ["R"]
 date: "7-7-2026"
 draft: true

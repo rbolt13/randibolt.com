@@ -16,22 +16,101 @@ format:
 
 Forecasting tools can make it easy to generate predictions, but understanding how they work helps us decide when to rely on them. Different workloads have different patterns, and a model that works well for one may be less useful for another. In this post, I'll explore two forecasting approaches in R and test how well they predict phone volume.
 
-Accurate phone forecasts can help teams balance phone coverage with other work and plan time for training, staff meetings, or system updates. The level of detail matters: monthly forecasts can support broader workload planning, while choosing specific days or hours requires more detailed data. Here, I'll use monthly public utility call data from Mesa, Arizona, to explore the forecasting process.
+Accurate phone forecasts can help teams balance phone coverage with other work and plan time for training, staff meetings, or system updates. Here, I'll use hourly counts of recorded inquiries to New York City's 311 call center to explore daily, weekly, and yearly patterns and test predictions against later observations.
 
 I'll start with Prophet, which models trends and recurring patterns and can incorporate holidays or other predictors. Then I'll explore ETS (Error, Trend, Seasonality), an exponential smoothing approach that gives more weight to recent observations. I'll compare their predictions against actual call volumes and finish with a recommendation for this dataset, including the limitations of that comparison.
 
 # Set-up
 
-```{r set up}
-# Load Packages
+## Packages
+
+I'll use these packages throughout the post:
+
+- **tidyverse:** import, clean, summarize, and visualize the data. It includes readr, dplyr, tidyr, and ggplot2.
+- **lubridate:** work with dates and times and create calendar features.
+- **httr2:** request data directly from NYC Open Data.
+- **prophet:** build forecasts with trend, seasonal patterns, and optional holiday effects.
+- **forecast:** build ETS models and calculate forecast accuracy measures.
+- **plotly:** make charts interactive so we can inspect individual dates and predictions.
+
+Install these packages once if needed, then load them when starting the analysis. The installation line is commented out so rendering will not reinstall them.
+
+## Data
+
+The [NYC 311 Call Center Inquiry dataset](https://data.cityofnewyork.us/City-Government/311-Call-Center-Inquiry/wewp-mm3p/about_data) records agent-handled inquiries, including a date and time, topic, and resolution. For this analysis, I'll request hourly record counts from January 2015 through December 2018. This gives us three years for initial training and a later full year to test the forecasts against actual recorded activity.
+
+The request groups records by date and hour before downloading, keeping the file manageable. I'll save the extract locally so future runs can reuse it. The resulting fields are `date`, `hour`, and `inquiry_count`. These counts describe recorded agent-handled activity, rather than all incoming demand or abandoned calls. We'll check gaps and counting rules before modeling; an absent hour is not automatically zero.
+
+I chose a period before 2020 because NYC notes that pandemic-related handling changes caused underreporting from March 2020 onward.
+
+```{r setup}
+#| echo: true
+#| code-fold: false
+#| warning: false
+#| message: false
+#| results: hide
+
+# Run once if these packages are not installed:
+# install.packages(c("tidyverse", "lubridate", "httr2",
+#                    "prophet", "forecast", "plotly"))
+
 library(tidyverse)
-library(readr)
+library(lubridate)
+library(httr2)
 library(prophet)
+library(forecast)
 library(plotly)
-# Load Data
-data <- read_csv("data/Business_Services_-_Utility_Customer_Calls_20260706.csv")
-# View Data 
-head(data)
+
+# Reuse the saved extract after the first download.
+data_path <- "data/nyc_311_hourly_2015_2018.csv"
+dir.create("data", showWarnings = FALSE, recursive = TRUE)
+
+if (!file.exists(data_path)) {
+  request <- httr2::request(
+    "https://data.cityofnewyork.us/resource/wewp-mm3p.csv"
+  ) |>
+    req_url_query(
+      `$select` = paste(
+        "date_trunc_ymd(date_time) AS date,",
+        "date_extract_hh(date_time) AS hour,",
+        "count(*) AS inquiry_count"
+      ),
+      `$where` = paste(
+        "date_time >= '2015-01-01T00:00:00'",
+        "AND date_time < '2019-01-01T00:00:00'"
+      ),
+      `$group` = "date,hour",
+      `$order` = "date,hour",
+      `$limit` = 100000
+    ) |>
+    req_timeout(seconds = 180)
+
+  response <- req_perform(request)
+  writeBin(resp_body_raw(response), data_path)
+}
+
+data <- read_csv(
+  data_path,
+  col_types = cols(
+    date = col_character(),
+    hour = col_integer(),
+    inquiry_count = col_double()
+  ),
+  show_col_types = FALSE,
+  progress = FALSE
+) |>
+  mutate(date = ymd(substr(date, 1, 10))) |>
+  arrange(date, hour)
+
+# Check the basic structure without printing results.
+stopifnot(
+  nrow(data) > 0,
+  all(c("date", "hour", "inquiry_count") %in% names(data)),
+  !anyNA(data),
+  all(data$hour >= 0 & data$hour <= 23),
+  all(data$inquiry_count >= 0),
+  !anyDuplicated(data[c("date", "hour")])
+)
 ```
 
 # Breif EDA & Cleaning
@@ -223,4 +302,4 @@ forecast_yoy |>
 
 # Sources
 
-[City of Mesa Public Data Hub - Utility Customer Calls Answered](https://data.mesaaz.gov/Business-Services/Utility-Customer-Calls-Answered/3mzs-jhfh?utm_source=chatgpt.com)
+[NYC Open Data: 311 Call Center Inquiry](https://data.cityofnewyork.us/City-Government/311-Call-Center-Inquiry/wewp-mm3p/about_data)

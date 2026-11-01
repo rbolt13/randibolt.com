@@ -22,37 +22,12 @@ I'll start with Prophet, which models trends and recurring patterns and can inco
 
 # Set-up
 
-## Packages
-
-I'll use these packages throughout the post:
-
-- **tidyverse:** import, clean, summarize, and visualize the data. It includes readr, dplyr, tidyr, and ggplot2.
-- **lubridate:** work with dates and times and create calendar features.
-- **httr2:** request data directly from NYC Open Data.
-- **prophet:** build forecasts with trend, seasonal patterns, and optional holiday effects.
-- **forecast:** build ETS models and calculate forecast accuracy measures.
-- **plotly:** make charts interactive so we can inspect individual dates and predictions.
-
-Install these packages once if needed, then load them when starting the analysis. The installation line is commented out so rendering will not reinstall them.
-
-## Data
-
-The [NYC 311 Call Center Inquiry dataset](https://data.cityofnewyork.us/City-Government/311-Call-Center-Inquiry/wewp-mm3p/about_data) records agent-handled inquiries, including a date and time, topic, and resolution. For this analysis, I'll request hourly record counts from January 2015 through December 2018. This gives us three years for initial training and a later full year to test the forecasts against actual recorded activity.
-
-The request groups records by date and hour before downloading, keeping the file manageable. I'll save the extract locally so future runs can reuse it. The resulting fields are `date`, `hour`, and `inquiry_count`. These counts describe recorded agent-handled activity, rather than all incoming demand or abandoned calls. We'll check gaps and counting rules before modeling; an absent hour is not automatically zero.
-
-I chose a period before 2020 because NYC notes that pandemic-related handling changes caused underreporting from March 2020 onward.
+I'll use tidyverse and lubridate to prepare the data, httr2 to download it, Prophet and ETS to forecast volume, and plotly for interactive charts.
 
 ```{r setup}
-#| echo: true
 #| code-fold: false
 #| warning: false
 #| message: false
-#| results: hide
-
-# Run once if these packages are not installed:
-# install.packages(c("tidyverse", "lubridate", "httr2",
-#                    "prophet", "forecast", "plotly"))
 
 library(tidyverse)
 library(lubridate)
@@ -60,57 +35,28 @@ library(httr2)
 library(prophet)
 library(forecast)
 library(plotly)
+```
 
-# Reuse the saved extract after the first download.
-data_path <- "data/nyc_311_hourly_2015_2018.csv"
-dir.create("data", showWarnings = FALSE, recursive = TRUE)
+The [NYC 311 Call Center Inquiry dataset](https://data.cityofnewyork.us/City-Government/311-Call-Center-Inquiry/wewp-mm3p/about_data) records agent-handled inquiries. I'll download hourly counts for 2015–2018, using the first three years for training and 2018 for testing. These counts exclude abandoned calls, and missing hours may not mean zero activity. This period also avoids pandemic-related underreporting beginning in March 2020.
 
-if (!file.exists(data_path)) {
-  request <- httr2::request(
-    "https://data.cityofnewyork.us/resource/wewp-mm3p.csv"
+```{r data}
+#| code-fold: false
+#| warning: false
+#| message: false
+
+response <- request("https://data.cityofnewyork.us/resource/wewp-mm3p.csv") |>
+  req_url_query(
+    `$select` = "date_trunc_ymd(date_time) AS date, date_extract_hh(date_time) AS hour, count(*) AS inquiry_count",
+    `$where` = "date_time >= '2015-01-01T00:00:00' AND date_time < '2019-01-01T00:00:00'",
+    `$group` = "date,hour",
+    `$order` = "date,hour",
+    `$limit` = 100000
   ) |>
-    req_url_query(
-      `$select` = paste(
-        "date_trunc_ymd(date_time) AS date,",
-        "date_extract_hh(date_time) AS hour,",
-        "count(*) AS inquiry_count"
-      ),
-      `$where` = paste(
-        "date_time >= '2015-01-01T00:00:00'",
-        "AND date_time < '2019-01-01T00:00:00'"
-      ),
-      `$group` = "date,hour",
-      `$order` = "date,hour",
-      `$limit` = 100000
-    ) |>
-    req_timeout(seconds = 180)
+  req_timeout(180) |>
+  req_perform()
 
-  response <- req_perform(request)
-  writeBin(resp_body_raw(response), data_path)
-}
-
-data <- read_csv(
-  data_path,
-  col_types = cols(
-    date = col_character(),
-    hour = col_integer(),
-    inquiry_count = col_double()
-  ),
-  show_col_types = FALSE,
-  progress = FALSE
-) |>
-  mutate(date = ymd(substr(date, 1, 10))) |>
-  arrange(date, hour)
-
-# Check the basic structure without printing results.
-stopifnot(
-  nrow(data) > 0,
-  all(c("date", "hour", "inquiry_count") %in% names(data)),
-  !anyNA(data),
-  all(data$hour >= 0 & data$hour <= 23),
-  all(data$inquiry_count >= 0),
-  !anyDuplicated(data[c("date", "hour")])
-)
+data <- read_csv(I(resp_body_string(response)), show_col_types = FALSE) |>
+  mutate(date = as_date(date))
 ```
 
 # Breif EDA & Cleaning

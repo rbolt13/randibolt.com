@@ -4,6 +4,8 @@ description: "Developing and comparing ETS and Prophet models to evaluate how ac
 categories: ["R"]
 date: "7-7-2026"
 draft: true
+execute:
+  eval: false
 format:
   html:
     toc: true

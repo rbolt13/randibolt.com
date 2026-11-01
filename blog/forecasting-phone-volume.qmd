@@ -1,217 +1,366 @@
 ---
 title: "Forecasting Phone Volume with R"
-categories: ["R"]
-date: "7-7-2026"
+description: "Exploring payment call volume, testing a Prophet forecast, and explaining what the results can tell us."
+categories: ["R", "Forecasting", "Time Series", "Data Visualization"]
+date: "2026-07-07"
+date-modified: "2026-11-01"
 draft: true
 format:
   html:
     toc: true
     code-fold: true
+execute:
+  warning: true
+  message: false
 ---
 
-Can we use R to forecast phone volume for the city of Mesa Arizona? 
+Can we use R to forecast phone volume for the city of Mesa, Arizona?
+
+Phone reports help us understand what has already happened. A forecast takes that a step further by estimating what demand might look like next. That could help a team plan ahead for busier months, but first I want to know whether the model predicts better than a simple rule.
+
+For this example, I am using public utility customer call data and focusing on payment-related services. I'll explore the history, test Prophet against a seasonal baseline, and forecast the next 12 months. This is a learning exercise using a saved data extract, rather than an official forecast for Mesa.
 
 # Set-up
 
-```{r set up}
-# Load Packages
+```{r setup}
 library(tidyverse)
-library(readr)
+library(lubridate)
 library(prophet)
 library(plotly)
-# Load Data
-data <- read_csv("data/Business_Services_-_Utility_Customer_Calls_20260706.csv")
-# View Data 
+
+set.seed(2026)
+data <- read_csv(
+  "data/Business_Services_-_Utility_Customer_Calls_20260706.csv",
+  col_types = cols(.default = col_character()),
+  show_col_types = FALSE
+) |>
+  mutate(
+    `Reporting Date` = mdy(`Reporting Date`),
+    `Calls Offered` = parse_number(`Calls Offered`)
+  )
+
+stopifnot(!anyNA(data$`Reporting Date`))
 head(data)
 ```
 
-# Breif EDA & Cleaning
+The extract is dated July 6, 2026, and contains reporting months from March 2018 through June 2026. Call counts contain commas, so I read the columns as text and explicitly convert Calls Offered to numbers. Reporting dates label months; they do not mean all the calls happened on the first day.
 
-## Calls Offered by Service
+I am using Calls Offered to describe recorded demand entering these services. It should not be interpreted as a count of unique people. Before using this for staffing, I would also confirm how transfers and repeat calls are counted.
 
-I'm starting by looking at the number of calls offered for each service. 
+# Brief EDA and cleaning
 
-```{r offered by q}
-offer_by_q <- data |>
+## Calls offered by service
+
+I'm starting with the number of calls offered for each service to see what is available.
+
+```{r offered-by-service}
+offered_by_service <- data |>
   group_by(`Service Name`) |>
-  summarise(`Calls Offered` = sum(`Calls Offered`, na.rm = TRUE)) |>
+  summarise(`Calls Offered` = sum(`Calls Offered`, na.rm = TRUE), .groups = "drop") |>
   arrange(desc(`Calls Offered`))
-offer_by_q
+offered_by_service
 ```
 
-## Calls Offered for Each Payment Related Services
+## Payment-related services
 
-I am not sure what all the queues are, but see 'payment' in here. Lets focus our analysis on payment lines. 
+I am selecting services with "payment" in their names. The names include MakePayment, MakePaymentError, and PaymentsOff. These suggest different payment routes, but I have not confirmed their operational definitions. The E and S suffixes may indicate language; I am not using that assumption to split the analysis.
 
-```{r}
-payment_data <- data |>
-  filter(str_detect(`Service Name`, regex("payment", ignore_case = TRUE))) |>
+```{r payment-services}
+payment_rows <- data |>
+  filter(str_detect(`Service Name`, regex("payment", ignore_case = TRUE)))
+
+stopifnot(
+  !anyNA(payment_rows$`Calls Offered`),
+  all(payment_rows$`Calls Offered` >= 0)
+)
+
+payment_rows |>
   group_by(`Service Name`) |>
-  summarise(`Calls Offered` = sum(`Calls Offered`, na.rm = TRUE)) |>
+  summarise(
+    `First Month` = min(`Reporting Date`),
+    `Last Month` = max(`Reporting Date`),
+    `Calls Offered` = sum(`Calls Offered`),
+    .groups = "drop"
+  ) |>
   arrange(desc(`Calls Offered`))
-payment_data
 ```
 
-For payments, it looks like customers can call in to reach:
+Some service names have a numeric prefix while others do not, and the set of services reported varies over time. Selecting by the word "payment" includes both naming formats. It does not establish whether changes reflect renamed services, routing changes, or reporting changes.
 
-* Make Payment: Caller is trying to make a payment.
+## Check dates and missing months
 
-* Make Payment Error: Caller had an issue while making a payment.
+Before modeling, I want to check for duplicate service-month records and gaps. An absent record is not automatically a month with zero calls.
 
-* Payments Off: Payment option may have been unavailable, and caller was routed here.
+```{r data-checks}
+duplicate_service_months <- payment_rows |>
+  count(`Reporting Date`, `Service Name`) |>
+  filter(n > 1)
+duplicate_service_months
+stopifnot(nrow(duplicate_service_months) == 0)
 
-I am also going to assume the 'E' is for English lines and 'S' is for Spanish lines. 
-
-## Calls Offered for All Payment Services
-
-To somewhat simplify this analysis, lets start by looking at calls offed for all payment services as a whole. 
-
-```{r payment monthly}
-payment_monthly <- data |>
-  mutate(`Reporting Date` = as_date(parse_date_time(`Reporting Date`, orders = c("ymd", "mdy")))) |>
-  filter(str_detect(`Service Name`, regex("payment", ignore_case = TRUE))) |>
+payment_monthly_all <- payment_rows |>
+  mutate(`Reporting Date` = floor_date(`Reporting Date`, "month")) |>
   group_by(`Reporting Date`) |>
-  summarise(`Calls Offered` = sum(`Calls Offered`, na.rm = TRUE)) |>
-  arrange(desc(`Reporting Date`))
+  summarise(`Calls Offered` = sum(`Calls Offered`), .groups = "drop") |>
+  arrange(`Reporting Date`)
 
-payment_monthly
+expected_months <- tibble(`Reporting Date` = seq.Date(
+  min(payment_monthly_all$`Reporting Date`),
+  max(payment_monthly_all$`Reporting Date`), by = "month"
+))
+missing_months <- anti_join(expected_months, payment_monthly_all, by = "Reporting Date")
+missing_months
 ```
 
-# Visualize Payments by Month 
+March, April, and May 2021 are absent from the payment series. I will use June 2021 onward for modeling so the training period is continuous. This also changes the period being studied, so the result should not be treated as a model of the entire history.
 
-Lets look at payments by month, and compare each year. 
+The final reported month is June 2026. Its presence does not prove that every service reported a complete month. For this exercise I retain it, but reporting completeness would need confirmation before operational use.
 
-```{r payment monthly yoy}
-#| fig-height: 12
+# Visualize payments by month
+
+Let's compare the monthly totals by year before narrowing the modeling period.
+
+```{r monthly-history}
+#| fig-height: 10
 #| fig-width: 8
-payment_monthly |>
-  mutate(
-    year = year(`Reporting Date`),
-    month = month(`Reporting Date`, label = TRUE, abbr = TRUE)
-  ) |>
-  ggplot(aes(x = month, y = `Calls Offered`)) +
-  geom_col() +
-  geom_text(aes(label = `Calls Offered`), vjust = -0.3) +
-  facet_wrap(~ year, ncol = 1) +
-  labs(
-    title = "Payment Calls Offered by Month",
-    x = "Month",
-    y = "Calls Offered"
-  )
+#| fig-alt: "Monthly payment calls offered by year, showing gaps in 2021 and higher totals in earlier years."
+payment_monthly_all |>
+  mutate(year = year(`Reporting Date`), month = month(`Reporting Date`, label = TRUE)) |>
+  ggplot(aes(month, `Calls Offered`)) +
+  geom_col(fill = "#426879") +
+  facet_wrap(~ year, ncol = 2) +
+  scale_y_continuous(labels = scales::label_comma()) +
+  labs(title = "Payment calls offered by month", x = NULL, y = "Calls offered") +
+  theme_minimal()
 ```
 
-Right away we can see a large range of calls between 1,502 and 6,491 since 2018. It also looks like call volume has been decreasing the last couple of years compared to pre-pandemic call volumes. 
+Earlier years have higher recorded volumes than recent years. The chart alone cannot tell us why. Changes in customer behavior, payment options, routing, or reporting could all affect the series.
 
-# Last 5 Years Summary Stats
+## Summary of the modeling period
 
-It looks like we are missing some data in 2021 from March - May. Lets filter out anything before June 2021 and observe the summary stats. 
-
-```{r}
-payment_monthly <- payment_monthly |>
+```{r modeling-period}
+payment_monthly <- payment_monthly_all |>
   filter(`Reporting Date` >= as.Date("2021-06-01"))
-summary(payment_monthly)
+
+stopifnot(
+  nrow(payment_monthly) >= 36,
+  identical(payment_monthly$`Reporting Date`, seq.Date(
+    min(payment_monthly$`Reporting Date`),
+    max(payment_monthly$`Reporting Date`), by = "month"
+  ))
+)
+
+payment_summary <- payment_monthly |>
+  summarise(
+    Months = n(),
+    Average = mean(`Calls Offered`),
+    Minimum = min(`Calls Offered`),
+    Maximum = max(`Calls Offered`)
+  )
+knitr::kable(payment_summary, digits = 0)
 ```
 
-Cool! It looks like over the past 5 years Meza gets about 2k calls a month related to payments with a range of about 1k calls. 
+From June 2021 through June 2026, there are 61 reporting months with an average of about 2,168 calls per month, ranging from 1,705 to 2,654. This describes the combined payment services, not an individual queue or language.
 
-## Visualize Payments by Quarter
+## Visualize payments by quarter
 
-Looks by month, I am not seeing obvious consistent spikes or dips in the data so I am going to look at it by quarter to see if there if there might be any seasonal trends. 
+Quarterly totals might make broader patterns easier to see. I am including only quarters with three reported months so a partial quarter is not mistaken for low demand. This excludes Q2 2021 from the modeling-period chart.
 
-```{r}
-#| fig-height: 12
+```{r quarterly-history}
+#| fig-height: 7
 #| fig-width: 8
+#| fig-alt: "Quarterly payment call totals by year, including only quarters with all three months present."
 payment_quarterly <- payment_monthly |>
-  mutate(
-    year = year(`Reporting Date`),
-    quarter = paste0("Q", quarter(`Reporting Date`))
-  ) |>
+  mutate(year = year(`Reporting Date`), quarter = paste0("Q", quarter(`Reporting Date`))) |>
   group_by(year, quarter) |>
-  summarise(`Calls Offered` = sum(`Calls Offered`, na.rm = TRUE), .groups = "drop")
-
-payment_quarterly |>
-  ggplot(aes(x = quarter, y = `Calls Offered`)) +
-  geom_col() +
-  geom_text(aes(label = `Calls Offered`), vjust = -0.3) +
-  facet_wrap(~ year, ncol = 1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
-  labs(
-    title = "Payment Calls Offered by Quarter",
-    x = "Quarter",
-    y = "Calls Offered"
-  )
-```
-
-I am not seeing any seasonal trends that are too obvious. Perhaps there is a dip in quarter three, but I will be curious to see what our forecast comes up with for the next few months (Q3) of 2026. 
-
-## Prepare for Prophet
-
-Now we need to slightly modify our data for the Prophet model. Mainly just changing the column headers. 
-
-```{r}
-prophet_payment <- payment_monthly |>
-  transmute(
-    ds = `Reporting Date`,
-    y = `Calls Offered`
+  summarise(
+    months_reported = n_distinct(`Reporting Date`),
+    `Calls Offered` = sum(`Calls Offered`), .groups = "drop"
   ) |>
+  filter(months_reported == 3)
+
+ggplot(payment_quarterly, aes(quarter, `Calls Offered`)) +
+  geom_col(fill = "#426879") +
+  facet_wrap(~ year, ncol = 2) +
+  scale_y_continuous(labels = scales::label_comma()) +
+  labs(title = "Payment calls offered by complete quarter", x = NULL, y = "Calls offered") +
+  theme_minimal()
+```
+
+I do not see a strong, consistent seasonal pattern just from these charts. That is an initial observation, rather than proof that seasonality is absent. The historical test will help assess whether the model is useful.
+
+# Why Prophet?
+
+Prophet estimates a trend and recurring seasonal patterns. I chose it as a starting point because I can inspect both the forecast and its components in R. Choosing a model that is convenient to use does not establish that it predicts well.
+
+These are monthly totals, so daily and weekly seasonality are turned off. I use a modest yearly seasonal component with Fourier order 3 to limit flexibility for a series with only 12 observations per year. This is an initial modeling choice, not a tuned or proven best setting. Predictions stay on month-start dates, matching the observations.
+
+```{r prepare-prophet}
+prophet_payment <- payment_monthly |>
+  transmute(ds = `Reporting Date`, y = `Calls Offered`) |>
   arrange(ds)
-```
 
-
-# Prophet
-
-```{r}
-# model data
-model_prophet <- prophet(
-  prophet_payment,
-  weekly.seasonality = FALSE,
-  daily.seasonality = FALSE
-)
-# forecast the next 12 month
-future <- make_future_dataframe(
-  model_prophet,
-  periods = 12,
-  freq = "month"
-)
-# generate forecast
-forecast <- predict(model_prophet, future)
-# plot
-plot(model_prophet, forecast) |>
-  ggplotly()
-```
-
-
-```{r}
-#| fig-height: 12
-#| fig-width: 8
-# modify data
-forecast_yoy <- forecast |>
-  select(ds, yhat, yhat_lower, yhat_upper) |>
-  left_join(prophet_payment, by = "ds") |>
-  mutate(
-    `Calls Offered` = if_else(is.na(y), yhat, y),
-    type = if_else(is.na(y), "Forecast", "Actual"),
-    year = year(ds),
-    month = month(ds, label = TRUE, abbr = TRUE)
+fit_payment_model <- function(history) {
+  prophet(
+    history,
+    yearly.seasonality = 3,
+    weekly.seasonality = FALSE,
+    daily.seasonality = FALSE,
+    interval.width = 0.80
   )
-# plot 
-forecast_yoy |>
-  ggplot(aes(x = month, y = `Calls Offered`, fill = type)) +
-  geom_col() +
-  geom_text(aes(label = round(`Calls Offered`)), vjust = -0.3) +
-  facet_wrap(~ year, ncol = 1) +
-  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
-  labs(
-    title = "Payment Calls Offered Forecast by Month",
-    x = "Month",
-    y = "Calls Offered",
-    fill = NULL
-  ) 
+}
 ```
 
+# Test the forecast against known months
 
-# 
+Before forecasting beyond the extract, I will hold back the final 12 months, July 2025 through June 2026. The model only sees the earlier months. I can then compare its predictions with what actually happened.
+
+My baseline is seasonal naive: predict the same number of calls as the same month one year earlier. If Prophet cannot improve on that simple rule, extra complexity is hard to justify.
+
+```{r holdout-test}
+test_months <- 12L
+train <- head(prophet_payment, -test_months)
+test <- tail(prophet_payment, test_months)
+
+validation_model <- fit_payment_model(train)
+validation_predictions <- predict(validation_model, test |> select(ds)) |>
+  select(ds, yhat, yhat_lower, yhat_upper)
+
+baseline <- train |>
+  transmute(ds = ds %m+% years(1), seasonal_naive = y)
+
+validation <- test |>
+  left_join(validation_predictions, by = "ds") |>
+  left_join(baseline, by = "ds")
+stopifnot(!anyNA(validation$seasonal_naive), !anyNA(validation$yhat))
+
+accuracy <- validation |>
+  select(ds, Actual = y, Prophet = yhat, `Seasonal naive` = seasonal_naive) |>
+  pivot_longer(c(Prophet, `Seasonal naive`), names_to = "Model", values_to = "Prediction") |>
+  group_by(Model) |>
+  summarise(
+    MAE = mean(abs(Actual - Prediction)),
+    RMSE = sqrt(mean((Actual - Prediction)^2)),
+    .groups = "drop"
+  ) |>
+  arrange(MAE)
+knitr::kable(accuracy, digits = 1)
+```
+
+MAE is the average size of the prediction error, measured in calls per month. RMSE also measures error in calls, but gives more weight to large misses. Lower is better for both.
+
+```{r validation-chart}
+#| fig-alt: "Actual calls and held-out predictions from Prophet and a seasonal naive baseline for the final twelve observed months."
+validation |>
+  select(ds, Actual = y, Prophet = yhat, `Seasonal naive` = seasonal_naive) |>
+  pivot_longer(-ds, names_to = "Series", values_to = "Calls") |>
+  ggplot(aes(ds, Calls, color = Series, linetype = Series)) +
+  geom_line(linewidth = 0.8) +
+  geom_point() +
+  scale_color_manual(values = c("Actual" = "#263E4A", "Prophet" = "#967044", "Seasonal naive" = "#697D69")) +
+  scale_y_continuous(labels = scales::label_comma()) +
+  labs(title = "How well did the forecasts predict known months?", x = NULL, y = "Calls offered") +
+  theme_minimal()
+```
+
+```{r validation-interpretation, include=FALSE}
+prophet_mae <- accuracy$MAE[accuracy$Model == "Prophet"]
+baseline_mae <- accuracy$MAE[accuracy$Model == "Seasonal naive"]
+comparison <- if (prophet_mae < baseline_mae) {
+  "Prophet had a lower average absolute error than the seasonal naive baseline in this test."
+} else if (prophet_mae > baseline_mae) {
+  "The seasonal naive baseline had a lower average absolute error than Prophet in this test."
+} else {
+  "The two methods had the same average absolute error in this test."
+}
+coverage <- mean(with(validation, y >= yhat_lower & y <= yhat_upper))
+```
+
+`r comparison` Prophet missed by about `r round(prophet_mae)` calls per month on average, compared with `r round(baseline_mae)` for the baseline. These results apply to one held-out year. Testing several earlier forecast starting points would give a stronger assessment of reliability.
+
+The actual total fell inside Prophet's nominal 80% interval in `r sum(with(validation, y >= yhat_lower & y <= yhat_upper))` of the 12 test months (`r scales::percent(coverage, accuracy = 1)`). That is a check on this test period, not a guarantee of future coverage.
+
+# Forecast the next 12 months
+
+Now I will refit Prophet using all 61 months in the modeling period and estimate July 2026 through June 2027. Those dates are future months relative to this saved extract, even if some have already passed by the time this post is read. I have not added newer actuals to the analysis.
+
+The Prophet forecast below is a demonstration. Its usefulness should be judged alongside the baseline comparison above; fitting it to all the data does not establish that it is the best method.
+
+```{r final-forecast}
+model_prophet <- fit_payment_model(prophet_payment)
+future <- tibble(ds = seq.Date(
+  max(prophet_payment$ds) %m+% months(1),
+  by = "month", length.out = 12
+))
+forecast <- predict(model_prophet, future)
+
+forecast_table <- forecast |>
+  transmute(
+    Month = as.Date(ds),
+    Prediction = yhat,
+    `Lower 80% bound` = yhat_lower,
+    `Upper 80% bound` = yhat_upper
+  )
+knitr::kable(forecast_table, digits = 0)
+```
+
+## Read the forecast and its uncertainty
+
+The central prediction is one estimate of monthly volume. The shaded band shows Prophet's nominal 80% uncertainty interval. It depends on model assumptions, including how past trend changes might continue, and does not cover every possible operational change. It should not be read as a guaranteed range.
+
+```{r forecast-chart}
+#| fig-alt: "Observed monthly payment call totals followed by twelve Prophet predictions with a shaded nominal eighty percent uncertainty interval."
+forecast_plot <- ggplot() +
+  geom_line(data = prophet_payment, aes(ds, y), color = "#263E4A") +
+  geom_ribbon(data = forecast, aes(ds, ymin = yhat_lower, ymax = yhat_upper),
+              fill = "#967044", alpha = 0.2) +
+  geom_line(data = forecast, aes(ds, yhat), color = "#967044", linetype = "dashed") +
+  geom_vline(xintercept = as.numeric(max(prophet_payment$ds)), linetype = "dotted") +
+  scale_y_continuous(labels = scales::label_comma()) +
+  labs(title = "Monthly payment call forecast", subtitle = "Solid: observed | Dashed: Prophet forecast | Shading: nominal 80% interval",
+       x = NULL, y = "Calls offered") +
+  theme_minimal()
+ggplotly(forecast_plot)
+```
+
+```{r forecast-summary, include=FALSE}
+peak_month <- forecast_table |> slice_max(Prediction, n = 1, with_ties = FALSE)
+```
+
+Across the 12 forecast months, Prophet estimates about `r scales::comma(round(mean(forecast$yhat)))` calls per month on average. Its highest central estimate is `r format(peak_month$Month, "%B %Y")`, at about `r scales::comma(round(peak_month$Prediction))` calls. These are model estimates, not observed results or staffing requirements.
+
+## Compare actual and forecast months by year
+
+```{r forecast-by-year}
+#| fig-height: 8
+#| fig-width: 8
+#| fig-alt: "Monthly bars by year distinguish recorded actual calls from Prophet forecast calls."
+forecast_yoy <- bind_rows(
+  prophet_payment |> transmute(ds, `Calls Offered` = y, type = "Actual"),
+  forecast |> transmute(ds = as.Date(ds), `Calls Offered` = yhat, type = "Forecast")
+) |>
+  mutate(year = year(ds), month = month(ds, label = TRUE))
+
+ggplot(forecast_yoy, aes(month, `Calls Offered`, fill = type)) +
+  geom_col() +
+  facet_wrap(~ year, ncol = 2) +
+  scale_fill_manual(values = c("Actual" = "#426879", "Forecast" = "#967044")) +
+  scale_y_continuous(labels = scales::label_comma()) +
+  labs(title = "Payment calls offered: actual and forecast", x = NULL, y = "Calls offered", fill = NULL) +
+  theme_minimal()
+```
+
+# What I would use this for
+
+A monthly forecast could help a team anticipate demand and decide where to investigate further. It does not directly tell us how many staff are needed. That would also require information about handling time, operating hours, service goals, repeat contacts, and how calls arrive throughout the day.
+
+The main lesson for me is that producing a forecast is only one part of the work. Checking the input data, comparing against a simple baseline, and explaining the uncertainty are what make the output useful for a decision.
+
+Before relying on this operationally, I would confirm the service definitions and reporting completeness, repeat the accuracy test across multiple starting dates, and compare other approaches such as ETS. I would also check whether recent routing or payment changes make the historical pattern less relevant. This post does not establish what caused changes in demand or validate a production staffing model.
 
 # Sources
 
-[City of Mesa Public Data Hub - Utility Customer Calls Answered](https://data.mesaaz.gov/Business-Services/Utility-Customer-Calls-Answered/3mzs-jhfh?utm_source=chatgpt.com)
+- [City of Mesa Public Data Hub: Utility Customer Calls Answered](https://data.mesaaz.gov/Business-Services/Utility-Customer-Calls-Answered/3mzs-jhfh). This analysis uses the saved July 6, 2026 CSV extract and the Calls Offered field.
+- [Prophet documentation: monthly and other non-daily data](https://facebook.github.io/prophet/docs/non-daily_data.html).
+- [Prophet documentation: uncertainty intervals](https://facebook.github.io/prophet/docs/uncertainty_intervals.html).
+- [Prophet documentation: diagnostics](https://facebook.github.io/prophet/docs/diagnostics.html).

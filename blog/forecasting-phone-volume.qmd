@@ -24,7 +24,7 @@ I'll start with Prophet, which models trends and recurring patterns and can inco
 
 Before building the forecasts, I'll load the packages and bring in the data we'll use throughout the analysis.
 
-I'll use tidyverse and lubridate to prepare the data, httr2 to download it, Prophet and ETS to forecast volume.
+I'll use tidyverse and lubridate to prepare the data, and Prophet and ETS to forecast volume.
 
 ```{r setup}
 #| eval: true
@@ -32,14 +32,16 @@ I'll use tidyverse and lubridate to prepare the data, httr2 to download it, Prop
 #| warning: false
 #| message: false
 
+# install.packages(c("tidyverse", "lubridate", "httr2", "prophet", "forecast"))
+
 library(tidyverse)
 library(lubridate)
-library(httr2)
 library(prophet)
 library(forecast)
+source("data/R/style-table.R")
 ```
 
-The [NYC 311 Call Center Inquiry dataset](https://data.cityofnewyork.us/City-Government/311-Call-Center-Inquiry/wewp-mm3p/about_data) records agent-handled inquiries. I'll download hourly counts for 2015–2018, using the first three years for training and 2018 for testing. These counts exclude abandoned calls, and missing hours may not mean zero activity. This period also avoids pandemic-related underreporting beginning in March 2020.
+The [NYC 311 Call Center Inquiry dataset](https://data.cityofnewyork.us/City-Government/311-Call-Center-Inquiry/wewp-mm3p/about_data) records agent-handled inquiries. I'll use saved hourly counts for 2015–2018, using the first three years for training and 2018 for testing. These counts exclude abandoned calls, and missing hours may not mean zero activity. This period also avoids pandemic-related underreporting beginning in March 2020.
 
 ```{r data}
 #| eval: true
@@ -48,19 +50,8 @@ The [NYC 311 Call Center Inquiry dataset](https://data.cityofnewyork.us/City-Gov
 #| warning: false
 #| message: false
 
-response <- request("https://data.cityofnewyork.us/resource/wewp-mm3p.csv") |>
-  req_url_query(
-    `$select` = "date_trunc_ymd(date_time) AS date, date_extract_hh(date_time) AS hour, count(*) AS inquiry_count",
-    `$where` = "date_time >= '2015-01-01T00:00:00' AND date_time < '2019-01-01T00:00:00'",
-    `$group` = "date,hour",
-    `$order` = "date,hour",
-    `$limit` = 100000
-  ) |>
-  req_timeout(180) |>
-  req_perform()
+data <- read_csv("data/nyc-311-data.csv", show_col_types = FALSE)
 
-data <- read_csv(I(resp_body_string(response)), show_col_types = FALSE) |>
-  mutate(date = as_date(date))
 ```
 
 # Explore the Data
@@ -75,45 +66,8 @@ The first six rows show the three fields we'll use: `date` identifies weekdays a
 #| fig-height: 2.8
 #| fig-alt: "First six rows of the hourly inquiry data, showing date, hour, and inquiry count."
 
-preview <- head(data) |>
-  mutate(
-    row = row_number(),
-    date = format(date, "%Y-%m-%d"),
-    hour = as.character(hour),
-    inquiry_count = scales::comma(inquiry_count)
-  ) |>
-  pivot_longer(-row, names_to = "field", values_to = "value") |>
-  mutate(field = factor(field, levels = c("date", "hour", "inquiry_count")))
+style_table(head(data))
 
-headers <- tibble(
-  field = factor(
-    c("date", "hour", "inquiry_count"),
-    levels = c("date", "hour", "inquiry_count")
-  ),
-  value = c("date", "hour", "inquiry_count")
-)
-
-ggplot(preview, aes(x = field, y = -row)) +
-  geom_tile(aes(fill = row %% 2 == 0), color = "#F5F3EF", linewidth = 0.6) +
-  geom_text(aes(label = value), family = "serif", color = "#283438", size = 4) +
-  geom_tile(
-    data = headers, aes(x = field, y = 0),
-    inherit.aes = FALSE, fill = "#24434A", color = "#F5F3EF"
-  ) +
-  geom_text(
-    data = headers, aes(x = field, y = 0, label = value),
-    inherit.aes = FALSE, family = "serif",
-    fontface = "bold", color = "white", size = 4
-  ) +
-  scale_fill_manual(values = c("FALSE" = "#F5F3EF", "TRUE" = "#E3E9E7")) +
-  scale_x_discrete(expand = c(0, 0)) +
-  scale_y_continuous(expand = c(0, 0)) +
-  theme_void() +
-  theme(
-    legend.position = "none",
-    plot.background = element_rect(fill = "#F5F3EF", color = NA),
-    plot.margin = margin(8, 8, 8, 8)
-  )
 ```
 
 # Sources

@@ -1,6 +1,6 @@
 ---
 title: "Phone Demand Forecasting with R: ETS vs. Prophet"
-description: "Developing and comparing ETS and Prophet models to evaluate how accurately they forecast phone demand."
+description: "Building phone volume forecasts with ETS and Prophet, then checking how well they work."
 categories: ["R"]
 date: "7-7-2026"
 draft: true
@@ -12,7 +12,13 @@ format:
     code-fold: true
 ---
 
-Can we use R to forecast phone volume for the city of Mesa Arizona? 
+# Introduction
+
+Forecasting tools can make it easy to generate predictions, but understanding how they work helps us decide when to rely on them. Different workloads have different patterns, and a model that works well for one may be less useful for another. In this post, I'll explore two forecasting approaches in R and test how well they predict phone volume.
+
+Accurate phone forecasts can help teams balance phone coverage with other work and plan time for training, staff meetings, or system updates. The level of detail matters: monthly forecasts can support broader workload planning, while choosing specific days or hours requires more detailed data. Here, I'll use monthly public utility call data from Mesa, Arizona, to explore the forecasting process.
+
+I'll start with Prophet, which models trends and recurring patterns and can incorporate holidays or other predictors. Then I'll explore ETS (Error, Trend, Seasonality), an exponential smoothing approach that gives more weight to recent observations. I'll compare their predictions against actual call volumes and finish with a recommendation for this dataset, including the limitations of that comparison.
 
 # Set-up
 

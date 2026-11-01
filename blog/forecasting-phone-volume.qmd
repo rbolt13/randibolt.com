@@ -24,7 +24,7 @@ I'll start with Prophet, which models trends and recurring patterns and can inco
 
 Before building the forecasts, I'll load the packages and bring in the data we'll use throughout the analysis.
 
-I'll use tidyverse and lubridate to prepare the data, and Prophet and ETS to forecast volume.
+I'll use tidyverse and lubridate to prepare the data, Prophet and ETS to forecast volume, and a reusable `style_table()` function to format tables to match the blog.
 
 ```{r setup}
 #| eval: true
@@ -44,9 +44,8 @@ source("data/R/style-table.R")
 The [NYC 311 Call Center Inquiry dataset](https://data.cityofnewyork.us/City-Government/311-Call-Center-Inquiry/wewp-mm3p/about_data) records agent-handled inquiries. I'll use saved hourly counts for 2015–2018, using the first three years for training and 2018 for testing. These counts exclude abandoned calls, and missing hours may not mean zero activity. This period also avoids pandemic-related underreporting beginning in March 2020.
 
 ```{r data}
+#| echo: false
 #| eval: true
-#| code-fold: true
-#| code-summary: "Show Code"
 #| warning: false
 #| message: false
 
@@ -59,9 +58,8 @@ data <- read_csv("data/nyc-311-data.csv", show_col_types = FALSE)
 The first six rows show the three fields we'll use: `date` identifies weekdays and separates our training and testing periods, `hour` lets us focus on 8 a.m.–5 p.m., and `inquiry_count` is the recorded volume we'll summarize and forecast. We'll focus on Monday–Friday. Because the counts reflect inquiries handled by agents, they may understate demand when callers hang up before reaching someone, which matters if we use the forecast to plan phone coverage.
 
 ```{r preview-data}
+#| echo: false
 #| eval: true
-#| code-fold: true
-#| code-summary: "Show Code"
 #| fig-width: 7
 #| fig-height: 2.8
 #| fig-alt: "First six rows of the hourly inquiry data, showing date, hour, and inquiry count."

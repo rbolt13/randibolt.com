@@ -27,6 +27,7 @@ Before building the forecasts, I'll load the packages and bring in the data we'l
 I'll use tidyverse and lubridate to prepare the data, httr2 to download it, Prophet and ETS to forecast volume, and plotly for interactive charts.
 
 ```{r setup}
+#| eval: true
 #| code-fold: false
 #| warning: false
 #| message: false
@@ -42,6 +43,7 @@ library(plotly)
 The [NYC 311 Call Center Inquiry dataset](https://data.cityofnewyork.us/City-Government/311-Call-Center-Inquiry/wewp-mm3p/about_data) records agent-handled inquiries. I'll download hourly counts for 2015–2018, using the first three years for training and 2018 for testing. These counts exclude abandoned calls, and missing hours may not mean zero activity. This period also avoids pandemic-related underreporting beginning in March 2020.
 
 ```{r data}
+#| eval: true
 #| code-fold: true
 #| code-summary: "Show Code"
 #| warning: false
@@ -64,13 +66,14 @@ data <- read_csv(I(resp_body_string(response)), show_col_types = FALSE) |>
 
 # Explore and Prepare the Data
 
-Before fitting either model, I'll check the coverage and look for patterns in recorded inquiries. I'll use daily counts to keep the analysis manageable while retaining differences between weekdays and weekends. The exploration uses 2015–2017, leaving 2018 aside for testing.
+Before fitting either model, I'll check the coverage and look for patterns in recorded inquiries. I'll focus on Monday–Friday to reflect a weekday phone operation. For now, each daily total includes all hours; narrowing the analysis to business hours will require a specific time window. The exploration uses 2015–2017, leaving 2018 aside for testing.
 
 ## Check Coverage
 
-The download has one row per recorded date and hour. I'll check for duplicate rows and invalid values, then compare it with a full calendar of expected hours. Missing hours stay missing rather than becoming zeros.
+The download has one row per recorded date and hour. I'll check for duplicate rows and invalid values, then compare it with the expected hours for Monday–Friday. Missing hours stay missing rather than becoming zeros.
 
 ```{r check-coverage}
+#| eval: true
 #| code-summary: "Show Code"
 
 stopifnot(
@@ -85,6 +88,7 @@ hourly <- expand_grid(
   date = seq(as.Date("2015-01-01"), as.Date("2018-12-31"), by = "day"),
   hour = 0:23
 ) |>
+  filter(wday(date, week_start = 1) <= 5) |>
   left_join(data, by = c("date", "hour"))
 
 coverage <- hourly |>
@@ -108,6 +112,7 @@ A missing hour could reflect no inquiries or a reporting gap. This check also fl
 I'll total each day's inquiries, keeping incomplete days as missing. The first chart shows changes over time and any unusually high or low days worth investigating.
 
 ```{r daily-volume}
+#| eval: true
 #| code-summary: "Show Code"
 
 daily <- hourly |>
@@ -125,7 +130,7 @@ daily_plot <- ggplot(train, aes(date, inquiry_count)) +
   geom_line(color = "#355C7D", linewidth = 0.4) +
   scale_y_continuous(labels = scales::label_comma()) +
   labs(
-    title = "Daily NYC 311 Inquiries, 2015–2017",
+    title = "Weekday NYC 311 Inquiries, 2015–2017",
     x = NULL, y = "Recorded inquiries"
   ) +
   theme_minimal()
@@ -138,11 +143,12 @@ ggplotly(daily_plot)
 Next, I'll compare average daily volume by weekday and by month within each year. Averages make the monthly comparison less sensitive to the number of days in each month. Both summaries exclude incomplete days.
 
 ```{r weekly-pattern}
+#| eval: true
 #| code-summary: "Show Code"
 
 weekly_pattern <- train |>
   filter(!is.na(inquiry_count)) |>
-  mutate(weekday = wday(date, label = TRUE, week_start = 1)) |>
+  mutate(weekday = wday(date, label = TRUE, week_start = 1) |> droplevels()) |>
   group_by(weekday) |>
   summarise(avg_inquiries = mean(inquiry_count), .groups = "drop")
 
@@ -159,6 +165,7 @@ ggplotly(weekly_plot)
 ```
 
 ```{r yearly-pattern}
+#| eval: true
 #| code-summary: "Show Code"
 
 monthly_pattern <- train |>
@@ -174,7 +181,7 @@ monthly_plot <- ggplot(
   geom_point() +
   scale_y_continuous(labels = scales::label_comma()) +
   labs(
-    title = "Average Daily Inquiries by Month and Year",
+    title = "Average Weekday Inquiries by Month and Year",
     x = NULL, y = "Average recorded inquiries", color = "Year"
   ) +
   theme_minimal()
